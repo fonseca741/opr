@@ -1,6 +1,6 @@
 import { Button as ChackraButton } from "@chakra-ui/react";
 
-const Button = ({ children, ...rest }) => {
+const Button = ({ children, ...rest }: any) => {
   return (
     <ChackraButton
       colorScheme="gray"
