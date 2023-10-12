@@ -1,9 +1,9 @@
-import React, { memo } from "react";
 import { Flex, Link } from "@chakra-ui/react";
 import { AvatarIcon } from "components/header";
+import { useAuth } from "context";
 import LinkNext from "next/link";
 import { useRouter } from "next/router";
-import { useAuth } from "context";
+import { memo } from "react";
 
 const Header = () => {
   const { pathname } = useRouter();
@@ -15,7 +15,7 @@ const Header = () => {
       padding="1.2rem 2rem"
       justifyContent="space-between"
       marginStart="0rem"
-      background="#FFD000"
+      background="primary.100"
       marginBottom="3rem"
     >
       <Flex width="20rem" alignItems="center" justifyContent="flex-start">

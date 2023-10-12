@@ -1,26 +1,26 @@
-import Head from "next/head";
+import { Input, InputError } from "@/components/input";
 import { LayoutSigned } from "@/components/layout";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { useDropzone } from "react-dropzone";
-import { toast } from "react-toastify";
-import * as yup from "yup";
+import authRoute from "@/utils/auth";
+import fetchData from "@/utils/fetch";
 import {
-  Flex,
+  Box,
   Button,
-  useBoolean,
+  Flex,
   Text,
   Textarea,
-  Box,
+  useBoolean,
 } from "@chakra-ui/react";
-import { Input, InputError } from "@/components/input";
-import authRoute from "@/utils/auth";
-import { useAuth } from "context";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { EventProps } from "common/types/event";
+import { useAuth } from "context";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Select from "react-select";
-import fetchData from "@/utils/fetch";
-import { EventProps } from "common/types/event";
+import { toast } from "react-toastify";
+import * as yup from "yup";
 
 const schema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório"),
@@ -166,7 +166,7 @@ const CreateArticle = () => {
               <Input
                 label="Nome"
                 placeholder="Digite o título do artigo"
-                _focusVisible={{ borderColor: "#FFD000" }}
+                _focusVisible={{ borderColor: "primary.100" }}
                 error={errors.name?.message}
                 {...register("name")}
               />
@@ -191,7 +191,7 @@ const CreateArticle = () => {
               <Textarea
                 resize="none"
                 placeholder="Digite a descrição do artigo"
-                _focusVisible={{ borderColor: "#FFD000" }}
+                _focusVisible={{ borderColor: "primary.100" }}
                 {...register("description")}
               />
               {errors.description?.message ? (
@@ -240,7 +240,7 @@ const CreateArticle = () => {
                 colors: {
                   ...theme.colors,
                   text: "orangered",
-                  primary25: "#FFD000",
+                  primary25: "primary.100",
                   primary: "black",
                 },
               })}
@@ -274,7 +274,7 @@ const CreateArticle = () => {
             type="submit"
             disabled={isLoading}
             isLoading={isLoading}
-            style={{ background: "#FFD000", color: "#000" }}
+            variant="primary"
             title="Criar artigo"
           >
             Criar artigo

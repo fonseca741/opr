@@ -1,27 +1,27 @@
-import Head from "next/head";
+import { Input } from "@/components/input";
 import { LayoutSigned } from "@/components/layout";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
+import authRoute from "@/utils/auth";
 import {
   Avatar,
-  Flex,
   Button,
-  useBoolean,
   Divider,
+  Flex,
   Text,
+  useBoolean,
 } from "@chakra-ui/react";
-import { Input } from "@/components/input";
-import authRoute from "@/utils/auth";
-import { useAuth } from "context";
-import fetchData from "utils/fetch";
-import { useEffect, useState } from "react";
-import { formattStringToDots } from "../utils";
-import { useRouter } from "next/router";
 import {
+  ArticleProps as GlobalArticleProps,
   EventProps,
   UserProps,
-  ArticleProps as GlobalArticleProps,
 } from "common/types";
+import { useAuth } from "context";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import fetchData from "utils/fetch";
+import { formattStringToDots } from "../utils";
 
 type Inputs = {
   name: string;
@@ -133,7 +133,7 @@ const Profile = () => {
                   label="Nome"
                   placeholder="Digite seu nome"
                   defaultValue={user.name}
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   error={errors.name?.message}
                   {...register("name")}
                 />
@@ -200,7 +200,7 @@ const Profile = () => {
               type="submit"
               disabled={isLoading}
               isLoading={isLoading}
-              style={{ background: "#FFD000", color: "#000" }}
+              variant="primary"
               title="Atualizar meus dados"
             >
               Atualizar meus dados
@@ -239,7 +239,7 @@ const Profile = () => {
                   <Input
                     name="name"
                     label="Nome"
-                    _focusVisible={{ borderColor: "#FFD000" }}
+                    _focusVisible={{ borderColor: "primary.100" }}
                     defaultValue={article.name}
                     readOnly
                     disabled
@@ -256,7 +256,7 @@ const Profile = () => {
                     name="description"
                     label="Descrição"
                     defaultValue={formattStringToDots(article.description, 30)}
-                    _focusVisible={{ borderColor: "#FFD000" }}
+                    _focusVisible={{ borderColor: "primary.100" }}
                     readOnly
                     disabled
                   />
@@ -271,7 +271,7 @@ const Profile = () => {
                   justifyContent="center"
                 >
                   <Button
-                    style={{ background: "#FFD000", color: "#000" }}
+                    variant="primary"
                     title="Ver detalhes"
                     onClick={() => router.replace(`article/${article.id}`)}
                   >
@@ -318,7 +318,7 @@ const Profile = () => {
                   <Input
                     name="name"
                     label="Nome"
-                    _focusVisible={{ borderColor: "#FFD000" }}
+                    _focusVisible={{ borderColor: "primary.100" }}
                     defaultValue={event.name}
                     readOnly
                     disabled
@@ -335,7 +335,7 @@ const Profile = () => {
                     name="description"
                     label="Descrição"
                     defaultValue={formattStringToDots(event.description, 30)}
-                    _focusVisible={{ borderColor: "#FFD000" }}
+                    _focusVisible={{ borderColor: "primary.100" }}
                     readOnly
                     disabled
                   />
@@ -350,7 +350,7 @@ const Profile = () => {
                   justifyContent="center"
                 >
                   <Button
-                    style={{ background: "#FFD000", color: "#000" }}
+                    variant="primary"
                     title="Ver detalhes"
                     onClick={() => router.replace(`event/${event.id}`)}
                   >

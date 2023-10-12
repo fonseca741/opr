@@ -1,29 +1,29 @@
-import Head from "next/head";
+import { Input, InputError } from "@/components/input";
 import { LayoutSigned } from "@/components/layout";
+import authRoute from "@/utils/auth";
+import { base64toBlob } from "@/utils/base-64";
 import {
+  Box,
+  Button,
+  Divider,
   Flex,
-  useBoolean,
   Text,
   Textarea,
-  Divider,
-  Button,
-  Box,
+  useBoolean,
 } from "@chakra-ui/react";
-import { Input, InputError } from "@/components/input";
-import authRoute from "@/utils/auth";
-import fetchData from "utils/fetch";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { base64toBlob } from "@/utils/base-64";
-import { useDropzone } from "react-dropzone";
-import { useForm } from "react-hook-form";
 import {
-  EventProps,
-  UserProps,
   ArticleProps as GlobalArticleProps,
   ArticleReviewerProps as GlobalArticleReviewerProps,
+  EventProps,
+  UserProps,
 } from "common/types";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import fetchData from "utils/fetch";
 
 type ArticleReviewerProps = GlobalArticleReviewerProps & {
   reviewer: UserProps;
@@ -33,7 +33,7 @@ type ArticleReviewerProps = GlobalArticleReviewerProps & {
 type ArticleProps = GlobalArticleProps & {
   creator: UserProps;
   event: EventProps;
-  articleReviewer: ArticleReviewerProps[];
+  // articleReviewer: ArticleReviewerProps[];
 };
 
 type Inputs = {
@@ -115,11 +115,14 @@ const ReviewArticle = () => {
         const fileResult = reader.result as string;
 
         await fetchData("POST", "article-review/review", {
-          comments: data.comments || "",
           file: fileResult.replace("data:application/pdf;base64,", ""),
           articleId: Number(id.split("-")[0]),
           reviewerId: Number(id.split("-")[1]),
           originalFile: article?.file,
+          discussion: {
+            value: data.comments || "",
+            isReviwer: true,
+          },
         });
 
         toast.success("Revisão submetida com sucesso!", {
@@ -160,7 +163,7 @@ const ReviewArticle = () => {
       ) : (
         <Flex
           as="form"
-          width="80%"
+          width="full"
           padding="1rem"
           direction="column"
           onSubmit={handleSubmit(onSubmit)}
@@ -186,7 +189,7 @@ const ReviewArticle = () => {
                 <Input
                   name="title"
                   label="Títutlo"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={article?.name}
                   readOnly
                   disabled
@@ -203,7 +206,7 @@ const ReviewArticle = () => {
                   name="event_name"
                   label="Evento submetido"
                   defaultValue={article?.event?.name}
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   readOnly
                   disabled
                 />
@@ -218,7 +221,7 @@ const ReviewArticle = () => {
                 <Input
                   name="name"
                   label="Autor do artigo"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={article?.creator?.name}
                   readOnly
                   disabled
@@ -243,7 +246,7 @@ const ReviewArticle = () => {
                 </Text>
                 <Textarea
                   resize="none"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={article?.description}
                   readOnly
                   disabled
@@ -259,7 +262,7 @@ const ReviewArticle = () => {
                 minW="13.75rem"
               >
                 <Button
-                  style={{ background: "#FFD000", color: "#000" }}
+                  variant="primary"
                   title="Visualizar artigo"
                   onClick={handlePrintPdf}
                 >
@@ -274,7 +277,7 @@ const ReviewArticle = () => {
                 minW="13.75rem"
               >
                 <Button
-                  style={{ background: "#FFD000", color: "#000" }}
+                  variant="primary"
                   title="Baixar artigo"
                   onClick={handleDonwloadPdf}
                 >
@@ -312,7 +315,7 @@ const ReviewArticle = () => {
                 </Text>
                 <Textarea
                   resize="none"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={
                     article?.event.creatorInfos.length === 0
                       ? "Não há observações para revisores"
@@ -348,7 +351,7 @@ const ReviewArticle = () => {
                 <Textarea
                   resize="none"
                   placeholder="Digite comentários pontuais sobre o artigo"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   {...register("comments")}
                 />
                 {errors.comments?.message ? (
@@ -399,7 +402,7 @@ const ReviewArticle = () => {
                 type="submit"
                 disabled={isLoading}
                 isLoading={isLoading}
-                style={{ background: "#FFD000", color: "#000" }}
+                variant="primary"
                 title="Adicionar revisão"
               >
                 Adicionar revisão

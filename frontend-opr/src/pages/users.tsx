@@ -1,14 +1,14 @@
-import Head from "next/head";
-import { toast } from "react-toastify";
 import { LayoutSigned } from "@/components/layout";
-import fetchData from "utils/fetch";
-import { useCallback, useEffect, useState } from "react";
-import { Box, Checkbox, Flex, Text, useBoolean } from "@chakra-ui/react";
 import authRoute from "@/utils/auth";
+import { Box, Checkbox, Flex, Text, useBoolean } from "@chakra-ui/react";
 import { UserProps } from "common/types/user";
 import { useAuth } from "context";
-import { AiOutlineMail, AiOutlineClockCircle } from "react-icons/ai";
+import Head from "next/head";
+import { useCallback, useEffect, useState } from "react";
+import { AiOutlineClockCircle, AiOutlineMail } from "react-icons/ai";
 import { GrStatusUnknown } from "react-icons/gr";
+import { toast } from "react-toastify";
+import fetchData from "utils/fetch";
 
 const User = () => {
   const { user } = useAuth();
@@ -115,12 +115,12 @@ const User = () => {
                 padding="1rem"
                 cursor="pointer"
                 backgroundColor="#fff"
-                _hover={{ border: "2px solid #FFD000" }}
+                _hover={{ border: "2px solid primary.100" }}
               >
                 <Flex
                   width="300px"
                   height="60px"
-                  backgroundColor="#FFD000"
+                  backgroundColor="primary.100"
                   marginTop="-25px"
                   marginLeft="-35px"
                   borderRadius="4px"

@@ -1,17 +1,17 @@
-import Head from "next/head";
-import { SubmitHandler, useForm } from "react-hook-form";
-import * as yup from "yup";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
-import LinkNext from "next/link";
-import { Box, Flex, Link, Text, useBoolean } from "@chakra-ui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { LayoutDefault } from "@/components/layout";
-import { Button } from "@/components/button";
 import fetchData from "@/utils/fetch";
-import Select from "react-select";
+import { Box, Flex, Link, Text, useBoolean } from "@chakra-ui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Head from "next/head";
+import LinkNext from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import Select from "react-select";
+import { toast } from "react-toastify";
+import * as yup from "yup";
 
 const schema = yup.object().shape({
   name: yup.string().required("Por favor, digite seu nome."),
@@ -106,7 +106,7 @@ const Signup = () => {
           placeholder="Digite seu nome"
           error={errors.name?.message}
           color="#000"
-          _focusVisible={{ borderColor: "#FFD000" }}
+          _focusVisible={{ borderColor: "primary.100" }}
           {...register("name")}
         />
 
@@ -115,7 +115,7 @@ const Signup = () => {
           placeholder="Digite seu e-mail"
           error={errors.email?.message}
           color="#000"
-          _focusVisible={{ borderColor: "#FFD000" }}
+          _focusVisible={{ borderColor: "primary.100" }}
           {...register("email")}
         />
 
@@ -129,7 +129,7 @@ const Signup = () => {
             colors: {
               ...theme.colors,
               text: "orangered",
-              primary25: "#FFD000",
+              primary25: "primary.100",
               primary: "black",
             },
           })}
@@ -165,7 +165,7 @@ const Signup = () => {
           type="password"
           error={errors.password?.message}
           color="#000"
-          _focusVisible={{ borderColor: "#FFD000" }}
+          _focusVisible={{ borderColor: "primary.100" }}
           {...register("password")}
         />
 
@@ -175,13 +175,13 @@ const Signup = () => {
           type="password"
           error={errors.passwordConfirmation?.message}
           color="#000"
-          _focusVisible={{ borderColor: "#FFD000" }}
+          _focusVisible={{ borderColor: "primary.100" }}
           {...register("passwordConfirmation")}
         />
 
         <Button
           type="submit"
-          style={{ background: "#FFD000", color: "#000" }}
+          variant="primary"
           title="Cadastrar"
           disabled={isLoading}
           isLoading={isLoading}

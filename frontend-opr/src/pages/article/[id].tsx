@@ -1,30 +1,29 @@
-import Head from "next/head";
+import { Input } from "@/components/input";
 import { LayoutSigned } from "@/components/layout";
+import authRoute from "@/utils/auth";
+import { base64toBlob } from "@/utils/base-64";
 import {
+  Button,
+  Divider,
   Flex,
-  useBoolean,
   Text,
   Textarea,
-  Divider,
-  Button,
+  useBoolean,
 } from "@chakra-ui/react";
-import { Input } from "@/components/input";
-import authRoute from "@/utils/auth";
-import fetchData from "utils/fetch";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { base64toBlob } from "@/utils/base-64";
-import { useDropzone } from "react-dropzone";
-import { useAuth } from "context";
 import {
+  ArticleProps as GlobalArticleProps,
+  ArticleReviewerProps as GlobalArticleReviewerProps,
+  ArticleReviewProps,
   EventProps,
   UserProps,
-  ArticleProps as GlobalArticleProps,
-  ArticleReviewProps,
-  ArticleReviewerProps as GlobalArticleReviewerProps,
 } from "common/types";
-import Router from "next/router";
+import { useAuth } from "context";
+import Head from "next/head";
+import Router, { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { toast } from "react-toastify";
+import fetchData from "utils/fetch";
 
 type ArticleReviewerProps = GlobalArticleReviewerProps & {
   reviewer: UserProps;
@@ -174,7 +173,7 @@ const LoadArticleById = () => {
           </Text>
         </Flex>
       ) : (
-        <Flex as="form" width="80%" padding="1rem" direction="column">
+        <Flex as="form" direction="column" w="full">
           <Flex align="flex-start" direction="column">
             <Text
               width="100%"
@@ -196,7 +195,7 @@ const LoadArticleById = () => {
                 <Input
                   name="title"
                   label="Títutlo"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={article?.name}
                   readOnly
                   disabled
@@ -213,7 +212,7 @@ const LoadArticleById = () => {
                   name="event_name"
                   label="Evento submetido"
                   defaultValue={article?.event?.name}
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   readOnly
                   disabled
                 />
@@ -237,7 +236,7 @@ const LoadArticleById = () => {
                 </Text>
                 <Textarea
                   resize="none"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={article?.description}
                   readOnly
                   disabled
@@ -288,7 +287,7 @@ const LoadArticleById = () => {
                 minW="13.75rem"
               >
                 <Button
-                  style={{ background: "#FFD000", color: "#000" }}
+                  variant="primary"
                   title="Visualizar artigo"
                   onClick={handlePrintPdf}
                 >
@@ -303,7 +302,7 @@ const LoadArticleById = () => {
                 minW="13.75rem"
               >
                 <Button
-                  style={{ background: "#FFD000", color: "#000" }}
+                  variant="primary"
                   title="Baixar artigo"
                   onClick={handleDonwloadPdf}
                 >
@@ -319,7 +318,7 @@ const LoadArticleById = () => {
                   minW="13.75rem"
                 >
                   <Button
-                    style={{ background: "#FFD000", color: "#000" }}
+                    variant="primary"
                     title="Atualizar artigo"
                     onClick={handleUpdateArticle}
                   >
@@ -351,7 +350,7 @@ const LoadArticleById = () => {
                 <Input
                   name="name"
                   label="Nome"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={article?.creator?.name}
                   readOnly
                   disabled
@@ -368,7 +367,7 @@ const LoadArticleById = () => {
                   name="email"
                   label="E-mail"
                   defaultValue={article?.creator?.email}
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   readOnly
                   disabled
                 />
@@ -406,7 +405,7 @@ const LoadArticleById = () => {
                       <Input
                         name="name"
                         label="Nome"
-                        _focusVisible={{ borderColor: "#FFD000" }}
+                        _focusVisible={{ borderColor: "primary.100" }}
                         defaultValue={reviewer.reviewer.name}
                         readOnly
                         disabled
@@ -423,7 +422,7 @@ const LoadArticleById = () => {
                         name="e-mail"
                         label="E-mail"
                         defaultValue={reviewer.reviewer.email}
-                        _focusVisible={{ borderColor: "#FFD000" }}
+                        _focusVisible={{ borderColor: "primary.100" }}
                         readOnly
                         disabled
                       />
@@ -455,46 +454,48 @@ const LoadArticleById = () => {
                   .sort((first, second) => second.id - first.id)
                   .map((reviewer) => (
                     <Flex
-                      justify="flex-start"
+                      justify="space-between"
                       wrap="wrap"
                       w="100%"
                       mb="0.3125rem"
                       key={reviewer.id}
                       min-height="8rem"
                     >
-                      <Flex
-                        flex={0.3}
-                        direction="column"
-                        mr={{ base: "0", sm: "1rem" }}
-                        minW="13.75rem"
-                      >
-                        <Input
-                          name="name"
-                          label="Revisor"
-                          _focusVisible={{ borderColor: "#FFD000" }}
-                          defaultValue={reviewer.reviewerName}
-                          readOnly
-                          disabled
-                        />
+                      <Flex>
+                        <Flex
+                          flex={0.3}
+                          direction="column"
+                          mr={{ base: "0", sm: "1rem" }}
+                          minW="13.75rem"
+                        >
+                          <Input
+                            name="name"
+                            label="Revisor"
+                            _focusVisible={{ borderColor: "primary.100" }}
+                            defaultValue={reviewer.reviewerName}
+                            readOnly
+                            disabled
+                          />
+                        </Flex>
+
+                        <Flex
+                          flex={0.3}
+                          direction="column"
+                          mr={{ base: "0", sm: "1rem" }}
+                          minW="13.75rem"
+                        >
+                          <Input
+                            name="date"
+                            label="Data da revisão"
+                            _focusVisible={{ borderColor: "primary.100" }}
+                            defaultValue={reviewer.createdAt.split("T")[0]}
+                            readOnly
+                            disabled
+                          />
+                        </Flex>
                       </Flex>
 
-                      <Flex
-                        flex={0.3}
-                        direction="column"
-                        mr={{ base: "0", sm: "1rem" }}
-                        minW="13.75rem"
-                      >
-                        <Input
-                          name="date"
-                          label="Data da revisão"
-                          _focusVisible={{ borderColor: "#FFD000" }}
-                          defaultValue={reviewer.createdAt.split("T")[0]}
-                          readOnly
-                          disabled
-                        />
-                      </Flex>
-
-                      <Flex
+                      {/* <Flex
                         flex={0.3}
                         direction="column"
                         mr={{ base: "0", sm: "1rem" }}
@@ -512,47 +513,52 @@ const LoadArticleById = () => {
                           resize="none"
                           name="comments"
                           defaultValue={reviewer.comments}
-                          _focusVisible={{ borderColor: "#FFD000" }}
+                          _focusVisible={{ borderColor: "primary.100" }}
                           readOnly
                         />
-                      </Flex>
+                      </Flex> */}
 
-                      <Flex
-                        flex={0.1}
-                        direction="column"
-                        mr={{ base: "0", sm: "1rem" }}
-                        minW="13.75rem"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <Button
-                          style={{ background: "#FFD000", color: "#000" }}
-                          title="Visualizar revisão"
-                          onClick={() =>
-                            handleReviewerPdf(reviewer.originalFile)
-                          }
-                          disabled={!reviewer.originalFile}
+                      <Flex>
+                        <Flex
+                          flex={0.1}
+                          direction="column"
+                          mr={{ base: "0", sm: "1rem" }}
+                          minW="13.75rem"
+                          alignItems="center"
+                          justifyContent="center"
                         >
-                          Visualizar artigo original
-                        </Button>
-                      </Flex>
+                          <Button
+                            variant="primary"
+                            title="Visualizar revisão"
+                            onClick={() =>
+                              handleReviewerPdf(reviewer.originalFile)
+                            }
+                            disabled={!reviewer.originalFile}
+                          >
+                            Visualizar artigo original
+                          </Button>
+                        </Flex>
 
-                      <Flex
-                        flex={0.1}
-                        direction="column"
-                        mr={{ base: "0", sm: "1rem" }}
-                        minW="13.75rem"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <Button
-                          style={{ background: "#FFD000", color: "#000" }}
-                          title="Visualizar revisão"
-                          onClick={() => handleReviewerPdf(reviewer.file)}
-                          disabled={!reviewer.file}
+                        <Flex
+                          flex={0.1}
+                          direction="column"
+                          mr={{ base: "0", sm: "1rem" }}
+                          minW="13.75rem"
+                          alignItems="center"
+                          justifyContent="center"
                         >
-                          Visualizar revisão
-                        </Button>
+                          <Button
+                            variant="primary"
+                            title="Visualizar revisão"
+                            onClick={() =>
+                              router.push(`/review/${reviewer.id}`)
+                            }
+                            // onClick={() => handleReviewerPdf(reviewer.file)}
+                            disabled={!reviewer.file}
+                          >
+                            Visualizar revisão
+                          </Button>
+                        </Flex>
                       </Flex>
                     </Flex>
                   ))
@@ -570,4 +576,3 @@ const LoadArticleById = () => {
 };
 
 export default authRoute(LoadArticleById);
-

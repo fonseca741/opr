@@ -1,16 +1,16 @@
-import { SubmitHandler, useForm } from "react-hook-form";
-import Head from "next/head";
-import * as yup from "yup";
-import { toast } from "react-toastify";
-import LinkNext from "next/link";
-import { useRouter } from "next/navigation";
-import { Flex, Link, useBoolean } from "@chakra-ui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { LayoutDefault } from "@/components/layout";
-import { Button } from "@/components/button";
-import fetchData from "utils/fetch";
+import { Flex, Link, useBoolean } from "@chakra-ui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "context";
+import Head from "next/head";
+import LinkNext from "next/link";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import fetchData from "utils/fetch";
+import * as yup from "yup";
 
 const schema = yup.object().shape({
   email: yup
@@ -74,7 +74,7 @@ const Login = () => {
           label="E-mail"
           placeholder="Digite seu e-mail"
           color="#000"
-          _focusVisible={{ borderColor: "#FFD000" }}
+          _focusVisible={{ borderColor: "primary.100" }}
           error={errors.email?.message}
           {...register("email")}
         />
@@ -84,14 +84,14 @@ const Login = () => {
           placeholder="Digite sua senha"
           type="password"
           color="#000"
-          _focusVisible={{ borderColor: "#FFD000" }}
+          _focusVisible={{ borderColor: "primary.100" }}
           error={errors.password?.message}
           {...register("password")}
         />
 
         <Button
           type="submit"
-          style={{ background: "#FFD000", color: "#000" }}
+          variant="primary"
           title="Entrar"
           disabled={isLoading}
           isLoading={isLoading}

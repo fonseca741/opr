@@ -1,17 +1,17 @@
-import Head from "next/head";
-import { LayoutSigned } from "@/components/layout";
-import fetchData from "utils/fetch";
-import { useEffect, useState } from "react";
-import { Button, Flex, Text, useBoolean } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import { Input } from "@/components/input";
-import { useAuth } from "context";
+import { LayoutSigned } from "@/components/layout";
 import authRoute from "@/utils/auth";
+import { Button, Flex, Text, useBoolean } from "@chakra-ui/react";
 import {
   ArticleProps,
   EventArticleProps as GlobalEventArticleProps,
 } from "common/types";
+import { useAuth } from "context";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import fetchData from "utils/fetch";
 
 type EventReviewsProps = GlobalEventArticleProps & {
   id: number;
@@ -103,7 +103,7 @@ const Reviews = () => {
                       <Input
                         name="title"
                         label="Título do artigo"
-                        _focusVisible={{ borderColor: "#FFD000" }}
+                        _focusVisible={{ borderColor: "primary.100" }}
                         defaultValue={article.article.name}
                         readOnly
                         disabled
@@ -119,7 +119,7 @@ const Reviews = () => {
                       <Input
                         name="date"
                         label="Data da submissão"
-                        _focusVisible={{ borderColor: "#FFD000" }}
+                        _focusVisible={{ borderColor: "primary.100" }}
                         defaultValue={article.createdAt.split("T")[0]}
                         readOnly
                         disabled
@@ -134,7 +134,7 @@ const Reviews = () => {
                       justifyContent="center"
                     >
                       <Button
-                        style={{ background: "#FFD000", color: "#000" }}
+                        variant="primary"
                         title="   Visualizar arquivo"
                         onClick={() =>
                           router.replace(`/article/${article.article.id}`)
@@ -153,7 +153,7 @@ const Reviews = () => {
                       justifyContent="center"
                     >
                       <Button
-                        style={{ background: "#FFD000", color: "#000" }}
+                        variant="primary"
                         title="Revisar artigo"
                         onClick={() =>
                           router.replace(

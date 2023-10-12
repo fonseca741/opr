@@ -1,5 +1,5 @@
-import "react-toastify/dist/ReactToastify.css";
 import { extendTheme } from "@chakra-ui/react";
+import "react-toastify/dist/ReactToastify.css";
 
 const globalStyles = {
   body: {
@@ -11,23 +11,23 @@ const globalStyles = {
 
 const customTheme = {
   components: {
-    Button: { baseStyle: { _focus: { boxShadow: "none" } } },
+    Button: {
+      variants: {
+        primary: {
+          backgroundColor: "primary.100",
+          color: "#000",
+          _hover: { backgroundColor: "primary.200" },
+        },
+      },
+    },
   },
   colors: {
     gradientBackground:
       "linear-gradient(90.86deg, #0C64D3 4.45%, #2A89FF 101.58%)",
     primary: {
-      "10": "#0D71F010",
-      "50": "#F2F8FF",
-      "100": "#CDE2FC",
-      "200": "#9CC5FA",
-      "300": "#66A9FF",
-      "400": "#3C8DF4",
-      "500": "#0D71F0",
-      "600": "#0A5AC0",
-      "700": "#0950A9",
-      "800": "#052D5F",
-      "900": "#03162E",
+      "50": "#fff2b8",
+      "100": "#FFD000",
+      "200": "#ECC100",
     },
     secondary: {
       "50": "#FFF3E6",

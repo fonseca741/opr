@@ -1,25 +1,25 @@
-import Head from "next/head";
+import { Input, InputError } from "@/components/input";
 import { LayoutSigned } from "@/components/layout";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
-import * as yup from "yup";
+import authRoute from "@/utils/auth";
 import {
-  Flex,
+  Box,
   Button,
-  useBoolean,
+  Flex,
   Text,
   Textarea,
-  Box,
+  useBoolean,
 } from "@chakra-ui/react";
-import { Input, InputError } from "@/components/input";
-import authRoute from "@/utils/auth";
-import { useAuth } from "context";
-import fetchData from "utils/fetch";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/router";
-import Select from "react-select";
-import { useEffect, useState } from "react";
 import { UserProps } from "common/types/user";
+import { useAuth } from "context";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import Select from "react-select";
+import { toast } from "react-toastify";
+import fetchData from "utils/fetch";
+import * as yup from "yup";
 
 const schema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório"),
@@ -164,7 +164,7 @@ const CreateEvent = () => {
               <Input
                 label="Nome"
                 placeholder="Digite o nome do evento"
-                _focusVisible={{ borderColor: "#FFD000" }}
+                _focusVisible={{ borderColor: "primary.100" }}
                 error={errors.name?.message}
                 {...register("name")}
               />
@@ -179,7 +179,7 @@ const CreateEvent = () => {
               <Input
                 type="date"
                 label="Data inicial"
-                _focusVisible={{ borderColor: "#FFD000" }}
+                _focusVisible={{ borderColor: "primary.100" }}
                 error={errors.initial_date?.message}
                 {...register("initial_date")}
               />
@@ -194,7 +194,7 @@ const CreateEvent = () => {
               <Input
                 type="date"
                 label="Data final"
-                _focusVisible={{ borderColor: "#FFD000" }}
+                _focusVisible={{ borderColor: "primary.100" }}
                 error={errors.final_date?.message}
                 {...register("final_date")}
               />
@@ -219,7 +219,7 @@ const CreateEvent = () => {
               <Textarea
                 resize="none"
                 placeholder="Digite a descrição do evento"
-                _focusVisible={{ borderColor: "#FFD000" }}
+                _focusVisible={{ borderColor: "primary.100" }}
                 {...register("description")}
               />
               {errors.description?.message ? (
@@ -244,7 +244,7 @@ const CreateEvent = () => {
             <Textarea
               resize="none"
               placeholder="Digite perguntas padrões ou observações para os revisores do evento"
-              _focusVisible={{ borderColor: "#FFD000" }}
+              _focusVisible={{ borderColor: "primary.100" }}
               {...register("questions")}
             />
             {errors.questions?.message ? (
@@ -273,7 +273,7 @@ const CreateEvent = () => {
                 colors: {
                   ...theme.colors,
                   text: "orangered",
-                  primary25: "#FFD000",
+                  primary25: "primary.100",
                   primary: "black",
                 },
               })}
@@ -308,7 +308,7 @@ const CreateEvent = () => {
             type="submit"
             disabled={isLoading}
             isLoading={isLoading}
-            style={{ background: "#FFD000", color: "#000" }}
+            variant="primary"
             title="Criar evento"
           >
             Criar evento

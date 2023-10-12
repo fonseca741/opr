@@ -1,6 +1,6 @@
-import React from "react";
 import { Flex } from "@chakra-ui/react";
 import { Header } from "components/header";
+import React from "react";
 
 type LayoutSignedProps = {
   children: React.ReactNode;
@@ -8,13 +8,17 @@ type LayoutSignedProps = {
 
 const LayoutSigned = ({ children }: LayoutSignedProps) => {
   return (
-    <Flex>
-      <Flex direction="row" width="100%">
-        <Flex direction="column" width="100%">
-          <Header />
-          <Flex marginStart="0rem" justify="center">
-            {children}
-          </Flex>
+    <Flex direction="column" width="100%">
+      <Header />
+      <Flex justify="center">
+        <Flex
+          marginStart="0rem"
+          justify="center"
+          borderRadius="1rem"
+          maxW="100rem"
+          w="80%"
+        >
+          {children}
         </Flex>
       </Flex>
     </Flex>

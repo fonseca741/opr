@@ -1,22 +1,22 @@
-import Head from "next/head";
 import { LayoutSigned } from "@/components/layout";
-import fetchData from "utils/fetch";
-import { useEffect, useState } from "react";
-import { Box, Button, Flex, Text, useBoolean } from "@chakra-ui/react";
-import { formattStringToDots } from "../utils";
-import { toast } from "react-toastify";
-import { useRouter } from "next/router";
-import { useAuth } from "context";
 import authRoute from "@/utils/auth";
+import { Box, Button, Flex, Text, useBoolean } from "@chakra-ui/react";
 import {
-  UserProps,
-  EventProps,
   ArticleProps as GlobalArticleProps,
+  EventProps,
+  UserProps,
 } from "common/types";
+import { useAuth } from "context";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { GrDocumentText } from "react-icons/gr";
-import { FiUser } from "react-icons/fi";
 import { BsCalendar3Event } from "react-icons/bs";
+import { FiUser } from "react-icons/fi";
+import { GrDocumentText } from "react-icons/gr";
+import { toast } from "react-toastify";
+import fetchData from "utils/fetch";
+import { formattStringToDots } from "../utils";
 
 type ArticleProps = GlobalArticleProps & {
   creator: UserProps;
@@ -68,7 +68,7 @@ const Article = () => {
           {["admin", "author"].includes(user.role) && (
             <Button
               style={{
-                background: "#FFD000",
+                background: "primary.100",
                 color: "#000",
                 marginBottom: "1rem",
                 marginTop: "1rem",
@@ -96,18 +96,16 @@ const Article = () => {
                   height="200px"
                   borderRadius="4px"
                   padding="1rem"
-                  cursor="pointer"
                   backgroundColor="#fff"
-                  _hover={{ border: "2px solid #FFD000" }}
+                  _hover={{ border: "2px solid primary.100" }}
                 >
                   <Flex
                     width="300px"
                     height="60px"
-                    backgroundColor="#FFD000"
+                    backgroundColor="primary.100"
                     marginTop="-25px"
                     marginLeft="-35px"
                     borderRadius="4px"
-                    cursor="pointer"
                     alignItems="center"
                     justifyContent="center"
                   >
@@ -188,7 +186,7 @@ const Article = () => {
                   <Flex justifyContent="end" marginTop="-40px">
                     <Button
                       borderRadius="4px"
-                      style={{ background: "#FFD000", color: "#000" }}
+                      variant="primary"
                       title="Ver detalhes"
                       onClick={() => router.replace(`article/${article.id}`)}
                     >

@@ -1,20 +1,20 @@
-import React, { memo } from "react";
 import {
+  Avatar,
+  Center,
+  Flex,
+  Link,
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
-  MenuOptionGroup,
   MenuDivider,
+  MenuItem,
+  MenuList,
+  MenuOptionGroup,
   Tooltip,
-  Flex,
-  Center,
-  Link,
-  Avatar,
 } from "@chakra-ui/react";
-import LinkNext from "next/link";
 import { ChevronDown } from "assets/icons";
 import { useAuth } from "context";
+import LinkNext from "next/link";
+import { memo } from "react";
 
 const AvatarIcon = () => {
   const { user, logout } = useAuth();
@@ -28,7 +28,7 @@ const AvatarIcon = () => {
               <Avatar
                 name={user?.name}
                 bg="#000"
-                color="#FFD000"
+                color="primary.100"
                 border="0.125rem solid #000"
                 width="2.35rem"
                 height="2.35rem"

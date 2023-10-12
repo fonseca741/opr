@@ -1,7 +1,7 @@
-import Head from "next/head";
-import { Flex, Box, Text } from "@chakra-ui/react";
 import { LayoutSigned } from "@/components/layout";
 import authRoute from "@/utils/auth";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import Head from "next/head";
 
 const Home = () => (
   <LayoutSigned>

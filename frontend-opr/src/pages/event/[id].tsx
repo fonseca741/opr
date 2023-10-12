@@ -1,28 +1,28 @@
-import Head from "next/head";
+import { Input } from "@/components/input";
 import { LayoutSigned } from "@/components/layout";
+import authRoute from "@/utils/auth";
+import { formattStringToDots } from "@/utils/formatt";
 import {
+  Button,
+  Divider,
   Flex,
-  useBoolean,
   Text,
   Textarea,
-  Divider,
-  Button,
+  useBoolean,
 } from "@chakra-ui/react";
-import { Input } from "@/components/input";
-import authRoute from "@/utils/auth";
-import { useAuth } from "context";
-import fetchData from "utils/fetch";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { formattStringToDots } from "@/utils/formatt";
-import { toast } from "react-toastify";
 import {
-  UserProps,
   ArticleProps as GlobalArticleProps,
+  EventArticleProps as GlobalEventArticleProps,
   EventProps as GlobalEventProps,
   EventReviewerProps as GlobalEventReviewerProps,
-  EventArticleProps as GlobalEventArticleProps,
+  UserProps,
 } from "common/types";
+import { useAuth } from "context";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import fetchData from "utils/fetch";
 
 type EventReviewerPros = GlobalEventReviewerProps & {
   reviewer: UserProps;
@@ -84,7 +84,7 @@ const LoadEventById = () => {
           </Text>
         </Flex>
       ) : (
-        <Flex as="form" width="80%" padding="1rem" direction="column">
+        <Flex as="form" direction="column">
           <Flex align="flex-start" direction="column">
             <Text
               width="100%"
@@ -106,7 +106,7 @@ const LoadEventById = () => {
                 <Input
                   name="name"
                   label="Nome"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={event?.name}
                   readOnly
                   disabled
@@ -128,7 +128,7 @@ const LoadEventById = () => {
                       .toLocaleDateString("pt-BR")
                       .toString()
                   }
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   readOnly
                   disabled
                 />
@@ -149,7 +149,7 @@ const LoadEventById = () => {
                       .toLocaleDateString("pt-BR")
                       .toString()
                   }
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   readOnly
                   disabled
                 />
@@ -173,7 +173,7 @@ const LoadEventById = () => {
                 </Text>
                 <Textarea
                   resize="none"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={event?.description}
                   readOnly
                   disabled
@@ -198,7 +198,7 @@ const LoadEventById = () => {
                 </Text>
                 <Textarea
                   resize="none"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={event?.creatorInfos}
                   readOnly
                   disabled
@@ -237,7 +237,7 @@ const LoadEventById = () => {
                       <Input
                         name="name"
                         label="Nome"
-                        _focusVisible={{ borderColor: "#FFD000" }}
+                        _focusVisible={{ borderColor: "primary.100" }}
                         defaultValue={reviewer.reviewer.name}
                         readOnly
                         disabled
@@ -254,7 +254,7 @@ const LoadEventById = () => {
                         name="email"
                         label="E-mail"
                         defaultValue={reviewer.reviewer.email}
-                        _focusVisible={{ borderColor: "#FFD000" }}
+                        _focusVisible={{ borderColor: "primary.100" }}
                         readOnly
                         disabled
                       />
@@ -299,7 +299,7 @@ const LoadEventById = () => {
                       <Input
                         name="name"
                         label="Nome"
-                        _focusVisible={{ borderColor: "#FFD000" }}
+                        _focusVisible={{ borderColor: "primary.100" }}
                         defaultValue={article.article.name}
                         readOnly
                         disabled
@@ -319,7 +319,7 @@ const LoadEventById = () => {
                           article.article.description,
                           30
                         )}
-                        _focusVisible={{ borderColor: "#FFD000" }}
+                        _focusVisible={{ borderColor: "primary.100" }}
                         readOnly
                         disabled
                       />
@@ -334,7 +334,7 @@ const LoadEventById = () => {
                       justifyContent="center"
                     >
                       <Button
-                        style={{ background: "#FFD000", color: "#000" }}
+                        variant="primary"
                         title="Ver detalhes"
                         onClick={() =>
                           router.replace(`/article/${article.article.id}`)
@@ -356,7 +356,7 @@ const LoadEventById = () => {
                         justifyContent="center"
                       >
                         <Button
-                          style={{ background: "#FFD000", color: "#000" }}
+                          variant="primary"
                           title="Revisar artigo"
                           onClick={() => {
                             const currentReviewerId =
@@ -405,7 +405,7 @@ const LoadEventById = () => {
                 <Input
                   name="name"
                   label="Nome"
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   defaultValue={event?.creator?.name}
                   readOnly
                   disabled
@@ -422,7 +422,7 @@ const LoadEventById = () => {
                   name="email"
                   label="E-mail"
                   defaultValue={event?.creator?.email}
-                  _focusVisible={{ borderColor: "#FFD000" }}
+                  _focusVisible={{ borderColor: "primary.100" }}
                   readOnly
                   disabled
                 />
