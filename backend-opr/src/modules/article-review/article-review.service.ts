@@ -1,10 +1,11 @@
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   ArticleReview,
+  ArticleReviewDiscussion,
   ArticleReviewer,
 } from 'src/databases/postgres/entities';
+import { Repository } from 'typeorm';
 import { ArticleReviewDto } from './dto';
 
 @Injectable()
@@ -14,6 +15,8 @@ export class ArticleReviewService {
     private readonly repository: Repository<ArticleReview>,
     @InjectRepository(ArticleReviewer)
     private readonly articleReviewer: Repository<ArticleReviewer>,
+    @InjectRepository(ArticleReviewDiscussion)
+    private readonly articleReviewDiscussion: Repository<ArticleReviewDiscussion>,
   ) {}
 
   async review(reviewArticleDto: ArticleReviewDto) {
@@ -34,11 +37,21 @@ export class ArticleReviewService {
       articleReviewId = hasArticleReviewer.id;
     }
 
-    await this.repository.save({
-      comments: reviewArticleDto.comments,
-      articleReview: articleReviewId,
-      file: reviewArticleDto.file,
-      originalFile: reviewArticleDto.originalFile,
-    });
+    try {
+      const review = await this.repository.save({
+        articleReviewer: articleReviewId,
+        file: reviewArticleDto.file,
+        originalFile: reviewArticleDto.originalFile,
+      });
+
+      console.log(review);
+      await this.articleReviewDiscussion.save({
+        articleReview: review.id,
+        value: reviewArticleDto.discussion.value,
+        isReviwer: reviewArticleDto.discussion.isReviwer,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 }

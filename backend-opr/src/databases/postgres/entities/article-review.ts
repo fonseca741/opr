@@ -1,11 +1,13 @@
 import {
-  Entity,
-  CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryGeneratedColumn,
-  ManyToOne,
   Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import { ArticleReviewDiscussion } from './article-review-discussion';
 import { ArticleReviewer } from './index';
 
 @Entity()
@@ -17,7 +19,7 @@ export class ArticleReview {
     () => ArticleReviewer,
     (articleReviewer) => articleReviewer.articleReview,
   )
-  articleReview: any;
+  articleReviewer: any;
 
   @Column()
   file: string;
@@ -25,8 +27,11 @@ export class ArticleReview {
   @Column()
   originalFile: string;
 
-  @Column()
-  comments: string;
+  @OneToMany(
+    () => ArticleReviewDiscussion,
+    (articleReviewDiscussion) => articleReviewDiscussion.articleReview,
+  )
+  articleDiscussions: ArticleReviewDiscussion[];
 
   @CreateDateColumn()
   createdAt: Date;

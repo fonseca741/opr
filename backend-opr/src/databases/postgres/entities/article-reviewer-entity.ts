@@ -1,12 +1,12 @@
 import {
-  Entity,
   CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryGeneratedColumn,
+  Entity,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { User, Article, ArticleReview } from './index';
+import { Article, ArticleReview, User } from './index';
 
 @Entity()
 export class ArticleReviewer {
@@ -27,7 +27,7 @@ export class ArticleReviewer {
 
   @OneToMany(
     () => ArticleReview,
-    (articleReview) => articleReview.articleReview,
+    (articleReview) => articleReview.articleReviewer,
   )
   articleReview: ArticleReview;
 }

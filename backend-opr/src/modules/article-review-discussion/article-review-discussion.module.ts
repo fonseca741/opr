@@ -6,8 +6,6 @@ import {
   ArticleReviewer,
 } from 'src/databases/postgres/entities/index';
 import { AuthModule } from 'src/modules/auth/auth.module';
-import { ArticleReviewController } from './article-review.controller';
-import { ArticleReviewService } from './article-review.service';
 
 @Module({
   imports: [
@@ -18,7 +16,5 @@ import { ArticleReviewService } from './article-review.service';
       ArticleReviewDiscussion,
     ]),
   ],
-  controllers: [ArticleReviewController],
-  providers: [ArticleReviewService],
 })
-export class ArticleReviewModule {}
+export class ArticleReviewDiscussionModule {}

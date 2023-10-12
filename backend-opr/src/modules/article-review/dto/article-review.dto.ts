@@ -1,10 +1,7 @@
-import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { CreateArticleReviewDiscussionDto } from 'src/modules/article-review-discussion/dto/article-review-discussion.dto';
 
 export class ArticleReviewDto {
-  @IsString()
-  @IsNotEmpty()
-  comments: string;
-
   @IsNumber()
   @IsNotEmpty()
   articleId: number;
@@ -20,4 +17,7 @@ export class ArticleReviewDto {
   @IsString()
   @IsNotEmpty()
   originalFile: string;
+
+  @IsNotEmpty()
+  discussion: CreateArticleReviewDiscussionDto;
 }

@@ -1,13 +1,13 @@
 import {
-  Entity,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryGeneratedColumn,
+  Entity,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { ArticleReviewer, EventArticles, User, Event } from './index';
+import { ArticleReviewer, Event, EventArticles, User } from './index';
 
 @Entity()
 export class Article {
@@ -42,5 +42,5 @@ export class Article {
     () => ArticleReviewer,
     (articleReviewer) => articleReviewer.article,
   )
-  articleReviewer: ArticleReviewer;
+  articleReviewer: ArticleReviewer[];
 }

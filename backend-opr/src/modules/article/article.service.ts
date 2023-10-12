@@ -1,4 +1,3 @@
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -6,6 +5,7 @@ import {
   ArticleReviewer,
   EventArticles,
 } from 'src/databases/postgres/entities';
+import { Repository } from 'typeorm';
 import { CreateArticleDto, UpdateArticleDto } from './dto';
 
 @Injectable()
@@ -60,6 +60,7 @@ export class ArticleService {
         'articleReviewer',
         'articleReviewer.reviewer',
         'articleReviewer.articleReview',
+        'articleReviewer.articleReview.articleDiscussions',
       ],
     });
   }

@@ -1,21 +1,23 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'src/config/env';
-import { AppController } from './app.controller';
-import { UserModule } from 'src/modules/user/user.module';
-import { AuthModule } from 'src/modules/auth/auth.module';
-import { EventModule } from 'src/modules/event/event.module';
-import { ArticleModule } from 'src/modules/article/article.module';
-import { ArticleReviewModule } from 'src/modules/article-review/article-review.module';
 import {
-  User,
   Article,
-  Event,
-  ArticleReviewer,
   ArticleReview,
+  ArticleReviewDiscussion,
+  ArticleReviewer,
+  Event,
   EventArticles,
   EventReviewers,
+  User,
 } from 'src/databases/postgres/entities';
+import { ArticleReviewModule } from 'src/modules/article-review/article-review.module';
+import { ArticleModule } from 'src/modules/article/article.module';
+import { AuthModule } from 'src/modules/auth/auth.module';
+import { EventModule } from 'src/modules/event/event.module';
+import { UserModule } from 'src/modules/user/user.module';
+import { ArticleReviewDiscussionModule } from '../article-review-discussion/article-review-discussion.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -26,7 +28,7 @@ import {
       username: config.database.username,
       password: config.database.password,
       database: config.database.database,
-      ssl: true,
+      ssl: false,
       entities: [
         User,
         Article,
@@ -35,6 +37,7 @@ import {
         Event,
         EventArticles,
         EventReviewers,
+        ArticleReviewDiscussion,
       ],
       synchronize: true,
     }),
@@ -43,6 +46,7 @@ import {
     EventModule,
     ArticleModule,
     ArticleReviewModule,
+    ArticleReviewDiscussionModule,
   ],
   controllers: [AppController],
 })

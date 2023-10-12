@@ -11,6 +11,6 @@ export class ArticleReviewController {
   @UseGuards(AuthGuard)
   @SetMetadata('roles', ['admin', 'reviewer'])
   async reviewArticle(@Body() reviewArticleDto: ArticleReviewDto) {
-    await this.articleReviewService.review(reviewArticleDto);
+    return await this.articleReviewService.review(reviewArticleDto);
   }
 }

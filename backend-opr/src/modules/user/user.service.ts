@@ -1,9 +1,9 @@
-import { sign } from 'jsonwebtoken';
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/databases/postgres/entities/user-entity';
+import { sign } from 'jsonwebtoken';
 import { config } from 'src/config/env';
+import { User } from 'src/databases/postgres/entities/user-entity';
+import { Repository } from 'typeorm';
 import { CreateUserDTO, LoginUserDTO, UpdateUserDTO } from './dto';
 
 @Injectable()
@@ -59,7 +59,7 @@ export class UserService {
         },
         config.auth.secret,
         {
-          expiresIn: config.auth.expiresIn,
+          expiresIn: 7200,
         },
       ),
     };
