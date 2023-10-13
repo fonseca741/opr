@@ -287,6 +287,7 @@ const LoadArticleById = () => {
                 minW="13.75rem"
               >
                 <Button
+                  marginBottom="10px"
                   variant="primary"
                   title="Visualizar artigo"
                   onClick={handlePrintPdf}
@@ -551,7 +552,9 @@ const LoadArticleById = () => {
                             variant="primary"
                             title="Visualizar revisão"
                             onClick={() =>
-                              router.push(`/review/${reviewer.id}`)
+                              router.push(
+                                `/review/show/${router.query.id}-${reviewer.id}`
+                              )
                             }
                             // onClick={() => handleReviewerPdf(reviewer.file)}
                             disabled={!reviewer.file}

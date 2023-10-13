@@ -64,15 +64,15 @@ const Article = () => {
           </Text>
         </Flex>
       ) : (
-        <Flex flexDirection="column" align="center" justify="center">
+        <Flex flexDirection="column" align="center">
           {["admin", "author"].includes(user.role) && (
             <Button
               style={{
-                background: "primary.100",
                 color: "#000",
                 marginBottom: "1rem",
                 marginTop: "1rem",
               }}
+              variant="primary"
               title="Criar artigo"
               onClick={() => router.replace("create-article")}
             >
@@ -98,6 +98,7 @@ const Article = () => {
                   padding="1rem"
                   backgroundColor="#fff"
                   _hover={{ border: "2px solid primary.100" }}
+                  boxShadow="0px 0px 10px rgba(0, 0, 0, 0.2)"
                 >
                   <Flex
                     width="300px"

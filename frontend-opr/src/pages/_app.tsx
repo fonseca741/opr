@@ -1,8 +1,8 @@
-import type { AppProps } from "next/app";
-import { ChakraProvider } from "@chakra-ui/react";
-import { ToastContainer } from "react-toastify";
-import { AuthProvider } from "context";
 import { theme } from "@/styles/index";
+import { ChakraProvider } from "@chakra-ui/react";
+import { AuthProvider } from "context";
+import type { AppProps } from "next/app";
+import { ToastContainer } from "react-toastify";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (

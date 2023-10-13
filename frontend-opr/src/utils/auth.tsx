@@ -2,7 +2,7 @@
 import { useAuth } from "context";
 import jwt from "jsonwebtoken";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const myRoutes: Record<string, string[]> = {
   "/": ["admin", "author", "publisher", "reviewer"],
@@ -14,6 +14,7 @@ const myRoutes: Record<string, string[]> = {
   "/create-article": ["admin", "author"],
   "/create-event": ["admin", "publisher"],
   "/review/[id]": ["admin", "reviewer"],
+  "/review/show/[id]": ["admin", "author", "publisher", "reviewer"],
   "/event/[id]": ["admin", "author", "publisher", "reviewer"],
   "/article/[id]": ["admin", "author", "publisher", "reviewer"],
 };

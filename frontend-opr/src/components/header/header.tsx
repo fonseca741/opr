@@ -16,7 +16,6 @@ const Header = () => {
       justifyContent="space-between"
       marginStart="0rem"
       background="primary.100"
-      marginBottom="3rem"
     >
       <Flex width="20rem" alignItems="center" justifyContent="flex-start">
         <AvatarIcon />

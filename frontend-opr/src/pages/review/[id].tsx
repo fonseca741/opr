@@ -121,7 +121,7 @@ const ReviewArticle = () => {
           originalFile: article?.file,
           discussion: {
             value: data.comments || "",
-            isReviwer: true,
+            isReviewer: true,
           },
         });
 
@@ -262,6 +262,7 @@ const ReviewArticle = () => {
                 minW="13.75rem"
               >
                 <Button
+                  marginBottom="10px"
                   variant="primary"
                   title="Visualizar artigo"
                   onClick={handlePrintPdf}

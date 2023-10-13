@@ -64,7 +64,7 @@ const Reviews = () => {
           </Text>
         </Flex>
       ) : (
-        <Flex flexDirection="column" align="center" justify="center">
+        <Flex flexDirection="column" align="center">
           <Text
             width="100%"
             textAlign="center"
