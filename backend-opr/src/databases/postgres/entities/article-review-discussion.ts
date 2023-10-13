@@ -16,7 +16,7 @@ export class ArticleReviewDiscussion {
   value: string;
 
   @Column()
-  isReviwer: boolean;
+  isReviewer: boolean;
 
   @CreateDateColumn()
   createdAt: Date;

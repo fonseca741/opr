@@ -44,14 +44,14 @@ export class ArticleReviewService {
         originalFile: reviewArticleDto.originalFile,
       });
 
-      console.log(review);
       await this.articleReviewDiscussion.save({
         articleReview: review.id,
         value: reviewArticleDto.discussion.value,
-        isReviwer: reviewArticleDto.discussion.isReviwer,
+        isReviewer: reviewArticleDto.discussion.isReviewer,
       });
     } catch (err) {
       console.log(err);
+      throw new Error('Error on save review');
     }
   }
 }

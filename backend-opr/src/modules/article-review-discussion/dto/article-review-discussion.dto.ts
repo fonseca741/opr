@@ -1,4 +1,10 @@
-import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateArticleReviewDiscussionDto {
   @IsString()
@@ -7,5 +13,9 @@ export class CreateArticleReviewDiscussionDto {
 
   @IsBoolean()
   @IsNotEmpty()
-  isReviwer: boolean;
+  isReviewer: boolean;
+
+  @IsNumber()
+  @IsOptional()
+  articleReviewId: number;
 }
