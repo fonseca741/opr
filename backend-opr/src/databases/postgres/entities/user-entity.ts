@@ -1,14 +1,15 @@
+import { compare, hash } from 'bcrypt';
 import {
-  Entity,
+  BeforeInsert,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryGeneratedColumn,
-  BeforeInsert,
+  Entity,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { hash, compare } from 'bcrypt';
-import { Event, EventReviewers, Article, ArticleReviewer } from './index';
+import { EventChairs } from './event-chairs-entity';
+import { Article, ArticleReviewer, Event, EventReviewers } from './index';
 
 @Entity()
 export class User {
@@ -54,6 +55,9 @@ export class User {
 
   @OneToMany(() => EventReviewers, (eventReviewers) => eventReviewers.reviewer)
   reviewerEvent: EventReviewers;
+
+  @OneToMany(() => EventChairs, (eventChairs) => eventChairs.chair)
+  chairsEvent: EventReviewers;
 
   @BeforeInsert()
   hashPassword = async () => {

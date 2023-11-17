@@ -73,7 +73,7 @@ const LoadArticleById = () => {
               return {
                 articleReview: articleReview.articleReview.map((review) => ({
                   reviewerName,
-                  comments: review.comments,
+                  articleDiscussions: review.articleDiscussions,
                   file: review.file,
                   createdAt: review.createdAt,
                   id: review.id,
@@ -462,9 +462,9 @@ const LoadArticleById = () => {
                       key={reviewer.id}
                       min-height="8rem"
                     >
-                      <Flex wrap="wrap">
+                      <Flex wrap="wrap" flex={1}>
                         <Flex
-                          flex={0.3}
+                          flex={0.2}
                           wrap="wrap"
                           direction="column"
                           mr={{ base: "0", sm: "1rem" }}
@@ -481,7 +481,7 @@ const LoadArticleById = () => {
                         </Flex>
 
                         <Flex
-                          flex={0.3}
+                          flex={0.2}
                           wrap="wrap"
                           direction="column"
                           mr={{ base: "0", sm: "1rem" }}
@@ -494,6 +494,24 @@ const LoadArticleById = () => {
                             defaultValue={reviewer.createdAt.split("T")[0]}
                             readOnly
                             disabled
+                          />
+                        </Flex>
+
+                        <Flex
+                          flex={0.6}
+                          direction="column"
+                          mr={{ base: "0", sm: "1rem" }}
+                          minW="13.75rem"
+                        >
+                          <Input
+                            name="comments"
+                            label="Preview da revisão"
+                            defaultValue={
+                              reviewer?.articleDiscussions[0]?.value
+                            }
+                            _focusVisible={{ borderColor: "primary.100" }}
+                            disabled
+                            readOnly
                           />
                         </Flex>
                       </Flex>
@@ -536,11 +554,10 @@ const LoadArticleById = () => {
                                 `/review/show/${router.query.id}-${reviewer.id}`
                               )
                             }
-                            // onClick={() => handleReviewerPdf(reviewer.file)}
                             disabled={!reviewer.file}
                             marginBottom="20px"
                           >
-                            Visualizar revisão
+                            Acessar revisão
                           </Button>
                         </Flex>
                       </Flex>

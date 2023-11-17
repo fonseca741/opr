@@ -1,13 +1,14 @@
 import {
-  Entity,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryGeneratedColumn,
+  Entity,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { User, EventReviewers, EventArticles } from './index';
+import { EventChairs } from './event-chairs-entity';
+import { EventArticles, EventReviewers, User } from './index';
 
 @Entity()
 export class Event {
@@ -40,6 +41,9 @@ export class Event {
 
   @OneToMany(() => EventReviewers, (eventReviewers) => eventReviewers.event)
   eventReviewers: EventReviewers;
+
+  @OneToMany(() => EventChairs, (eventChairs) => eventChairs.event)
+  eventChairs: EventChairs;
 
   @OneToMany(() => EventArticles, (eventArticles) => eventArticles.event)
   eventArticles: EventArticles;

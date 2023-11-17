@@ -58,11 +58,12 @@ const Event = () => {
           {["admin", "publisher"].includes(user.role) && (
             <Button
               style={{
-                background: "primary.100",
                 color: "#000",
                 marginBottom: "1rem",
                 marginTop: "1rem",
               }}
+              bgColor="primary.100"
+              _hover={{ backgroundColor: "primary.200" }}
               title="Criar evento"
               onClick={() => router.replace("create-event")}
             >

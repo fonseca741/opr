@@ -1,9 +1,9 @@
 import {
-  IsNotEmpty,
-  IsString,
-  IsNumber,
-  MinLength,
   IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  MinLength,
 } from 'class-validator';
 
 export class CreateEventDto {
@@ -32,6 +32,9 @@ export class CreateEventDto {
   @IsNotEmpty()
   @IsArray()
   reviewers: number[];
+
+  @IsArray()
+  chairs: number[];
 
   @IsString()
   creatorInfos: string;

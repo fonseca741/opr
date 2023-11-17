@@ -1,7 +1,11 @@
-import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Event, EventReviewers } from 'src/databases/postgres/entities';
+import {
+  Event,
+  EventChairs,
+  EventReviewers,
+} from 'src/databases/postgres/entities';
+import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
 
 @Injectable()
@@ -11,6 +15,8 @@ export class EventService {
     private readonly repository: Repository<Event>,
     @InjectRepository(EventReviewers)
     private readonly repositoryReviewers: Repository<EventReviewers>,
+    @InjectRepository(EventChairs)
+    private readonly repositoryChairs: Repository<EventChairs>,
   ) {}
 
   async create(createEventDto: CreateEventDto) {
@@ -20,6 +26,13 @@ export class EventService {
       await this.repositoryReviewers.save({
         event: event.id,
         reviewer,
+      });
+    }
+
+    for (const chair of createEventDto.chairs) {
+      await this.repositoryChairs.save({
+        event: event.id,
+        chair,
       });
     }
   }
@@ -43,6 +56,8 @@ export class EventService {
         'eventReviewers.reviewer',
         'eventArticles',
         'eventArticles.article',
+        'eventChairs',
+        'eventChairs.chair',
       ],
     });
   }

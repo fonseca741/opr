@@ -8,6 +8,7 @@ import {
   ArticleReviewer,
   Event,
   EventArticles,
+  EventChairs,
   EventReviewers,
   User,
 } from 'src/databases/postgres/entities';
@@ -38,6 +39,7 @@ import { AppController } from './app.controller';
         EventArticles,
         EventReviewers,
         ArticleReviewDiscussion,
+        EventChairs,
       ],
       synchronize: true,
     }),

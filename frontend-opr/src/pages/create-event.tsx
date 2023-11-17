@@ -54,24 +54,31 @@ const CreateEvent = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useBoolean(false);
   const [reviewers, setReviewers] = useState<SelectProps[]>([]);
+  const [users, setUsers] = useState<SelectProps[]>([]);
   const [selectedReviewers, setSelectedReviewers] = useState<SelectProps[]>([]);
+  const [selectedChairs, setSelectedChairs] = useState<SelectProps[]>([]);
 
   useEffect(() => {
     (async () => {
       try {
         const apiResponse = await fetchData("GET", "user/role/reviewer");
+        const apiResponseUsers = await fetchData("GET", "user");
         const formattedResponse = apiResponse.map((reviewer: UserProps) => ({
           value: reviewer.id,
           label: `${reviewer.name} - ${reviewer.email}`,
         }));
-        setReviewers(formattedResponse);
-      } catch (error) {
-        toast.error(
-          "Ocorreu um erro ao buscar os revisores, tente novamente!",
-          {
-            autoClose: 5000,
-          }
+        const formattedResponseUsers = apiResponseUsers.map(
+          (user: UserProps) => ({
+            value: user.id,
+            label: `${user.name} - ${user.email}`,
+          })
         );
+        setReviewers(formattedResponse);
+        setUsers(formattedResponseUsers);
+      } catch (error) {
+        toast.error("Ocorreu um erro ao buscar os usuários, tente novamente!", {
+          autoClose: 5000,
+        });
       }
     })();
   }, []);
@@ -79,6 +86,7 @@ const CreateEvent = () => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const formattedReviewers = selectedReviewers.flat(Infinity);
+      const formattedChairs = selectedChairs.flat(Infinity);
 
       if (formattedReviewers.length === 0) {
         toast.error("Selecione ao menos um revisor!", {
@@ -114,6 +122,7 @@ const CreateEvent = () => {
         startDate: data.initial_date,
         endDate: data.final_date,
         reviewers: formattedReviewers.map((reviewer) => reviewer.value),
+        chairs: formattedChairs.map((chair) => chair.value),
         creatorInfos: data.questions,
       });
       toast.success("Evento criado com sucesso!", {
@@ -292,6 +301,38 @@ const CreateEvent = () => {
             ) : (
               <Box h="1.625rem" />
             )}
+          </Flex>
+        </Flex>
+
+        <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
+          <Flex
+            flex={1}
+            direction="column"
+            mr={{ base: "0", sm: "1rem" }}
+            minW="13.75rem"
+          >
+            <Text fontSize="sm" mb="2px" alignItems="start" color="neutral.500">
+              Chairs do evento
+            </Text>
+
+            <Select
+              theme={(theme) => ({
+                ...theme,
+                borderRadius: 0,
+                colors: {
+                  ...theme.colors,
+                  text: "orangered",
+                  primary25: "primary.100",
+                  primary: "black",
+                },
+              })}
+              isMulti
+              onChange={(value) => {
+                setSelectedChairs(value as SelectProps[]);
+              }}
+              options={users}
+              placeholder="Selecione os chairs"
+            />
           </Flex>
         </Flex>
 
