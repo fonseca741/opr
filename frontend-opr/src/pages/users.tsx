@@ -107,22 +107,23 @@ const User = () => {
             users.map((user) => (
               <Box
                 key={user.id}
-                width="400px"
+                width={{ base: "300px", md: "400px" }}
                 color="#000"
                 margin="1.5rem"
-                height="200px"
+                height={{ base: "auto", md: "200px" }}
                 borderRadius="4px"
                 padding="1rem"
                 cursor="pointer"
                 backgroundColor="#fff"
                 _hover={{ border: "2px solid primary.100" }}
+                boxShadow="0px 0px 10px rgba(0, 0, 0, 0.2)"
               >
                 <Flex
                   width="300px"
                   height="60px"
                   backgroundColor="primary.100"
-                  marginTop="-25px"
-                  marginLeft="-35px"
+                  marginTop={{ base: "-16px", md: "-25px" }}
+                  marginLeft={{ base: "-16px", md: "-35px" }}
                   borderRadius="4px"
                   cursor="pointer"
                   alignItems="center"

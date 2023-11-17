@@ -1,4 +1,3 @@
-import React from "react";
 import { Flex, Text } from "@chakra-ui/react";
 
 type LayoutDefaultProps = {
@@ -6,35 +5,34 @@ type LayoutDefaultProps = {
 };
 
 const LayoutDefault = ({ children }: LayoutDefaultProps) => (
-  <Flex direction="row">
+  <Flex
+    direction={{ base: "column", md: "row" }}
+    minWidth="full"
+    minHeight="100vh"
+    alignItems="center"
+    justifyContent="center"
+  >
     <Flex
-      minWidth="full"
-      minHeight="100vh"
-      alignItems="center"
-      justifyContent="center"
+      as="main"
+      bg="#0F171F"
+      flex="0.5"
+      h="100vh"
+      justify="center"
+      align="center"
     >
-      <Flex
-        as="main"
-        bg="#0F171F"
-        flex="0.5"
-        h="100vh"
-        justify="center"
-        align="center"
+      <Text
+        color="#fff"
+        fontWeight="bold"
+        fontSize="35"
+        textAlign="center"
+        width="60%"
       >
-        <Text
-          color="#fff"
-          fontWeight="bold"
-          fontSize="35"
-          textAlign="center"
-          width="60%"
-        >
-          SOFTWARE PARA APOIO À OPEN PEER REVIEW
-        </Text>
-      </Flex>
+        SOFTWARE PARA APOIO À OPEN PEER REVIEW
+      </Text>
+    </Flex>
 
-      <Flex as="main" flex="0.5" h="100vh" justify="center" align="center">
-        {children}
-      </Flex>
+    <Flex as="main" flex="0.5" h="100vh" justify="center" align="center">
+      {children}
     </Flex>
   </Flex>
 );

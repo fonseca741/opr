@@ -63,7 +63,7 @@ const Login = () => {
         borderRadius="0.75rem"
         bg="white"
         boxShadow="md"
-        w={{ base: "28rem" }}
+        w={{ base: "20rem", md: "28rem" }}
         h="25rem"
         textColor="gray.700"
         direction="column"

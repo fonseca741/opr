@@ -139,6 +139,7 @@ const Reviews = () => {
                         onClick={() =>
                           router.replace(`/article/${article.article.id}`)
                         }
+                        marginBottom="20px"
                       >
                         Visualizar arquivo
                       </Button>
@@ -160,6 +161,7 @@ const Reviews = () => {
                             `/review/${article.article.id}-${user.id}`
                           )
                         }
+                        marginBottom="20px"
                       >
                         Revisar artigo
                       </Button>

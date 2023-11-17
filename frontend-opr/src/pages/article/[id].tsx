@@ -462,9 +462,10 @@ const LoadArticleById = () => {
                       key={reviewer.id}
                       min-height="8rem"
                     >
-                      <Flex>
+                      <Flex wrap="wrap">
                         <Flex
                           flex={0.3}
+                          wrap="wrap"
                           direction="column"
                           mr={{ base: "0", sm: "1rem" }}
                           minW="13.75rem"
@@ -481,6 +482,7 @@ const LoadArticleById = () => {
 
                         <Flex
                           flex={0.3}
+                          wrap="wrap"
                           direction="column"
                           mr={{ base: "0", sm: "1rem" }}
                           minW="13.75rem"
@@ -496,30 +498,7 @@ const LoadArticleById = () => {
                         </Flex>
                       </Flex>
 
-                      {/* <Flex
-                        flex={0.3}
-                        direction="column"
-                        mr={{ base: "0", sm: "1rem" }}
-                        minW="13.75rem"
-                      >
-                        <Text
-                          fontSize="sm"
-                          mb="2px"
-                          alignItems="start"
-                          color="neutral.500"
-                        >
-                          Comentários do revisor
-                        </Text>
-                        <Textarea
-                          resize="none"
-                          name="comments"
-                          defaultValue={reviewer.comments}
-                          _focusVisible={{ borderColor: "primary.100" }}
-                          readOnly
-                        />
-                      </Flex> */}
-
-                      <Flex>
+                      <Flex wrap="wrap">
                         <Flex
                           flex={0.1}
                           direction="column"
@@ -535,6 +514,7 @@ const LoadArticleById = () => {
                               handleReviewerPdf(reviewer.originalFile)
                             }
                             disabled={!reviewer.originalFile}
+                            marginBottom="20px"
                           >
                             Visualizar artigo original
                           </Button>
@@ -558,6 +538,7 @@ const LoadArticleById = () => {
                             }
                             // onClick={() => handleReviewerPdf(reviewer.file)}
                             disabled={!reviewer.file}
+                            marginBottom="20px"
                           >
                             Visualizar revisão
                           </Button>

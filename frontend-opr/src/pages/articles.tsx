@@ -81,7 +81,6 @@ const Article = () => {
           )}
 
           <Flex
-            minWidth="600px"
             alignItems="center"
             justifyContent="center"
             wrap={{ base: "wrap" }}
@@ -90,10 +89,10 @@ const Article = () => {
               articles.map((article) => (
                 <Box
                   key={article.id}
-                  width="400px"
+                  width={{ base: "300px", md: "400px" }}
                   color="#000"
                   margin="1.5rem"
-                  height="200px"
+                  height={{ base: "auto", md: "200px" }}
                   borderRadius="4px"
                   padding="1rem"
                   backgroundColor="#fff"
@@ -104,8 +103,8 @@ const Article = () => {
                     width="300px"
                     height="60px"
                     backgroundColor="primary.100"
-                    marginTop="-25px"
-                    marginLeft="-35px"
+                    marginTop={{ base: "-16px", md: "-25px" }}
+                    marginLeft={{ base: "-16px", md: "-35px" }}
                     borderRadius="4px"
                     alignItems="center"
                     justifyContent="center"
