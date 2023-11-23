@@ -1,16 +1,18 @@
 import {
-  Controller,
-  Post,
   Body,
+  Controller,
+  Get,
   HttpException,
   HttpStatus,
-  UseGuards,
-  Get,
-  Put,
   Param,
+  Post,
+  Put,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/modules/auth/auth.guard';
 import { CreateUserDTO, LoginUserDTO, UpdateUserDTO } from './dto';
+import { OrcidLoginDto } from './dto/orcid-login';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -26,10 +28,29 @@ export class UserController {
     }
   }
 
+  @Post('orcid')
+  async orcidLogin(@Body() orcidLoginDto: OrcidLoginDto) {
+    try {
+      return await this.userService.orcidLogin(orcidLoginDto);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
   @Post()
-  async create(@Body() createUserDto: CreateUserDTO) {
+  async create(
+    @Body() createUserDto: CreateUserDTO,
+    @Query() shouldLogin = false,
+  ) {
     try {
       await this.userService.create(createUserDto);
+
+      if (shouldLogin) {
+        return await this.userService.login({
+          email: createUserDto.email,
+          password: createUserDto.password,
+        });
+      }
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }

@@ -1,3 +1,4 @@
+import { OrcidIcon } from "@/assets/icons";
 import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { LayoutDefault } from "@/components/layout";
@@ -51,6 +52,10 @@ const Login = () => {
     }
   };
 
+  const handleRedirect = () => {
+    router.push(`${process.env.NEXT_PUBLIC_ORCID_AUTH_URI}`);
+  };
+
   return (
     <LayoutDefault>
       <Head>
@@ -64,7 +69,6 @@ const Login = () => {
         bg="white"
         boxShadow="md"
         w={{ base: "20rem", md: "28rem" }}
-        h="25rem"
         textColor="gray.700"
         direction="column"
         justifyContent="center"
@@ -99,6 +103,10 @@ const Login = () => {
           Entrar
         </Button>
 
+        <Button mt="15px" onClick={handleRedirect} leftIcon={<OrcidIcon />}>
+          Entrar via Orcid
+        </Button>
+
         <Link
           as={LinkNext}
           href="/signup"
@@ -108,7 +116,7 @@ const Login = () => {
           textAlign="center"
           _hover={{ textDecoration: "underline" }}
         >
-          cadastrar usuário
+          Cadastrar usuário
         </Link>
       </Flex>
     </LayoutDefault>

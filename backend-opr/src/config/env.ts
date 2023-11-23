@@ -21,4 +21,10 @@ export const config = {
     secret: process.env.AUTH_SECRET,
     expiresIn: process.env.AUTH_EXPIRES_IN,
   },
+  orcid: {
+    apiUrl: process.env.API_URL,
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    redirectUri: process.env.REDIRECT_URI,
+  },
 };

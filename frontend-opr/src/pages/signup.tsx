@@ -73,7 +73,7 @@ const Signup = () => {
       });
       router.replace("/login");
     } catch {
-      toast.error("Ocorreu um erro ao realizar o login, tente novamente!", {
+      toast.error("Ocorreu um erro ao realizar o cadastro, tente novamente!", {
         autoClose: 5000,
       });
     } finally {
@@ -94,7 +94,7 @@ const Signup = () => {
         borderRadius="0.75rem"
         bg="white"
         boxShadow="md"
-        w={{ base: "28rem" }}
+        w={{ base: "20rem", md: "28rem" }}
         h="35rem"
         textColor="gray.700"
         direction="column"

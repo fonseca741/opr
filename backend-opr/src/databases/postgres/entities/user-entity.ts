@@ -22,7 +22,7 @@ export class User {
   @Column()
   email: string;
 
-  @Column({ select: false })
+  @Column({ select: false, nullable: true })
   password: string;
 
   @Column({
@@ -34,6 +34,9 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @Column({ nullable: true })
+  orcid: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -61,7 +64,7 @@ export class User {
 
   @BeforeInsert()
   hashPassword = async () => {
-    this.password = await hash(this.password, 10);
+    if (this.password) this.password = await hash(this.password, 10);
   };
 
   async checkPassword(password: string) {

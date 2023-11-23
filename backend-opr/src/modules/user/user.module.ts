@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
 import { User } from 'src/databases/postgres/entities/user-entity';
 import { AuthModule } from 'src/modules/auth/auth.module';
+import { OrcidModule } from '../orcid/orcid.module';
+import { UserController } from './user.controller';
+import { UserService } from './user.service';
 
 @Module({
-  imports: [AuthModule, TypeOrmModule.forFeature([User])],
+  imports: [AuthModule, TypeOrmModule.forFeature([User]), OrcidModule],
   controllers: [UserController],
   providers: [UserService],
 })

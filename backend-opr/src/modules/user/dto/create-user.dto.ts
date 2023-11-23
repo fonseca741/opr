@@ -1,9 +1,9 @@
 import {
-  IsNotEmpty,
   IsEmail,
+  IsNotEmpty,
+  IsOptional,
   IsString,
   MinLength,
-  IsOptional,
 } from 'class-validator';
 import { Match, OneOf } from 'src/decorators';
 
@@ -17,7 +17,7 @@ export class CreateUserDTO {
   email: string;
 
   @MinLength(4)
-  @IsNotEmpty()
+  @IsOptional()
   password: string;
 
   @IsOptional()
@@ -28,5 +28,10 @@ export class CreateUserDTO {
   isActive: boolean;
 
   @Match('password')
+  @IsOptional()
   passwordConfirmation: string;
+
+  @IsString()
+  @IsOptional()
+  orcid: string;
 }
