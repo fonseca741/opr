@@ -1,6 +1,8 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -12,10 +14,18 @@ export class EventChairs {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Event, (event) => event.eventChairs)
+  @Column()
+  event_id: number;
+
+  @Column()
+  chair_id: number;
+
+  @ManyToOne(() => Event, (event) => event.eventChairs, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'event_id' })
   event: any;
 
-  @ManyToOne(() => User, (user) => user.chairsEvent)
+  @ManyToOne(() => User, (user) => user.chairsEvent, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'chair_id' })
   chair: any;
 
   @CreateDateColumn()

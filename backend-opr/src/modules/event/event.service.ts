@@ -7,6 +7,7 @@ import {
 } from 'src/databases/postgres/entities';
 import { Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create-event.dto';
+import { UpdateEventDto } from './dto/update-event.dto';
 
 @Injectable()
 export class EventService {
@@ -24,15 +25,15 @@ export class EventService {
 
     for (const reviewer of createEventDto.reviewers) {
       await this.repositoryReviewers.save({
-        event: event.id,
+        event_id: event.id,
         reviewer,
       });
     }
 
     for (const chair of createEventDto.chairs) {
       await this.repositoryChairs.save({
-        event: event.id,
-        chair,
+        event_id: event.id,
+        chair_id: chair,
       });
     }
   }
@@ -73,5 +74,38 @@ export class EventService {
         id: 'DESC',
       },
     });
+  }
+
+  async update(updateEventDto: UpdateEventDto) {
+    const { chairs, reviewers, ...updateData } = updateEventDto;
+
+    await this.repository.update({ id: updateEventDto.id }, updateData);
+
+    console.log(updateEventDto.id);
+
+    const oldChairs = await this.repositoryChairs.findBy({
+      event_id: updateEventDto.id,
+    });
+
+    const oldReviewers = await this.repositoryReviewers.findBy({
+      event_id: updateEventDto.id,
+    });
+
+    await this.repositoryChairs.remove(oldChairs);
+    await this.repositoryReviewers.remove(oldReviewers);
+
+    for (const reviewer of updateEventDto.reviewers) {
+      await this.repositoryReviewers.save({
+        event_id: updateEventDto.id,
+        reviewer,
+      });
+    }
+
+    for (const chair of updateEventDto.chairs) {
+      await this.repositoryChairs.save({
+        event_id: updateEventDto.id,
+        chair_id: chair,
+      });
+    }
   }
 }

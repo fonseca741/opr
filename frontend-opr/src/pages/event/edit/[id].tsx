@@ -20,6 +20,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import fetchData from "utils/fetch";
 import * as yup from "yup";
+import { EventProps } from "../[id]";
 
 const schema = yup.object().shape({
   name: yup.string().required("Nome é obrigatório"),
@@ -41,47 +42,74 @@ type SelectProps = {
   label: string;
 };
 
-const CreateEvent = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({
-    mode: "onSubmit",
-    resolver: yupResolver(schema),
-  });
+const formatOptions = (array: UserProps[]) => {
+  return array.map((user) => ({
+    value: user.id.toString(),
+    label: `${user.name} - ${user.email}`,
+  }));
+};
+
+const EditEvent = () => {
   const { user } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useBoolean(false);
   const [reviewers, setReviewers] = useState<SelectProps[]>([]);
   const [users, setUsers] = useState<SelectProps[]>([]);
-  const [selectedReviewers, setSelectedReviewers] = useState<SelectProps[]>([]);
-  const [selectedChairs, setSelectedChairs] = useState<SelectProps[]>([]);
+  const [selectedReviewers, setSelectedReviewers] = useState<SelectProps[]>();
+  const [selectedChairs, setSelectedChairs] = useState<SelectProps[]>();
+  const [event, setEvent] = useState<EventProps>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm<Inputs>({
+    mode: "onSubmit",
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
     (async () => {
-      try {
-        const apiResponse = await fetchData("GET", "user/role/reviewer");
-        const apiResponseUsers = await fetchData("GET", "user");
-        const formattedResponse = apiResponse.map((reviewer: UserProps) => ({
-          value: reviewer.id,
-          label: `${reviewer.name} - ${reviewer.email}`,
-        }));
-        const formattedResponseUsers = apiResponseUsers.map(
-          (user: UserProps) => ({
-            value: user.id,
-            label: `${user.name} - ${user.email}`,
-          })
-        );
-        setReviewers(formattedResponse);
-        setUsers(formattedResponseUsers);
-      } catch (error) {
-        toast.error("Ocorreu um erro ao buscar os usuários, tente novamente!", {
-          autoClose: 5000,
-        });
+      if (router.query.id) {
+        try {
+          const apiResponse: EventProps = await fetchData(
+            "GET",
+            `event/${router.query.id}`
+          );
+          const reviewersResponse = await fetchData(
+            "GET",
+            "user/role/reviewer"
+          );
+          const usersResponse = await fetchData("GET", "user");
+          const formattedResponse = formatOptions(reviewersResponse);
+          const formattedResponseUsers = formatOptions(usersResponse);
+          setReviewers(formattedResponse);
+          setUsers(formattedResponseUsers);
+          setEvent(apiResponse);
+          const reviewers = apiResponse.eventReviewers.map((er) => er.reviewer);
+          const chairs = apiResponse.eventChairs.map((ed) => ed.chair);
+          setSelectedReviewers(formatOptions(reviewers));
+          setSelectedChairs(formatOptions(chairs));
+
+          setValue("name", apiResponse.name);
+          setValue("initial_date", apiResponse.startDate.split("T")[0]);
+          setValue("final_date", apiResponse.endDate.split("T")[0]);
+          setValue("description", apiResponse.description);
+          setValue("questions", apiResponse.creatorInfos);
+        } catch (error) {
+          console.log(error);
+          toast.error(
+            "Ocorreu um erro ao carregar os dados do evento, tente novamente!",
+            {
+              autoClose: 5000,
+            }
+          );
+        } finally {
+          setIsLoading.off();
+        }
       }
     })();
-  }, []);
+  }, [router.query.id]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
@@ -95,18 +123,6 @@ const CreateEvent = () => {
         return;
       }
 
-      // if (
-      //   data.initial_date <
-      //   new Date()
-      //     .toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-      //     .split("T")[0]
-      // ) {
-      //   toast.error("Data inicial não pode ser menor que a data atual!", {
-      //     autoClose: 5000,
-      //   });
-      //   return;
-      // }
-
       if (data.final_date < data.initial_date) {
         toast.error("Data final não pode ser menor que a data inicial!", {
           autoClose: 5000,
@@ -115,8 +131,8 @@ const CreateEvent = () => {
       }
 
       setIsLoading.on();
-      await fetchData("POST", "event", {
-        creator: user.id,
+      await fetchData("PUT", "event", {
+        id: event?.id,
         name: data.name,
         description: data.description,
         startDate: data.initial_date,
@@ -275,28 +291,30 @@ const CreateEvent = () => {
               Revisores do evento
             </Text>
 
-            <Select
-              theme={(theme) => ({
-                ...theme,
-                borderRadius: 0,
-                colors: {
-                  ...theme.colors,
-                  text: "orangered",
-                  primary25: "primary.100",
-                  primary: "black",
-                },
-              })}
-              defaultValue={selectedReviewers}
-              isMulti
-              onChange={(value) => {
-                setSelectedReviewers(value as SelectProps[]);
-              }}
-              options={reviewers}
-              placeholder="Selecione os revisores"
-              noOptionsMessage={() => "Nenhum revisor cadastrado"}
-            />
+            {selectedReviewers && (
+              <Select
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 0,
+                  colors: {
+                    ...theme.colors,
+                    text: "orangered",
+                    primary25: "primary.100",
+                    primary: "black",
+                  },
+                })}
+                defaultValue={selectedReviewers}
+                isMulti
+                onChange={(value) => {
+                  setSelectedReviewers(value as SelectProps[]);
+                }}
+                options={reviewers}
+                placeholder="Selecione os revisores"
+                noOptionsMessage={() => "Nenhum revisor cadastrado"}
+              />
+            )}
 
-            {selectedReviewers.length === 0 ? (
+            {!selectedReviewers || selectedReviewers.length === 0 ? (
               <InputError>Selecione ao menos 1 revisor</InputError>
             ) : (
               <Box h="1.625rem" />
@@ -315,24 +333,27 @@ const CreateEvent = () => {
               Chairs do evento
             </Text>
 
-            <Select
-              theme={(theme) => ({
-                ...theme,
-                borderRadius: 0,
-                colors: {
-                  ...theme.colors,
-                  text: "orangered",
-                  primary25: "primary.100",
-                  primary: "black",
-                },
-              })}
-              isMulti
-              onChange={(value) => {
-                setSelectedChairs(value as SelectProps[]);
-              }}
-              options={users}
-              placeholder="Selecione os chairs"
-            />
+            {selectedChairs && (
+              <Select
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 0,
+                  colors: {
+                    ...theme.colors,
+                    text: "orangered",
+                    primary25: "primary.100",
+                    primary: "black",
+                  },
+                })}
+                defaultValue={selectedChairs}
+                isMulti
+                onChange={(value) => {
+                  setSelectedChairs(value as SelectProps[]);
+                }}
+                options={users}
+                placeholder="Selecione os chairs"
+              />
+            )}
           </Flex>
         </Flex>
 
@@ -350,9 +371,9 @@ const CreateEvent = () => {
             disabled={isLoading}
             isLoading={isLoading}
             variant="primary"
-            title="Criar evento"
+            title="Salvar"
           >
-            Criar evento
+            Salvar evento
           </Button>
         </Flex>
       </Flex>
@@ -360,4 +381,4 @@ const CreateEvent = () => {
   );
 };
 
-export default authRoute(CreateEvent);
+export default authRoute(EditEvent);

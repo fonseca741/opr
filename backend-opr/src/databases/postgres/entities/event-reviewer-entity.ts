@@ -1,18 +1,26 @@
 import {
-  Entity,
+  Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  PrimaryGeneratedColumn,
+  Entity,
+  JoinColumn,
   ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { User, Event } from './index';
+import { Event, User } from './index';
 
 @Entity()
 export class EventReviewers {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Event, (event) => event.eventReviewers)
+  @Column()
+  event_id: number;
+
+  @ManyToOne(() => Event, (event) => event.eventReviewers, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'event_id' })
   event: any;
 
   @ManyToOne(() => User, (user) => user.reviewerEvent)

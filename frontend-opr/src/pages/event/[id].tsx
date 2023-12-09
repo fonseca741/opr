@@ -2,6 +2,7 @@ import { Input } from "@/components/input";
 import { LayoutSigned } from "@/components/layout";
 import authRoute from "@/utils/auth";
 import { formattStringToDots } from "@/utils/formatt";
+import { EditIcon } from "@chakra-ui/icons";
 import {
   Button,
   Divider,
@@ -24,17 +25,22 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import fetchData from "utils/fetch";
 
-type EventReviewerPros = GlobalEventReviewerProps & {
+type EventReviewerProps = GlobalEventReviewerProps & {
   reviewer: UserProps;
+};
+
+type EventChairProps = GlobalEventReviewerProps & {
+  chair: UserProps;
 };
 
 type ArticleProps = GlobalEventArticleProps & {
   article: GlobalArticleProps;
 };
 
-type EventProps = GlobalEventProps & {
+export type EventProps = GlobalEventProps & {
   creator: UserProps;
-  eventReviewers: EventReviewerPros[];
+  eventReviewers: EventReviewerProps[];
+  eventChairs: EventChairProps[];
   eventArticles: ArticleProps[];
 };
 
@@ -63,6 +69,16 @@ const LoadEventById = () => {
       }
     })();
   }, [router.query.id, setIsLoading]);
+
+  const canEdit = () => {
+    const eventChairsId = event?.eventChairs.map(
+      (eventChair) => eventChair.chair.id
+    );
+
+    const allowedIds = [eventChairsId, event?.creator.id].flat(Infinity);
+
+    return allowedIds.includes(user.id) || user.role === "admin";
+  };
 
   return (
     <LayoutSigned>
@@ -337,7 +353,7 @@ const LoadEventById = () => {
                         variant="primary"
                         title="Ver detalhes"
                         onClick={() =>
-                          router.replace(`/article/${article.article.id}`)
+                          router.push(`/article/${article.article.id}`)
                         }
                       >
                         Ver detalhes
@@ -365,7 +381,7 @@ const LoadEventById = () => {
                                   eventReviewers.reviewer.id === user.id
                               );
 
-                            router.replace(
+                            router.push(
                               `/review/${article.article.id}-${currentReviewerId?.reviewer.id}`
                             );
                           }}
@@ -428,6 +444,76 @@ const LoadEventById = () => {
                 />
               </Flex>
             </Flex>
+
+            <Text
+              width="100%"
+              textAlign="center"
+              margin="1rem 0 3rem 0"
+              fontSize="1.5rem"
+              fontWeight="bold"
+            >
+              Chairs do evento
+            </Text>
+
+            <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
+              {event?.eventChairs?.length ? (
+                event?.eventChairs?.map((eventChair) => (
+                  <Flex
+                    justify="flex-start"
+                    wrap="wrap"
+                    w="100%"
+                    mb="0.3125rem"
+                    key={eventChair.id}
+                  >
+                    <Flex
+                      flex={1}
+                      direction="column"
+                      mr={{ base: "0", sm: "1rem" }}
+                      minW="13.75rem"
+                    >
+                      <Input
+                        name="name"
+                        label="Nome"
+                        _focusVisible={{ borderColor: "primary.100" }}
+                        defaultValue={eventChair.chair.name}
+                        readOnly
+                        disabled
+                      />
+                    </Flex>
+
+                    <Flex
+                      flex={1}
+                      direction="column"
+                      mr={{ base: "0", sm: "1rem" }}
+                      minW="13.75rem"
+                    >
+                      <Input
+                        name="email"
+                        label="E-mail"
+                        defaultValue={eventChair.chair.email}
+                        _focusVisible={{ borderColor: "primary.100" }}
+                        readOnly
+                        disabled
+                      />
+                    </Flex>
+                  </Flex>
+                ))
+              ) : (
+                <Text textAlign="center" width="100%" color="#696969">
+                  Nenhum revisor selecionado :(
+                </Text>
+              )}
+            </Flex>
+
+            <Button
+              leftIcon={<EditIcon />}
+              variant="primary"
+              alignSelf="center"
+              isDisabled={!canEdit()}
+              onClick={() => router.push(`/event/edit/${event?.id}`)}
+            >
+              Editar evento
+            </Button>
           </Flex>
         </Flex>
       )}

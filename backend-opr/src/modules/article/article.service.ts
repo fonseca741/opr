@@ -57,6 +57,7 @@ export class ArticleService {
       relations: [
         'creator',
         'event',
+        'event.eventChairs',
         'articleReviewer',
         'articleReviewer.reviewer',
         'articleReviewer.articleReview',

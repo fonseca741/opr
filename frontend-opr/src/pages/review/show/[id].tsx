@@ -40,6 +40,9 @@ type PageInfo = {
     date: string;
     file: string;
   };
+  event: {
+    chairs: number[];
+  };
 };
 
 type Discussion = {
@@ -120,6 +123,11 @@ const LoadReviewById = () => {
               date: reviewer.createdAt,
               file: review.file,
             },
+            event: {
+              chairs: apiResponse.event.eventChairs.map(
+                (eventChair: any) => eventChair.chair_id
+              ),
+            },
           };
 
           setDiscussions(review.articleDiscussions);
@@ -146,7 +154,7 @@ const LoadReviewById = () => {
     try {
       const response = await fetchData("POST", "article-review-discussion", {
         value: data.comment,
-        isReviewer: user.role === "reviewer",
+        isReviewer: user.role !== "publisher",
         articleReviewId: pageInfo?.review.id,
       });
 
@@ -165,10 +173,11 @@ const LoadReviewById = () => {
     }
   };
 
-  const isCurrentUser = () => {
+  const canComment = () => {
     return (
       user.id === pageInfo?.review.reviewer.id ||
-      user.id === pageInfo?.article.author.id
+      user.id === pageInfo?.article.author.id ||
+      pageInfo?.event.chairs.includes(user.id)
     );
   };
 
@@ -203,31 +212,31 @@ const LoadReviewById = () => {
                 <Text fontWeight="bold" marginRight="5px">
                   Titulo do artigo:
                 </Text>
-                <Text>Texto bem grande para ser o nome do arquivo</Text>
+                <Text>{pageInfo?.article.name}</Text>
               </Flex>
               <Flex>
                 <Text fontWeight="bold" marginRight="5px">
                   Autor:
                 </Text>
-                <Text> {pageInfo?.article.author.name}</Text>
+                <Text>{pageInfo?.article.author.name}</Text>
               </Flex>
               <Flex>
                 <Text fontWeight="bold" marginRight="5px">
                   Data da submissão:
                 </Text>
-                <Text> {pageInfo?.article.submitionDate.split("T")[0]}</Text>
+                <Text>{pageInfo?.article.submitionDate.split("T")[0]}</Text>
               </Flex>
               <Flex>
                 <Text fontWeight="bold" marginRight="5px">
                   Revisor:
                 </Text>
-                <Text> {pageInfo?.review.reviewer.name}</Text>
+                <Text>{pageInfo?.review.reviewer.name}</Text>
               </Flex>
               <Flex>
                 <Text fontWeight="bold" marginRight="5px">
                   Data da revisão:
                 </Text>
-                <Text> {pageInfo?.review.date.split("T")[0]}</Text>
+                <Text>{pageInfo?.review.date.split("T")[0]}</Text>
               </Flex>
             </Flex>
 
@@ -300,12 +309,12 @@ const LoadReviewById = () => {
                 placeholder="Adicionar comentário"
                 {...register("comment")}
                 id="comment"
-                isDisabled={!isCurrentUser()}
+                isDisabled={!canComment()}
               />
               <FormErrorMessage>{errors.comment?.message}</FormErrorMessage>
             </FormControl>
             <Button
-              isDisabled={!isCurrentUser()}
+              isDisabled={!canComment()}
               type="submit"
               variant="primary"
               ml="10px"

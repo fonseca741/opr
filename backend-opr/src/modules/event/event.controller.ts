@@ -1,15 +1,17 @@
 import {
-  Controller,
-  Post,
   Body,
-  SetMetadata,
-  UseGuards,
+  Controller,
   Get,
   Param,
+  Post,
+  Put,
+  SetMetadata,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/modules/auth/auth.guard';
-import { EventService } from './event.service';
 import { CreateEventDto } from './dto/create-event.dto';
+import { UpdateEventDto } from './dto/update-event.dto';
+import { EventService } from './event.service';
 
 @Controller('event')
 export class EventController {
@@ -20,6 +22,12 @@ export class EventController {
   @SetMetadata('roles', ['admin', 'publisher'])
   async create(@Body() createEventDto: CreateEventDto) {
     await this.eventService.create(createEventDto);
+  }
+
+  @Put()
+  @UseGuards(AuthGuard)
+  async update(@Body() updateEventDto: UpdateEventDto) {
+    await this.eventService.update(updateEventDto);
   }
 
   @Get()

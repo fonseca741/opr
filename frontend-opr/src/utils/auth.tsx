@@ -17,6 +17,7 @@ const myRoutes: Record<string, string[]> = {
   "/review/show/[id]": ["admin", "author", "publisher", "reviewer"],
   "/event/[id]": ["admin", "author", "publisher", "reviewer"],
   "/article/[id]": ["admin", "author", "publisher", "reviewer"],
+  "/event/edit/[id]": ["admin", "author", "publisher", "reviewer"],
 };
 
 const authRoute = (Component: any) => {
