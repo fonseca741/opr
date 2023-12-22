@@ -29,10 +29,10 @@ export class CreateEventDto {
   @IsNotEmpty()
   endDate: string;
 
-  @IsNotEmpty()
   @IsArray()
   reviewers: number[];
 
+  @IsNotEmpty()
   @IsArray()
   chairs: number[];
 

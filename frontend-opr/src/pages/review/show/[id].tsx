@@ -286,7 +286,11 @@ const LoadReviewById = () => {
                       Data:
                     </Text>
                     <Text fontSize="14px">
-                      {comment.createdAt.split("T")[0]}
+                      {`${comment.createdAt.split("T")[0]}, ${comment.createdAt
+                        .split("T")[1]
+                        .split(":")
+                        .slice(0, 2)
+                        .join(":")}`}
                     </Text>
                   </Flex>
                   <Box

@@ -88,8 +88,8 @@ const CreateEvent = () => {
       const formattedReviewers = selectedReviewers.flat(Infinity);
       const formattedChairs = selectedChairs.flat(Infinity);
 
-      if (formattedReviewers.length === 0) {
-        toast.error("Selecione ao menos um revisor!", {
+      if (formattedChairs.length === 0) {
+        toast.error("Selecione ao menos um chair!", {
           autoClose: 5000,
         });
         return;
@@ -264,7 +264,7 @@ const CreateEvent = () => {
           </Flex>
         </Flex>
 
-        <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
+        <Flex justify="flex-start" wrap="wrap" w="100%" mb="2rem">
           <Flex
             flex={1}
             direction="column"
@@ -295,12 +295,6 @@ const CreateEvent = () => {
               placeholder="Selecione os revisores"
               noOptionsMessage={() => "Nenhum revisor cadastrado"}
             />
-
-            {selectedReviewers.length === 0 ? (
-              <InputError>Selecione ao menos 1 revisor</InputError>
-            ) : (
-              <Box h="1.625rem" />
-            )}
           </Flex>
         </Flex>
 
@@ -333,6 +327,12 @@ const CreateEvent = () => {
               options={users}
               placeholder="Selecione os chairs"
             />
+
+            {selectedReviewers.length === 0 ? (
+              <InputError>Selecione ao menos um chair</InputError>
+            ) : (
+              <Box h="1.625rem" />
+            )}
           </Flex>
         </Flex>
 
