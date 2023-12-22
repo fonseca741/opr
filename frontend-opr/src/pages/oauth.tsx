@@ -129,7 +129,7 @@ const OAuth = () => {
   return (
     <LayoutDefault>
       <Head>
-        <title>Teste</title>
+        <title>Complete o Cadastro</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
