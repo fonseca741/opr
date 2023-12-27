@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>Novo comentário</title>
+  </head>
+  <style>
+    .globalContainer { 
+      max-width: 600px; 
+      font-family: 'Inter', sans-serif;
+      margin: 0 auto;
+    } 
+    
+    .headerContainer { 
+      background-color: #FFD000;
+      color: black;
+      padding: 10px 20px;
+    }
+      
+    .headerContainer .name { 
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 18px;
+    }
+
+    .headerContainer .title { 
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 18px;
+    }
+
+    .footerContainer { 
+      background-color: #FFD000;
+      color: black;
+      padding: 0px 20px;
+      font-size: 14px;
+    }
+
+    .contentContainer {
+      background-color: whitesmoke;
+      padding: 0px 20px;
+    }
+
+    .content {
+      background-color: white;
+      padding: 5px 20px;
+      margin: 20px 0px;
+      border-radius: 8px;
+    }
+
+    .content p {
+      color: black;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      text-align: center;
+    }
+
+  </style>
+  <body>
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" class="globalContainer">
+      <tr>
+        <td>
+          {{!-- HEADER --}}
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" class="headerContainer">
+            <tr>
+              <td>
+                <p class='name'>Olá, {{ name }}</p>
+                <p class='title'>Você recebeu um novo comentário</p>
+              </td>
+            </tr>
+          </table>
+
+          {{!-- CONTENT --}}
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" class="contentContainer">
+            <tr>
+              <td>
+                <div class="content">
+                  <p>Você possui um novo item para analisar, foi adicionado um
+                    comentário na revisão do artigo "{{ article }}", acesse a
+                    plataforma para visualizar
+                  </p>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          {{!-- FOOTER --}}
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" class="footerContainer">
+            <tr>
+              <td>
+                <p>Este é um email automático, não é necessário responder.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

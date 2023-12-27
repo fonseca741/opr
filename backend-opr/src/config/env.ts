@@ -27,4 +27,11 @@ export const config = {
     clientSecret: process.env.CLIENT_SECRET,
     redirectUri: process.env.REDIRECT_URI,
   },
+  mail: {
+    smtp: process.env.MAIL_SMTP,
+    port: process.env.MAIL_PORT,
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASSWORD,
+    from: process.env.MAIL_FROM,
+  },
 };

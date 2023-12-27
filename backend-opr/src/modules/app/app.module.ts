@@ -18,6 +18,7 @@ import { AuthModule } from 'src/modules/auth/auth.module';
 import { EventModule } from 'src/modules/event/event.module';
 import { UserModule } from 'src/modules/user/user.module';
 import { ArticleReviewDiscussionModule } from '../article-review-discussion/article-review-discussion.module';
+import { MailModule } from '../mail/mail.module';
 import { OrcidModule } from '../orcid/orcid.module';
 import { AppController } from './app.controller';
 
@@ -51,6 +52,7 @@ import { AppController } from './app.controller';
     ArticleReviewModule,
     ArticleReviewDiscussionModule,
     OrcidModule,
+    MailModule,
   ],
   controllers: [AppController],
 })
