@@ -13,10 +13,12 @@ export class ArticleReviewer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Article, (article) => article.articleReviewer)
+  @ManyToOne(() => Article, (article) => article.articleReviewer, {
+    eager: true,
+  })
   article: any;
 
-  @ManyToOne(() => User, (user) => user.articleReviewer)
+  @ManyToOne(() => User, (user) => user.articleReviewer, { eager: true })
   reviewer: any;
 
   @CreateDateColumn()

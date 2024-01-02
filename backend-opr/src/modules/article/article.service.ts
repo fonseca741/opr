@@ -3,9 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   Article,
   ArticleReviewer,
+  Event,
   EventArticles,
+  EventReviewers,
 } from 'src/databases/postgres/entities';
 import { Repository } from 'typeorm';
+import { MailTemplate } from '../mail/constants/mail-template.constants';
+import { MailService } from '../mail/mail.service';
 import { CreateArticleDto, UpdateArticleDto } from './dto';
 
 @Injectable()
@@ -17,6 +21,11 @@ export class ArticleService {
     private readonly repositoryEventArticle: Repository<EventArticles>,
     @InjectRepository(ArticleReviewer)
     private readonly articleReviewer: Repository<ArticleReviewer>,
+    @InjectRepository(EventReviewers)
+    private readonly eventReviewer: Repository<EventReviewers>,
+    @InjectRepository(Event)
+    private readonly eventRepository: Repository<Event>,
+    private readonly mailService: MailService,
   ) {}
 
   async createArticle(createArticleDto: CreateArticleDto) {
@@ -32,6 +41,37 @@ export class ArticleService {
       event: createArticleDto.event,
       article: article.id,
     });
+
+    try {
+      const eventReviewers = (
+        await this.eventReviewer.findBy({
+          event_id: +createArticleDto.event,
+        })
+      ).map((er) => er.reviewer);
+
+      const eventName = (
+        await this.eventRepository.findOneBy({
+          id: +createArticleDto.event,
+        })
+      ).name;
+
+      console.log(eventName);
+
+      eventReviewers.forEach((reviewer) => {
+        this.mailService.send({
+          to: reviewer.email,
+          subject: 'Novo artigo disponível para revisão!',
+          template: MailTemplate.NewArticle,
+          context: {
+            name: reviewer.name,
+            article: createArticleDto.name,
+            event: eventName,
+          },
+        });
+      });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async updateArticle(id, updateArticleDto: UpdateArticleDto) {

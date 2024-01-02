@@ -14,7 +14,7 @@ export class Article {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.creatorArticle)
+  @ManyToOne(() => User, (user) => user.creatorArticle, { eager: true })
   creator: any;
 
   @ManyToOne(() => Event, (event) => event.eventArticles)

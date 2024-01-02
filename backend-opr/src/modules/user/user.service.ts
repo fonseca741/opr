@@ -4,6 +4,8 @@ import { sign } from 'jsonwebtoken';
 import { config } from 'src/config/env';
 import { User } from 'src/databases/postgres/entities/user-entity';
 import { Repository } from 'typeorm';
+import { MailTemplate } from '../mail/constants/mail-template.constants';
+import { MailService } from '../mail/mail.service';
 import { OrcidService } from '../orcid/orcid.service';
 import { CreateUserDTO, LoginUserDTO, UpdateUserDTO } from './dto';
 import { OrcidLoginDto } from './dto/orcid-login';
@@ -14,6 +16,7 @@ export class UserService {
     @InjectRepository(User)
     private readonly repository: Repository<User>,
     private readonly orcidService: OrcidService,
+    private readonly mailService: MailService,
   ) {}
 
   async login(loginUserDto: LoginUserDTO) {
@@ -85,6 +88,15 @@ export class UserService {
     const user = this.repository.create(createUserDto);
 
     await this.repository.save(user);
+
+    await this.mailService.send({
+      to: createUserDto.email,
+      subject: 'Bem vindo à PeerVise',
+      template: MailTemplate.Welcome,
+      context: {
+        name: createUserDto.name,
+      },
+    });
   }
 
   async loadAllUsers() {

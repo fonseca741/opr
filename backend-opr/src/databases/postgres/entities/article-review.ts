@@ -18,6 +18,7 @@ export class ArticleReview {
   @ManyToOne(
     () => ArticleReviewer,
     (articleReviewer) => articleReviewer.articleReview,
+    { eager: true },
   )
   articleReviewer: any;
 

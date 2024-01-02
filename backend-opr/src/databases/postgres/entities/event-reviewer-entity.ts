@@ -23,7 +23,7 @@ export class EventReviewers {
   @JoinColumn({ name: 'event_id' })
   event: any;
 
-  @ManyToOne(() => User, (user) => user.reviewerEvent)
+  @ManyToOne(() => User, (user) => user.reviewerEvent, { eager: true })
   reviewer: any;
 
   @CreateDateColumn()

@@ -1,18 +1,26 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from 'src/modules/auth/auth.module';
-import { ArticleService } from './article.service';
-import { ArticleController } from './article.controller';
 import {
   Article,
   ArticleReviewer,
+  Event,
   EventArticles,
+  EventReviewers,
 } from 'src/databases/postgres/entities/index';
+import { AuthModule } from 'src/modules/auth/auth.module';
+import { ArticleController } from './article.controller';
+import { ArticleService } from './article.service';
 
 @Module({
   imports: [
     AuthModule,
-    TypeOrmModule.forFeature([Article, EventArticles, ArticleReviewer]),
+    TypeOrmModule.forFeature([
+      Article,
+      EventArticles,
+      ArticleReviewer,
+      EventReviewers,
+      Event,
+    ]),
   ],
   controllers: [ArticleController],
   providers: [ArticleService],
