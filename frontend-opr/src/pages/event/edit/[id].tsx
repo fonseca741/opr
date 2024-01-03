@@ -113,8 +113,8 @@ const EditEvent = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const formattedReviewers = selectedReviewers.flat(Infinity);
-      const formattedChairs = selectedChairs.flat(Infinity);
+      const formattedReviewers = selectedReviewers!.flat(Infinity);
+      const formattedChairs = selectedChairs!.flat(Infinity);
 
       if (formattedReviewers.length === 0) {
         toast.error("Selecione ao menos um revisor!", {
