@@ -154,7 +154,7 @@ const LoadReviewById = () => {
     try {
       const response = await fetchData("POST", "article-review-discussion", {
         value: data.comment,
-        isReviewer: user.role !== "publisher",
+        isReviewer: user.role !== "author",
         articleReviewId: pageInfo?.review.id,
       });
 
