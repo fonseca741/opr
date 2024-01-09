@@ -100,7 +100,7 @@ const LoadEventById = () => {
           </Text>
         </Flex>
       ) : (
-        <Flex as="form" direction="column">
+        <Flex as="form" direction="column" w="full">
           <Flex align="flex-start" direction="column">
             <Text
               width="100%"

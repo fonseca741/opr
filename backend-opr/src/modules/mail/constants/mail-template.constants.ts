@@ -3,4 +3,5 @@ export enum MailTemplate {
   NewDiscussion = './new-discussion',
   NewArticle = './new-article',
   NewReview = './new-review',
+  UpdateArticle = './update-article',
 }

@@ -12,11 +12,14 @@ export class ArticleReviewDiscussion {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  value: string;
+  @Column({ nullable: true })
+  value?: string;
 
   @Column()
   isReviewer: boolean;
+
+  @Column({ nullable: true })
+  file?: string;
 
   @CreateDateColumn()
   createdAt: Date;

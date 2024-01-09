@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   Article,
+  ArticleReviewDiscussion,
   ArticleReviewer,
   Event,
   EventArticles,
@@ -20,6 +21,7 @@ import { ArticleService } from './article.service';
       ArticleReviewer,
       EventReviewers,
       Event,
+      ArticleReviewDiscussion,
     ]),
   ],
   controllers: [ArticleController],

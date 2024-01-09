@@ -2,10 +2,6 @@ import { Input } from "@/components/input";
 import { LayoutSigned } from "@/components/layout";
 import authRoute from "@/utils/auth";
 import { Button, Flex, Text, useBoolean } from "@chakra-ui/react";
-import {
-  ArticleProps,
-  EventArticleProps as GlobalEventArticleProps,
-} from "common/types";
 import { useAuth } from "context";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -13,11 +9,11 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import fetchData from "utils/fetch";
 
-type EventReviewsProps = GlobalEventArticleProps & {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  article: ArticleProps;
+type EventReviewsProps = {
+  reviewid: number;
+  createdat: string;
+  name: string;
+  articleid: number;
 };
 
 const Reviews = () => {
@@ -64,7 +60,7 @@ const Reviews = () => {
           </Text>
         </Flex>
       ) : (
-        <Flex flexDirection="column" align="center">
+        <Flex flexDirection="column" align="center" w="full">
           <Text
             width="100%"
             textAlign="center"
@@ -84,18 +80,18 @@ const Reviews = () => {
           >
             {eventReviews.length ? (
               eventReviews
-                .sort((first, second) => second.id - first.id)
+                .sort((first, second) => second.reviewid - first.reviewid)
                 .map((article) => (
                   <Flex
                     justify="flex-start"
                     wrap="wrap"
                     w="100%"
                     mb="0.3125rem"
-                    key={article.id}
+                    key={article.articleid}
                     min-height="8rem"
                   >
                     <Flex
-                      flex={0.3}
+                      flex={0.6}
                       direction="column"
                       mr={{ base: "0", sm: "1rem" }}
                       minW="13.75rem"
@@ -104,7 +100,7 @@ const Reviews = () => {
                         name="title"
                         label="Título do artigo"
                         _focusVisible={{ borderColor: "primary.100" }}
-                        defaultValue={article.article.name}
+                        defaultValue={article.name}
                         readOnly
                         disabled
                       />
@@ -120,14 +116,14 @@ const Reviews = () => {
                         name="date"
                         label="Data da submissão"
                         _focusVisible={{ borderColor: "primary.100" }}
-                        defaultValue={article.createdAt.split("T")[0]}
+                        defaultValue={article.createdat.split("T")[0]}
                         readOnly
                         disabled
                       />
                     </Flex>
 
                     <Flex
-                      flex={0.1}
+                      flex={0.05}
                       direction="column"
                       minW="13.75rem"
                       alignItems="center"
@@ -137,16 +133,16 @@ const Reviews = () => {
                         variant="primary"
                         title="   Visualizar arquivo"
                         onClick={() =>
-                          router.replace(`/article/${article.article.id}`)
+                          router.push(`/article/${article.articleid}`)
                         }
                         marginBottom="20px"
                       >
-                        Visualizar arquivo
+                        Acessar artigo
                       </Button>
                     </Flex>
 
                     <Flex
-                      flex={0.1}
+                      flex={0.05}
                       direction="column"
                       mr={{ base: "0", sm: "1rem" }}
                       minW="13.75rem"
@@ -157,13 +153,13 @@ const Reviews = () => {
                         variant="primary"
                         title="Revisar artigo"
                         onClick={() =>
-                          router.replace(
-                            `/review/${article.article.id}-${user.id}`
+                          router.push(
+                            `/review/show/${article.articleid}-${article.reviewid}`
                           )
                         }
                         marginBottom="20px"
                       >
-                        Revisar artigo
+                        Acessar revisão
                       </Button>
                     </Flex>
                   </Flex>

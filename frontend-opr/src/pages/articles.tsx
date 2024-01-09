@@ -92,15 +92,19 @@ const Article = () => {
                   width={{ base: "300px", md: "400px" }}
                   color="#000"
                   margin="1.5rem"
-                  height={{ base: "auto", md: "200px" }}
+                  height={{ base: "auto", md: "220px" }}
                   borderRadius="4px"
                   padding="1rem"
                   backgroundColor="#fff"
-                  _hover={{ border: "2px solid primary.100" }}
+                  _hover={{ border: "1px solid #FFD000" }}
                   boxShadow="0px 0px 10px rgba(0, 0, 0, 0.2)"
+                  cursor="pointer"
+                  onClick={() => router.push(`article/${article.id}`)}
+                  fontSize="14px"
                 >
                   <Flex
                     width="300px"
+                    padding={2}
                     height="60px"
                     backgroundColor="primary.100"
                     marginTop={{ base: "-16px", md: "-25px" }}
@@ -112,10 +116,10 @@ const Article = () => {
                     <Text
                       fontWeight="bold"
                       color="#000"
-                      fontSize="15"
+                      fontSize="13"
                       marginRight="10px"
                     >
-                      {formattStringToDots(article.name.toUpperCase(), 22)}
+                      {formattStringToDots(article.name.toUpperCase(), 105)}
                     </Text>
                   </Flex>
 
@@ -131,7 +135,7 @@ const Article = () => {
                     </Text>
 
                     <Text fontWeight="bold" marginTop="10px">
-                      {formattStringToDots(article.description, 30)}
+                      {formattStringToDots(article.description, 80)}
                     </Text>
                   </Flex>
 
@@ -179,19 +183,8 @@ const Article = () => {
                     </Text>
 
                     <Text fontWeight="bold" marginTop="10px">
-                      {article.event.name}
+                      {formattStringToDots(article.event.name, 80)}
                     </Text>
-                  </Flex>
-
-                  <Flex justifyContent="end" marginTop="-40px">
-                    <Button
-                      borderRadius="4px"
-                      variant="primary"
-                      title="Ver detalhes"
-                      onClick={() => router.replace(`article/${article.id}`)}
-                    >
-                      Ver detalhes
-                    </Button>
                   </Flex>
                 </Box>
               ))
