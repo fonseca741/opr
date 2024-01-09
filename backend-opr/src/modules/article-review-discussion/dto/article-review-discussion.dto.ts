@@ -8,8 +8,9 @@ import {
 
 export class CreateArticleReviewDiscussionDto {
   @IsString()
+  @IsOptional()
   @IsNotEmpty()
-  value: string;
+  value?: string;
 
   @IsBoolean()
   @IsNotEmpty()
@@ -17,5 +18,9 @@ export class CreateArticleReviewDiscussionDto {
 
   @IsNumber()
   @IsOptional()
-  articleReviewId: number;
+  articleReviewId?: number;
+
+  @IsString()
+  @IsOptional()
+  file?: string;
 }

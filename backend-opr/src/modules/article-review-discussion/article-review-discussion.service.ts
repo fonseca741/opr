@@ -46,7 +46,7 @@ export class ArticleReviewDiscussionService {
 
     const articleName = review.articleReviewer.article.name;
     const articleAuthor = review.articleReviewer.article.creator;
-    const reviewer = review.articleReviewer.reviewer.name;
+    const reviewer = review.articleReviewer.reviewer;
 
     await this.mailService.send({
       to: articleReviewDiscussion.isReviewer

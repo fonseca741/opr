@@ -1,6 +1,7 @@
 import { LayoutSigned } from "@/components/layout";
 import authRoute from "@/utils/auth";
 import { base64toBlob } from "@/utils/base-64";
+import { CalendarIcon, RepeatClockIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -8,14 +9,23 @@ import {
   FormControl,
   FormErrorMessage,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Text,
   useBoolean,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "context";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import fetchData from "utils/fetch";
@@ -46,9 +56,10 @@ type PageInfo = {
 };
 
 type Discussion = {
-  value: string;
+  value?: string;
   createdAt: string;
   isReviewer: boolean;
+  file?: string;
 };
 
 type Inputs = {
@@ -62,11 +73,17 @@ const commentSchema = object({
 });
 
 const LoadReviewById = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useBoolean(true);
+  const [isSendingFile, setIsSendingFile] = useState(false);
+  const [acceptedFilesManager, setAcceptedFilesManager] = useState<File[]>([]);
   const [pageInfo, setPageInfo] = useState<PageInfo>();
   const [discussions, setDiscussions] = useState<Discussion[]>([]);
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: "application/pdf",
+  });
   const {
     register,
     handleSubmit,
@@ -75,6 +92,10 @@ const LoadReviewById = () => {
   } = useForm<Inputs>({
     resolver: yupResolver(commentSchema),
   });
+
+  useEffect(() => {
+    setAcceptedFilesManager(acceptedFiles);
+  }, [acceptedFiles, acceptedFiles.length]);
 
   useEffect(() => {
     (async () => {
@@ -143,6 +164,41 @@ const LoadReviewById = () => {
     })();
   }, [router.query.id, setIsLoading]);
 
+  const handleUpdateArticle = async () => {
+    setIsSendingFile(true);
+    try {
+      if (!acceptedFilesManager[0]) {
+        toast.error("É obrigatório selecionar o arquivo", {
+          autoClose: 5000,
+        });
+        return;
+      }
+
+      let reader = new FileReader();
+      reader.readAsDataURL(acceptedFilesManager[0]);
+
+      const pageParams = router.query.id as string;
+      const reviewId = pageParams.split("-")[1];
+
+      reader.onload = async () => {
+        const fileResult = reader.result as string;
+
+        await fetchData("POST", `article-review-discussion`, {
+          file: fileResult.replace("data:application/pdf;base64,", ""),
+          isReviewer: true,
+          articleReviewId: +reviewId,
+        });
+        setIsSendingFile(false);
+
+        Router.reload();
+      };
+    } catch {
+      toast.error("Ocorreu ao atualizar o artigo, tente novamente!", {
+        autoClose: 5000,
+      });
+    }
+  };
+
   const handleReviewerPdf = (file: string) => {
     const url = base64toBlob(file);
     window.open(URL.createObjectURL(url));
@@ -201,133 +257,254 @@ const LoadReviewById = () => {
           </Text>
         </Flex>
       ) : (
-        <Flex direction="column" w="full">
-          <Flex
-            justify="space-between"
-            align="center"
-            direction={{ base: "column", md: "row" }}
-          >
-            <Flex direction="column">
-              <Flex>
-                <Text fontWeight="bold" marginRight="5px">
-                  Titulo do artigo:
-                </Text>
-                <Text>{pageInfo?.article.name}</Text>
+        <>
+          <Flex direction="column" w="full">
+            <Flex
+              justify="space-between"
+              align="center"
+              direction={{ base: "column", md: "row" }}
+            >
+              <Flex direction="column">
+                <Flex>
+                  <Text fontWeight="bold" marginRight="5px">
+                    Titulo do artigo:
+                  </Text>
+                  <Text>{pageInfo?.article.name}</Text>
+                </Flex>
+                <Flex>
+                  <Text fontWeight="bold" marginRight="5px">
+                    Autor:
+                  </Text>
+                  <Text>{pageInfo?.article.author.name}</Text>
+                </Flex>
+                <Flex>
+                  <Text fontWeight="bold" marginRight="5px">
+                    Data da submissão:
+                  </Text>
+                  <Text>{pageInfo?.article.submitionDate.split("T")[0]}</Text>
+                </Flex>
+                <Flex>
+                  <Text fontWeight="bold" marginRight="5px">
+                    Revisor:
+                  </Text>
+                  <Text>{pageInfo?.review.reviewer.name}</Text>
+                </Flex>
+                <Flex>
+                  <Text fontWeight="bold" marginRight="5px">
+                    Data da revisão:
+                  </Text>
+                  <Text>{pageInfo?.review.date.split("T")[0]}</Text>
+                </Flex>
               </Flex>
-              <Flex>
-                <Text fontWeight="bold" marginRight="5px">
-                  Autor:
-                </Text>
-                <Text>{pageInfo?.article.author.name}</Text>
-              </Flex>
-              <Flex>
-                <Text fontWeight="bold" marginRight="5px">
-                  Data da submissão:
-                </Text>
-                <Text>{pageInfo?.article.submitionDate.split("T")[0]}</Text>
-              </Flex>
-              <Flex>
-                <Text fontWeight="bold" marginRight="5px">
-                  Revisor:
-                </Text>
-                <Text>{pageInfo?.review.reviewer.name}</Text>
-              </Flex>
-              <Flex>
-                <Text fontWeight="bold" marginRight="5px">
-                  Data da revisão:
-                </Text>
-                <Text>{pageInfo?.review.date.split("T")[0]}</Text>
+
+              <Flex direction="column">
+                <Button
+                  variant="primary"
+                  marginBottom="10px"
+                  onClick={() => handleReviewerPdf(pageInfo!.article.file)}
+                  disabled={!pageInfo!.article.file}
+                >
+                  Visualizar artigo original
+                </Button>
+                <Button
+                  variant="primary"
+                  marginBottom="10px"
+                  onClick={() => handleReviewerPdf(pageInfo!.review.file)}
+                  disabled={!pageInfo!.review.file}
+                >
+                  Visualizar revisão inicial
+                </Button>
+
+                <Button
+                  display={
+                    user.id === pageInfo?.review.reviewer.id ? "flex" : "none"
+                  }
+                  variant="secondary"
+                  onClick={onOpen}
+                >
+                  Submeter nova revisão
+                </Button>
               </Flex>
             </Flex>
 
-            <Flex direction="column">
-              <Button
-                variant="primary"
-                marginBottom="20px"
-                onClick={() => handleReviewerPdf(pageInfo!.article.file)}
-                disabled={!pageInfo!.article.file}
+            <Text marginTop="15px" fontWeight="bold">
+              Discussão:
+            </Text>
+            <Flex
+              border="1px solid #eaeaea"
+              height="63vh"
+              borderRadius={6}
+              padding={3}
+              direction="column"
+              overflow="auto"
+            >
+              {discussions.map((comment, index) => {
+                return !comment.file ? (
+                  <Flex key={index} direction="column" mb="20px">
+                    <Flex>
+                      <Text fontSize="14px" fontWeight="600" marginX="5px">
+                        {comment.isReviewer ? "Revisor:" : "Autor:"}
+                      </Text>
+                      <Text fontSize="14px" marginRight="60px">
+                        {comment.isReviewer
+                          ? pageInfo?.review.reviewer.name
+                          : pageInfo?.article.author.name}
+                      </Text>
+                    </Flex>
+                    <Box
+                      backgroundColor={
+                        comment.isReviewer ? "#ffea7f" : "#fff7d4"
+                      }
+                      borderRadius={6}
+                      padding={2}
+                      w="max-content"
+                      maxW={"full"}
+                    >
+                      <Text>{comment.value}</Text>
+                      <Flex justifyContent="flex-end">
+                        <Flex alignItems="center" mr="10px">
+                          <CalendarIcon boxSize="2.5" mr="3px" />
+                          <Text fontSize="12px">
+                            {`${comment.createdAt.split("T")[0]}`}
+                          </Text>
+                        </Flex>
+                        <Flex alignItems="center">
+                          <RepeatClockIcon boxSize="2.5" mr="3px" />
+                          <Text fontSize="12px">
+                            {` ${comment.createdAt
+                              .split("T")[1]
+                              .split(":")
+                              .slice(0, 2)
+                              .join(":")}`}
+                          </Text>
+                        </Flex>
+                      </Flex>
+                    </Box>
+                  </Flex>
+                ) : (
+                  <Flex
+                    key={index}
+                    direction="column"
+                    mb="20px"
+                    bgColor="neutral.100"
+                    borderRadius={6}
+                  >
+                    <Flex marginX="5px">
+                      <Text fontSize="14px" fontWeight="600">
+                        {comment.isReviewer ? "Revisor:" : "Autor:"}
+                      </Text>
+                      <Text fontSize="14px" marginRight="60px">
+                        {comment.isReviewer
+                          ? pageInfo?.review.reviewer.name
+                          : pageInfo?.article.author.name}
+                      </Text>
+                      <Text fontSize="14px" fontWeight="600" marginRight="5px">
+                        Data:
+                      </Text>
+                      <Text fontSize="14px">
+                        {`${
+                          comment.createdAt.split("T")[0]
+                        }, ${comment.createdAt
+                          .split("T")[1]
+                          .split(":")
+                          .slice(0, 2)
+                          .join(":")}`}
+                      </Text>
+                    </Flex>
+                    <Flex
+                      backgroundColor={comment.isReviewer ? "white" : "white"}
+                      borderRadius={6}
+                      padding={2}
+                      alignItems="center"
+                      justify="space-between"
+                      margin="5px"
+                    >
+                      <Text>
+                        {comment.isReviewer
+                          ? "Submeteu uma nova versão da revisão"
+                          : "Submeteu uma nova versão do artigo"}
+                      </Text>
+                      <Button
+                        variant="primary"
+                        size={"sm"}
+                        onClick={() =>
+                          handleReviewerPdf(comment.file as string)
+                        }
+                      >
+                        {comment.isReviewer
+                          ? "Visualizar revisão"
+                          : "Visualizar artigo"}
+                      </Button>
+                    </Flex>
+                  </Flex>
+                );
+              })}
+            </Flex>
+            <Flex mt="20px" as="form" onSubmit={handleSubmit(onSubmit)}>
+              <FormControl
+                isInvalid={typeof errors.comment?.message === "string"}
               >
-                Visualizar artigo
-              </Button>
+                <Input
+                  _focusVisible={{ borderColor: "primary.100" }}
+                  placeholder="Adicionar comentário"
+                  {...register("comment")}
+                  id="comment"
+                  isDisabled={!canComment()}
+                />
+                <FormErrorMessage>{errors.comment?.message}</FormErrorMessage>
+              </FormControl>
               <Button
+                isDisabled={!canComment()}
+                type="submit"
                 variant="primary"
-                onClick={() => handleReviewerPdf(pageInfo!.review.file)}
-                disabled={!pageInfo!.review.file}
+                ml="10px"
+                isLoading={isSubmitting}
               >
-                Visualizar artigo revisado
+                Comentar
               </Button>
             </Flex>
           </Flex>
-
-          <Text marginTop="15px" fontWeight="bold">
-            Discussão:
-          </Text>
-          <Flex
-            border="1px solid #eaeaea"
-            height="63vh"
-            borderRadius={6}
-            padding={3}
-            direction="column"
-            overflow="auto"
-          >
-            {discussions.map((comment, index) => {
-              return (
-                <Flex key={index} direction="column" mb="20px">
-                  <Flex>
-                    <Text fontSize="14px" fontWeight="600" marginX="5px">
-                      {comment.isReviewer ? "Revisor:" : "Autor:"}
-                    </Text>
-                    <Text fontSize="14px" marginRight="60px">
-                      {comment.isReviewer
-                        ? pageInfo?.review.reviewer.name
-                        : pageInfo?.article.author.name}
-                    </Text>
-                    <Text fontSize="14px" fontWeight="600" marginRight="5px">
-                      Data:
-                    </Text>
-                    <Text fontSize="14px">
-                      {`${comment.createdAt.split("T")[0]}, ${comment.createdAt
-                        .split("T")[1]
-                        .split(":")
-                        .slice(0, 2)
-                        .join(":")}`}
+          <Modal isOpen={isOpen} onClose={onClose} size="lg">
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Submeter nova revisão de artigo</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody>
+                <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
+                  <Flex
+                    {...getRootProps({ className: "dropzone" })}
+                    minHeight="5rem"
+                    borderStyle="dashed"
+                    _hover={{ cursor: "pointer" }}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    justify="center"
+                    align="center"
+                    w="100%"
+                  >
+                    <input {...getInputProps()} />
+                    <Text color="neutral.500">
+                      {acceptedFilesManager.length === 0
+                        ? "Arraste e solte o artigo em PDF aqui, ou clique para selecioná-lo"
+                        : `Arquivo "${acceptedFilesManager[0].name}" selecionado com sucesso :)`}
                     </Text>
                   </Flex>
-                  <Box
-                    backgroundColor={comment.isReviewer ? "#ffea7f" : "#fff7d4"}
-                    borderRadius={6}
-                    padding={2}
-                  >
-                    <Text>{comment.value}</Text>
-                  </Box>
                 </Flex>
-              );
-            })}
-          </Flex>
-          <Flex mt="20px" as="form" onSubmit={handleSubmit(onSubmit)}>
-            <FormControl
-              isInvalid={typeof errors.comment?.message === "string"}
-            >
-              <Input
-                _focusVisible={{ borderColor: "primary.100" }}
-                placeholder="Adicionar comentário"
-                {...register("comment")}
-                id="comment"
-                isDisabled={!canComment()}
-              />
-              <FormErrorMessage>{errors.comment?.message}</FormErrorMessage>
-            </FormControl>
-            <Button
-              isDisabled={!canComment()}
-              type="submit"
-              variant="primary"
-              ml="10px"
-              isLoading={isSubmitting}
-            >
-              Comentar
-            </Button>
-          </Flex>
-        </Flex>
+              </ModalBody>
+
+              <ModalFooter>
+                <Button
+                  isDisabled={acceptedFilesManager.length === 0}
+                  variant="primary"
+                  onClick={handleUpdateArticle}
+                  isLoading={isSendingFile}
+                >
+                  Enviar
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Modal>
+        </>
       )}
     </LayoutSigned>
   );

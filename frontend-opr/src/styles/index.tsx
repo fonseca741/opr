@@ -17,6 +17,13 @@ const customTheme = {
           backgroundColor: "primary.100",
           color: "#000",
           _hover: { backgroundColor: "primary.200" },
+          boxShadow: "1px 1px 5px #888888",
+        },
+        secondary: {
+          backgroundColor: "primary.50",
+          color: "#000",
+          _hover: { backgroundColor: "primary.75" },
+          boxShadow: "1px 1px 5px #888888",
         },
       },
     },
@@ -26,6 +33,7 @@ const customTheme = {
       "linear-gradient(90.86deg, #0C64D3 4.45%, #2A89FF 101.58%)",
     primary: {
       "50": "#fff2b8",
+      "75": "#ffe469",
       "100": "#FFD000",
       "200": "#ECC100",
     },

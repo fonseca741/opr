@@ -529,27 +529,6 @@ const LoadArticleById = () => {
                             variant="primary"
                             title="Visualizar revisão"
                             onClick={() =>
-                              handleReviewerPdf(reviewer.originalFile)
-                            }
-                            disabled={!reviewer.originalFile}
-                            marginBottom="20px"
-                          >
-                            Visualizar artigo original
-                          </Button>
-                        </Flex>
-
-                        <Flex
-                          flex={0.1}
-                          direction="column"
-                          mr={{ base: "0", sm: "1rem" }}
-                          minW="13.75rem"
-                          alignItems="center"
-                          justifyContent="center"
-                        >
-                          <Button
-                            variant="primary"
-                            title="Visualizar revisão"
-                            onClick={() =>
                               router.push(
                                 `/review/show/${router.query.id}-${reviewer.id}`
                               )
