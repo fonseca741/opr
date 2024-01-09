@@ -85,11 +85,15 @@ const Event = () => {
                   height={{ base: "auto", md: "200px" }}
                   borderRadius="4px"
                   padding="1rem"
-                  _hover={{ border: "2px solid primary.100" }}
+                  _hover={{ border: "1px solid #FFD000" }}
                   boxShadow="0px 0px 10px rgba(0, 0, 0, 0.2)"
+                  cursor="pointer"
+                  onClick={() => router.push(`event/${event.id}`)}
+                  fontSize="14px"
                 >
                   <Flex
                     width="300px"
+                    padding={2}
                     height="60px"
                     backgroundColor="primary.100"
                     marginTop={{ base: "-16px", md: "-25px" }}
@@ -101,10 +105,10 @@ const Event = () => {
                     <Text
                       fontWeight="bold"
                       color="#000"
-                      fontSize="15"
+                      fontSize="13"
                       marginRight="10px"
                     >
-                      {formattStringToDots(event.name.toUpperCase(), 22)}
+                      {formattStringToDots(event.name.toUpperCase(), 105)}
                     </Text>
                   </Flex>
 
@@ -120,7 +124,7 @@ const Event = () => {
                     </Text>
 
                     <Text fontWeight="bold" marginTop="10px">
-                      {formattStringToDots(event.description, 30)}
+                      {formattStringToDots(event.description, 80)}
                     </Text>
                   </Flex>
 
@@ -170,16 +174,6 @@ const Event = () => {
                     <Text fontWeight="bold" marginTop="10px">
                       {event.updatedAt.split("T")[0]}
                     </Text>
-                  </Flex>
-
-                  <Flex justifyContent="end" marginTop="-40px">
-                    <Button
-                      variant="primary"
-                      title="Ver detalhes"
-                      onClick={() => router.replace(`event/${event.id}`)}
-                    >
-                      Ver detalhes
-                    </Button>
                   </Flex>
                 </Box>
               ))
