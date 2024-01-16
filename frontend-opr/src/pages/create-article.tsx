@@ -134,7 +134,7 @@ const CreateArticle = () => {
   return (
     <LayoutSigned>
       <Head>
-        <title>Criar artigo</title>
+        <title>Submeter artigo</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
@@ -277,7 +277,7 @@ const CreateArticle = () => {
             variant="primary"
             title="Criar artigo"
           >
-            Criar artigo
+            Submeter
           </Button>
         </Flex>
       </Flex>

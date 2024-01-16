@@ -322,7 +322,7 @@ const LoadReviewById = () => {
                   variant="secondary"
                   onClick={onOpen}
                 >
-                  Submeter nova revisão
+                  Submeter novo anexo
                 </Button>
               </Flex>
             </Flex>
@@ -421,7 +421,7 @@ const LoadReviewById = () => {
                     >
                       <Text>
                         {comment.isReviewer
-                          ? "Submeteu uma nova versão da revisão"
+                          ? "Submeteu um novo arquivo pdf"
                           : "Submeteu uma nova versão do artigo"}
                       </Text>
                       <Button
@@ -432,7 +432,7 @@ const LoadReviewById = () => {
                         }
                       >
                         {comment.isReviewer
-                          ? "Visualizar revisão"
+                          ? "Visualizar arquivo"
                           : "Visualizar artigo"}
                       </Button>
                     </Flex>

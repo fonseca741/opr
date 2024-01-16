@@ -76,7 +76,7 @@ const Article = () => {
               title="Criar artigo"
               onClick={() => router.replace("create-article")}
             >
-              Criar artigo
+              Submeter artigo
             </Button>
           )}
 
