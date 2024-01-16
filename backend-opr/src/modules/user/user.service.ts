@@ -91,7 +91,7 @@ export class UserService {
 
     await this.mailService.send({
       to: createUserDto.email,
-      subject: 'Bem vindo à PeerVise',
+      subject: 'Bem vindo à OpenChair',
       template: MailTemplate.Welcome,
       context: {
         name: createUserDto.name,

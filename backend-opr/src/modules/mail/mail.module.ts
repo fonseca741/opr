@@ -23,7 +23,7 @@ import { MailService } from './mail.service';
             },
           },
           defaults: {
-            from: '"PeerVise" <peervise@uem.br>',
+            from: '"OpenChair" <openchair@uem.br>',
           },
           template: {
             dir: join(__dirname, 'templates'),
