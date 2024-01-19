@@ -103,7 +103,12 @@ const Login = () => {
           Entrar
         </Button>
 
-        <Button mt="15px" onClick={handleRedirect} leftIcon={<OrcidIcon />}>
+        <Button
+          mt="15px"
+          onClick={handleRedirect}
+          leftIcon={<OrcidIcon />}
+          boxShadow="1px 1px 5px #888888"
+        >
           Entrar via Orcid
         </Button>
 
