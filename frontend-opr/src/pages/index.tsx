@@ -13,7 +13,7 @@ const Home = () => (
       style={{
         display: "flex",
         flexDirection: "column",
-        width: "70%",
+        width: "95%",
         alignItems: "center",
         color: "#696969",
       }}

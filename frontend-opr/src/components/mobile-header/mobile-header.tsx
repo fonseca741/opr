@@ -59,6 +59,20 @@ const MobileHeader = () => {
             justify="center"
             align="center"
           >
+            <Link
+              as={LinkNext}
+              href="/"
+              fontWeight="700"
+              color={pathname === "/" ? "primary.100" : "neutral.500"}
+              fontSize="2rem"
+              cursor="pointer"
+              title="EVENTOS"
+              marginBottom="30px"
+              textDecoration={pathname === "/" ? "underline" : "none"}
+            >
+              HOME
+            </Link>
+
             {["admin", "reviewer"].includes(user.role) && (
               <Link
                 as={LinkNext}

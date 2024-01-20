@@ -19,6 +19,19 @@ const Header = () => {
     >
       <Flex width="20rem" alignItems="center" justifyContent="flex-start">
         <AvatarIcon />
+        <Link
+          as={LinkNext}
+          href="/"
+          fontWeight="700"
+          color="#000"
+          fontSize="1.5rem"
+          marginLeft="1.5rem"
+          cursor="pointer"
+          title="HOME"
+          textDecoration={pathname === "/" ? "underline" : "none"}
+        >
+          HOME
+        </Link>
       </Flex>
 
       <Flex align="center" justifyContent="flex-end">
