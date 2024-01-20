@@ -293,7 +293,7 @@ const LoadEventById = () => {
               fontSize="1.5rem"
               fontWeight="bold"
             >
-              Artigos submetidos
+              Artefatos submetidos
             </Text>
 
             <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
@@ -386,7 +386,7 @@ const LoadEventById = () => {
                             );
                           }}
                         >
-                          Revisar artigo
+                          Revisar artefato
                         </Button>
                       </Flex>
                     )}
@@ -394,7 +394,7 @@ const LoadEventById = () => {
                 ))
               ) : (
                 <Text textAlign="center" width="100%" color="#696969">
-                  Nenhum artigo submetido :(
+                  Nenhum artefato submetido :(
                 </Text>
               )}
             </Flex>

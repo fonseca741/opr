@@ -193,7 +193,7 @@ const LoadReviewById = () => {
         Router.reload();
       };
     } catch {
-      toast.error("Ocorreu ao atualizar o artigo, tente novamente!", {
+      toast.error("Ocorreu ao atualizar o artefato, tente novamente!", {
         autoClose: 5000,
       });
     }
@@ -267,7 +267,7 @@ const LoadReviewById = () => {
               <Flex direction="column">
                 <Flex>
                   <Text fontWeight="bold" marginRight="5px">
-                    Titulo do artigo:
+                    Titulo do artefato:
                   </Text>
                   <Text>{pageInfo?.article.name}</Text>
                 </Flex>
@@ -304,7 +304,7 @@ const LoadReviewById = () => {
                   onClick={() => handleReviewerPdf(pageInfo!.article.file)}
                   disabled={!pageInfo!.article.file}
                 >
-                  Visualizar artigo original
+                  Visualizar artefato original
                 </Button>
                 <Button
                   variant="primary"
@@ -422,7 +422,7 @@ const LoadReviewById = () => {
                       <Text>
                         {comment.isReviewer
                           ? "Submeteu um novo arquivo pdf"
-                          : "Submeteu uma nova versão do artigo"}
+                          : "Submeteu uma nova versão do artefato"}
                       </Text>
                       <Button
                         variant="primary"
@@ -433,7 +433,7 @@ const LoadReviewById = () => {
                       >
                         {comment.isReviewer
                           ? "Visualizar arquivo"
-                          : "Visualizar artigo"}
+                          : "Visualizar artefato"}
                       </Button>
                     </Flex>
                   </Flex>
@@ -467,7 +467,7 @@ const LoadReviewById = () => {
           <Modal isOpen={isOpen} onClose={onClose} size="lg">
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Submeter nova revisão de artigo</ModalHeader>
+              <ModalHeader>Submeter nova revisão de artefato</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
@@ -485,7 +485,7 @@ const LoadReviewById = () => {
                     <input {...getInputProps()} />
                     <Text color="neutral.500">
                       {acceptedFilesManager.length === 0
-                        ? "Arraste e solte o artigo em PDF aqui, ou clique para selecioná-lo"
+                        ? "Arraste e solte o PDF aqui, ou clique para selecioná-lo"
                         : `Arquivo "${acceptedFilesManager[0].name}" selecionado com sucesso :)`}
                     </Text>
                   </Flex>

@@ -12,9 +12,9 @@ import {
   useBoolean,
 } from "@chakra-ui/react";
 import {
+  EventProps,
   ArticleProps as GlobalArticleProps,
   ArticleReviewerProps as GlobalArticleReviewerProps,
-  EventProps,
   UserProps,
 } from "common/types";
 import Head from "next/head";
@@ -66,9 +66,12 @@ const ReviewArticle = () => {
 
           setArticle(apiResponse);
         } catch (error) {
-          toast.error("Ocorreu um erro ao buscar o artigo, tente novamente!", {
-            autoClose: 5000,
-          });
+          toast.error(
+            "Ocorreu um erro ao buscar o artefato, tente novamente!",
+            {
+              autoClose: 5000,
+            }
+          );
         } finally {
           setIsLoading.off();
         }
@@ -98,7 +101,7 @@ const ReviewArticle = () => {
 
   const onSubmit = async (data: Inputs) => {
     if (!acceptedFilesManager.length) {
-      toast.error("É necessário enviar o artigo revisado!", {
+      toast.error("É necessário enviar o artefato revisado!", {
         autoClose: 5000,
       });
 
@@ -133,7 +136,7 @@ const ReviewArticle = () => {
       };
     } catch {
       toast.error(
-        "Ocorreu um erro ao enviar o artigo revisado, tente novamente!",
+        "Ocorreu um erro ao enviar o artefato revisado, tente novamente!",
         {
           autoClose: 5000,
         }
@@ -144,7 +147,7 @@ const ReviewArticle = () => {
   return (
     <LayoutSigned>
       <Head>
-        <title>Artigo</title>
+        <title>Artefato</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
@@ -176,7 +179,7 @@ const ReviewArticle = () => {
               fontSize="1.5rem"
               fontWeight="bold"
             >
-              Dados do artigo
+              Dados do artefato
             </Text>
 
             <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
@@ -242,7 +245,7 @@ const ReviewArticle = () => {
                   alignItems="start"
                   color="neutral.500"
                 >
-                  Descrição do artigo
+                  Descrição do artefato
                 </Text>
                 <Textarea
                   resize="none"
@@ -267,7 +270,7 @@ const ReviewArticle = () => {
                   title="Visualizar artigo"
                   onClick={handlePrintPdf}
                 >
-                  Visualizar artigo
+                  Visualizar artefato
                 </Button>
               </Flex>
 
@@ -282,7 +285,7 @@ const ReviewArticle = () => {
                   title="Baixar artigo"
                   onClick={handleDonwloadPdf}
                 >
-                  Baixar artigo
+                  Baixar artefato
                 </Button>
               </Flex>
             </Flex>
@@ -347,11 +350,11 @@ const ReviewArticle = () => {
                   alignItems="start"
                   color="neutral.500"
                 >
-                  Comentários sobre o artigo
+                  Comentários sobre o artefato
                 </Text>
                 <Textarea
                   resize="none"
-                  placeholder="Digite comentários pontuais sobre o artigo"
+                  placeholder="Digite comentários pontuais sobre o artefato"
                   _focusVisible={{ borderColor: "primary.100" }}
                   {...register("comments")}
                 />
@@ -368,7 +371,7 @@ const ReviewArticle = () => {
                 alignItems="start"
                 color="neutral.500"
               >
-                Artigo com demarcações
+                Artefato com demarcações
               </Text>
               <Flex
                 {...getRootProps({ className: "dropzone" })}
@@ -384,7 +387,7 @@ const ReviewArticle = () => {
                 <input {...getInputProps()} />
                 <Text color="neutral.500">
                   {acceptedFilesManager.length === 0
-                    ? "Arraste e solte o artigo em PDF aqui, ou clique para selecioná-lo"
+                    ? "Arraste e solte o PDF aqui, ou clique para selecioná-lo"
                     : `Arquivo "${acceptedFilesManager[0].name}" selecionado com sucesso :)`}
                 </Text>
               </Flex>

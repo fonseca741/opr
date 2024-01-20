@@ -2,8 +2,8 @@ import { LayoutSigned } from "@/components/layout";
 import authRoute from "@/utils/auth";
 import { Box, Button, Flex, Text, useBoolean } from "@chakra-ui/react";
 import {
-  ArticleProps as GlobalArticleProps,
   EventProps,
+  ArticleProps as GlobalArticleProps,
   UserProps,
 } from "common/types";
 import { useAuth } from "context";
@@ -35,9 +35,12 @@ const Article = () => {
         const apiResponse = await fetchData("GET", "article");
         setArticles(apiResponse);
       } catch (error) {
-        toast.error("Ocorreu um erro ao buscar os artigos, tente novamente!", {
-          autoClose: 5000,
-        });
+        toast.error(
+          "Ocorreu um erro ao buscar os artefatos, tente novamente!",
+          {
+            autoClose: 5000,
+          }
+        );
       } finally {
         setLoading.off();
       }
@@ -47,7 +50,7 @@ const Article = () => {
   return (
     <LayoutSigned>
       <Head>
-        <title>Artigos</title>
+        <title>Artefatos</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
@@ -73,10 +76,10 @@ const Article = () => {
                 marginTop: "1rem",
               }}
               variant="primary"
-              title="Criar artigo"
+              title="Criar artefato"
               onClick={() => router.replace("create-article")}
             >
-              Submeter artigo
+              Submeter artefato
             </Button>
           )}
 
@@ -190,7 +193,7 @@ const Article = () => {
               ))
             ) : (
               <Text marginTop="20px" color="#696969">
-                Nenhum artigo cadastrado :(
+                Nenhum artefato cadastrado :(
               </Text>
             )}
           </Flex>

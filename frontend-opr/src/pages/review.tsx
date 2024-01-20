@@ -98,7 +98,7 @@ const Reviews = () => {
                     >
                       <Input
                         name="title"
-                        label="Título do artigo"
+                        label="Título do artefato"
                         _focusVisible={{ borderColor: "primary.100" }}
                         defaultValue={article.name}
                         readOnly
@@ -137,7 +137,7 @@ const Reviews = () => {
                         }
                         marginBottom="20px"
                       >
-                        Acessar artigo
+                        Acessar artefato
                       </Button>
                     </Flex>
 
@@ -151,7 +151,7 @@ const Reviews = () => {
                     >
                       <Button
                         variant="primary"
-                        title="Revisar artigo"
+                        title="Revisar artefato"
                         onClick={() =>
                           router.push(
                             `/review/show/${article.articleid}-${article.reviewid}`

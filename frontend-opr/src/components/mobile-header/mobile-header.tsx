@@ -102,13 +102,13 @@ const MobileHeader = () => {
               }
               fontSize="2rem"
               cursor="pointer"
-              title="ARTIGOS"
+              title="ARTEFATOS"
               textDecoration={
                 pathname.includes("article") ? "underline" : "none"
               }
               marginBottom="30px"
             >
-              ARTIGOS
+              ARTEFATOS
             </Link>
 
             {["admin"].includes(user.role) && (

@@ -11,10 +11,10 @@ import {
   useBoolean,
 } from "@chakra-ui/react";
 import {
-  ArticleProps as GlobalArticleProps,
-  ArticleReviewerProps as GlobalArticleReviewerProps,
   ArticleReviewProps,
   EventProps,
+  ArticleProps as GlobalArticleProps,
+  ArticleReviewerProps as GlobalArticleReviewerProps,
   UserProps,
 } from "common/types";
 import { useAuth } from "context";
@@ -90,9 +90,12 @@ const LoadArticleById = () => {
           setArticle(apiResponse);
           setArticleReviews(formattedReviews);
         } catch (error) {
-          toast.error("Ocorreu um erro ao buscar o artigo, tente novamente!", {
-            autoClose: 5000,
-          });
+          toast.error(
+            "Ocorreu um erro ao buscar o artefato, tente novamente!",
+            {
+              autoClose: 5000,
+            }
+          );
         } finally {
           setIsLoading.off();
         }
@@ -140,14 +143,14 @@ const LoadArticleById = () => {
           file: fileResult.replace("data:application/pdf;base64,", ""),
         });
 
-        toast.success("Artigo atualizado com sucesso!", {
+        toast.success("Artefato atualizado com sucesso!", {
           autoClose: 5000,
         });
 
         Router.reload();
       };
     } catch {
-      toast.error("Ocorreu ao atualizar o artigo, tente novamente!", {
+      toast.error("Ocorreu ao atualizar o artefato, tente novamente!", {
         autoClose: 5000,
       });
     }
@@ -156,7 +159,7 @@ const LoadArticleById = () => {
   return (
     <LayoutSigned>
       <Head>
-        <title>Artigo</title>
+        <title>Artefato</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
@@ -182,7 +185,7 @@ const LoadArticleById = () => {
               fontSize="1.5rem"
               fontWeight="bold"
             >
-              Dados do artigo
+              Dados do artefato
             </Text>
 
             <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
@@ -232,7 +235,7 @@ const LoadArticleById = () => {
                   alignItems="start"
                   color="neutral.500"
                 >
-                  Descrição do artigo
+                  Descrição do artefato
                 </Text>
                 <Textarea
                   resize="none"
@@ -253,7 +256,7 @@ const LoadArticleById = () => {
                   alignItems="start"
                   color="neutral.500"
                 >
-                  Nova submissão de artigo
+                  Nova submissão de artefato
                 </Text>
                 <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
                   <Flex
@@ -271,7 +274,7 @@ const LoadArticleById = () => {
                     <input {...getInputProps()} />
                     <Text color="neutral.500">
                       {acceptedFilesManager.length === 0
-                        ? "Arraste e solte o artigo em PDF aqui, ou clique para selecioná-lo"
+                        ? "Arraste e solte o artefato em PDF aqui, ou clique para selecioná-lo"
                         : `Arquivo "${acceptedFilesManager[0].name}" selecionado com sucesso :)`}
                     </Text>
                   </Flex>
@@ -292,7 +295,7 @@ const LoadArticleById = () => {
                   title="Visualizar artigo"
                   onClick={handlePrintPdf}
                 >
-                  Visualizar artigo
+                  Visualizar artefato
                 </Button>
               </Flex>
 
@@ -307,7 +310,7 @@ const LoadArticleById = () => {
                   title="Baixar artigo"
                   onClick={handleDonwloadPdf}
                 >
-                  Baixar artigo
+                  Baixar artefato
                 </Button>
               </Flex>
 
@@ -323,7 +326,7 @@ const LoadArticleById = () => {
                     title="Atualizar artigo"
                     onClick={handleUpdateArticle}
                   >
-                    Atualizar artigo
+                    Atualizar artefato
                   </Button>
                 </Flex>
               )}
@@ -338,7 +341,7 @@ const LoadArticleById = () => {
               fontSize="1.5rem"
               fontWeight="bold"
             >
-              Autor do artigo
+              Autor do artefato
             </Text>
 
             <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
@@ -384,7 +387,7 @@ const LoadArticleById = () => {
               fontSize="1.5rem"
               fontWeight="bold"
             >
-              Revisores do artigo
+              Revisores do artefato
             </Text>
 
             <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
@@ -432,7 +435,7 @@ const LoadArticleById = () => {
                 ))
               ) : (
                 <Text textAlign="center" width="100%" color="#696969">
-                  Nenhum revisor para o artigo :(
+                  Nenhum revisor para o artefato :(
                 </Text>
               )}
             </Flex>
@@ -446,7 +449,7 @@ const LoadArticleById = () => {
               fontSize="1.5rem"
               fontWeight="bold"
             >
-              Revisões do artigo
+              Revisões do artefato
             </Text>
 
             <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">

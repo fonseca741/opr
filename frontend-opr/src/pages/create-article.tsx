@@ -116,14 +116,14 @@ const CreateArticle = () => {
           event: selectedEvent.value,
         });
 
-        toast.success("Artigo submetido com sucesso!", {
+        toast.success("Artefato submetido com sucesso!", {
           autoClose: 5000,
         });
 
         router.replace("/articles");
       };
     } catch {
-      toast.error("Ocorreu ao submeter o artigo, tente novamente!", {
+      toast.error("Ocorreu ao submeter o artefato, tente novamente!", {
         autoClose: 5000,
       });
     } finally {
@@ -134,7 +134,7 @@ const CreateArticle = () => {
   return (
     <LayoutSigned>
       <Head>
-        <title>Submeter artigo</title>
+        <title>Submeter artefato</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
@@ -153,7 +153,7 @@ const CreateArticle = () => {
             fontSize="1.5rem"
             fontWeight="bold"
           >
-            Dados do artigo
+            Dados do artefato
           </Text>
 
           <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
@@ -165,7 +165,7 @@ const CreateArticle = () => {
             >
               <Input
                 label="Nome*"
-                placeholder="Digite o título do artigo"
+                placeholder="Digite o título do artefato"
                 _focusVisible={{ borderColor: "primary.100" }}
                 error={errors.name?.message}
                 {...register("name")}
@@ -186,11 +186,11 @@ const CreateArticle = () => {
                 alignItems="start"
                 color="neutral.500"
               >
-                Descrição do artigo*
+                Descrição do artefato*
               </Text>
               <Textarea
                 resize="none"
-                placeholder="Digite a descrição do artigo"
+                placeholder="Digite a descrição do artefato"
                 _focusVisible={{ borderColor: "primary.100" }}
                 {...register("description")}
               />
@@ -217,7 +217,7 @@ const CreateArticle = () => {
           <input {...getInputProps()} />
           <Text color="neutral.500">
             {acceptedFilesManager.length === 0
-              ? "Arraste e solte o artigo em PDF aqui, ou clique para selecioná-lo"
+              ? "Arraste e solte o artefato em PDF aqui, ou clique para selecioná-lo"
               : `Arquivo "${acceptedFilesManager[0].name}" selecionado com sucesso :)`}
           </Text>
         </Flex>

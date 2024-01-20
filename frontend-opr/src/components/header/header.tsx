@@ -60,10 +60,10 @@ const Header = () => {
           fontSize="1.5rem"
           marginLeft="1.5rem"
           cursor="pointer"
-          title="ARTIGOS"
+          title="ARTEFATOS"
           textDecoration={pathname.includes("article") ? "underline" : "none"}
         >
-          ARTIGOS
+          ARTEFATOS
         </Link>
 
         {["admin"].includes(user.role) && (
