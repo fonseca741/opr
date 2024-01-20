@@ -171,7 +171,7 @@ const CreateEvent = () => {
               minW="13.75rem"
             >
               <Input
-                label="Nome"
+                label="Nome*"
                 placeholder="Digite o nome do evento"
                 _focusVisible={{ borderColor: "primary.100" }}
                 error={errors.name?.message}
@@ -187,7 +187,7 @@ const CreateEvent = () => {
             >
               <Input
                 type="date"
-                label="Data inicial"
+                label="Data inicial*"
                 _focusVisible={{ borderColor: "primary.100" }}
                 error={errors.initial_date?.message}
                 {...register("initial_date")}
@@ -202,7 +202,7 @@ const CreateEvent = () => {
             >
               <Input
                 type="date"
-                label="Data final"
+                label="Data final*"
                 _focusVisible={{ borderColor: "primary.100" }}
                 error={errors.final_date?.message}
                 {...register("final_date")}
@@ -223,7 +223,7 @@ const CreateEvent = () => {
                 alignItems="start"
                 color="neutral.500"
               >
-                Descrição do evento
+                Descrição do evento*
               </Text>
               <Textarea
                 resize="none"
@@ -306,7 +306,7 @@ const CreateEvent = () => {
             minW="13.75rem"
           >
             <Text fontSize="sm" mb="2px" alignItems="start" color="neutral.500">
-              Chairs do evento
+              Chairs do evento*
             </Text>
 
             <Select

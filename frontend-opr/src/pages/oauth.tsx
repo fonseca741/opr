@@ -166,7 +166,7 @@ const OAuth = () => {
             complete as informações abaixo para concluir o seu cadastro.
           </Text>
           <Input
-            label="E-mail"
+            label="E-mail*"
             placeholder="Digite seu e-mail"
             error={errors.email?.message}
             color="#000"
@@ -175,7 +175,7 @@ const OAuth = () => {
           />
 
           <Text fontSize="sm" mb="2px" alignItems="start" color="neutral.500">
-            Permissão
+            Permissão*
           </Text>
           <Select
             theme={(theme) => ({

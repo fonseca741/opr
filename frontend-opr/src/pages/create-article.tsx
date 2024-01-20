@@ -164,7 +164,7 @@ const CreateArticle = () => {
               minW="13.75rem"
             >
               <Input
-                label="Nome"
+                label="Nome*"
                 placeholder="Digite o título do artigo"
                 _focusVisible={{ borderColor: "primary.100" }}
                 error={errors.name?.message}
@@ -186,7 +186,7 @@ const CreateArticle = () => {
                 alignItems="start"
                 color="neutral.500"
               >
-                Descrição do artigo
+                Descrição do artigo*
               </Text>
               <Textarea
                 resize="none"
@@ -230,7 +230,7 @@ const CreateArticle = () => {
             minW="13.75rem"
           >
             <Text fontSize="sm" mb="2px" alignItems="start" color="neutral.500">
-              Evento
+              Evento*
             </Text>
 
             <Select

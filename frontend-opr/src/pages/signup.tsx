@@ -102,7 +102,7 @@ const Signup = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <Input
-          label="Nome"
+          label="Nome*"
           placeholder="Digite seu nome"
           error={errors.name?.message}
           color="#000"
@@ -111,7 +111,7 @@ const Signup = () => {
         />
 
         <Input
-          label="E-mail"
+          label="E-mail*"
           placeholder="Digite seu e-mail"
           error={errors.email?.message}
           color="#000"
@@ -120,7 +120,7 @@ const Signup = () => {
         />
 
         <Text fontSize="sm" mb="2px" alignItems="start" color="neutral.500">
-          Permissão
+          Permissão*
         </Text>
         <Select
           theme={(theme) => ({
@@ -160,7 +160,7 @@ const Signup = () => {
         <Box margin="5px 0" />
 
         <Input
-          label="Senha"
+          label="Senha*"
           placeholder="Digite sua senha"
           type="password"
           error={errors.password?.message}
@@ -170,7 +170,7 @@ const Signup = () => {
         />
 
         <Input
-          label="Confirmar senha"
+          label="Confirmar senha*"
           placeholder="Confirme sua senha"
           type="password"
           error={errors.passwordConfirmation?.message}
