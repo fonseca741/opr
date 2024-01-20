@@ -52,7 +52,7 @@ export class ArticleReviewDiscussionService {
       to: articleReviewDiscussion.isReviewer
         ? articleAuthor.email
         : reviewer.email,
-      subject: 'Você recebeu um novo comentário',
+      subject: '[OpenChair] Você recebeu um novo comentário',
       template: MailTemplate.NewDiscussion,
       context: {
         name: articleReviewDiscussion.isReviewer

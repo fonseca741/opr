@@ -63,7 +63,7 @@ export class ArticleService {
       eventReviewers.forEach((reviewer) => {
         this.mailService.send({
           to: reviewer.email,
-          subject: 'Novo artigo disponível para revisão!',
+          subject: '[OpenChair] Novo artigo disponível para revisão!',
           template: MailTemplate.NewArticle,
           context: {
             name: reviewer.name,
@@ -108,7 +108,7 @@ export class ArticleService {
       for (const review of reviews) {
         this.mailService.send({
           to: review.email,
-          subject: 'Revisão com novo artigo para analisar.',
+          subject: '[OpenChair] Revisão com novo artigo para analisar.',
           template: MailTemplate.UpdateArticle,
           context: {
             articleName: review.articlename,

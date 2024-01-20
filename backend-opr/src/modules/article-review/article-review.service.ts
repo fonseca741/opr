@@ -67,7 +67,7 @@ export class ArticleReviewService {
       });
       await this.mailService.send({
         to: article.creator.email,
-        subject: 'Você recebeu uma nova revisão!',
+        subject: '[OpenChair] Você recebeu uma nova revisão!',
         template: MailTemplate.NewReview,
         context: {
           name: article.creator.name,
