@@ -23,11 +23,11 @@ const LayoutDefault = ({ children }: LayoutDefaultProps) => (
       <Text
         color="#fff"
         fontWeight="bold"
-        fontSize="35"
+        fontSize="50"
         textAlign="center"
         width="60%"
       >
-        SOFTWARE PARA APOIO À OPEN PEER REVIEW
+        OpenChair
       </Text>
     </Flex>
 
