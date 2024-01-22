@@ -2,7 +2,21 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { LayoutDefault } from "@/components/layout";
 import fetchData from "@/utils/fetch";
-import { Box, Flex, Link, Text, useBoolean } from "@chakra-ui/react";
+import {
+  Box,
+  Button as ChakraButton,
+  Flex,
+  Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useBoolean,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Head from "next/head";
 import LinkNext from "next/link";
@@ -38,6 +52,7 @@ type Inputs = {
 };
 
 const Signup = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const {
     register,
@@ -122,10 +137,11 @@ const Signup = () => {
         <Text fontSize="sm" mb="2px" alignItems="start" color="neutral.500">
           Permissão*
         </Text>
+
         <Select
           theme={(theme) => ({
             ...theme,
-            borderRadius: 0,
+            borderRadius: 5,
             colors: {
               ...theme.colors,
               text: "orangered",
@@ -156,6 +172,11 @@ const Signup = () => {
           ]}
           placeholder="Selecione uma permissão"
         />
+        <Flex direction="row" alignSelf="center">
+          <ChakraButton mt="10px" size="sm" onClick={onOpen}>
+            Ver permissão dos papéis
+          </ChakraButton>
+        </Flex>
 
         <Box margin="5px 0" />
 
@@ -201,6 +222,35 @@ const Signup = () => {
           acessar sistema
         </Link>
       </Flex>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Descrição dos papeis</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Todos os papeis tem permissão para fazer a listagem de artefatos,
+            eventos e revisões, se tratando de Ciência Aberta, todo o processo
+            ficará disponível de forma pública.
+            <br />
+            <br />
+            <strong>Revisor:</strong> O revisor, assim que associado à um evento
+            científico, poderá realizar revisões dos artefatos submetidos, dando
+            início a uma discussão.
+            <br />
+            <br />
+            <strong>Autor:</strong> O autor, poderá realizar submissões de
+            artefatos para eventos científicos já cadastrados e assim que algum
+            revisor iniciar uma discussão sobre o item submetido, poderá também
+            participar da discussão de seu próprio artefato.
+            <br />
+            <br />
+            <strong>Editor:</strong> O editor é o responsável pela criação e
+            edição dos eventos científicos, poderá adicionar qualquer usuário
+            cadastrado na ferramenta como Chair, que também ficará responsável
+            pelo gerenciamento do evento.
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </LayoutDefault>
   );
 };
