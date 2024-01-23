@@ -119,15 +119,14 @@ const CreateArticle = () => {
         toast.success("Artefato submetido com sucesso!", {
           autoClose: 5000,
         });
-
+        setIsLoading.off();
         router.replace("/articles");
       };
     } catch {
+      setIsLoading.off();
       toast.error("Ocorreu ao submeter o artefato, tente novamente!", {
         autoClose: 5000,
       });
-    } finally {
-      setIsLoading.off();
     }
   };
 
