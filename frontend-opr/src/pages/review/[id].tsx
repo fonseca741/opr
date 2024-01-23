@@ -48,6 +48,7 @@ const ReviewArticle = () => {
   } = useForm<Inputs>();
   const router = useRouter();
   const [isLoading, setIsLoading] = useBoolean(true);
+  const [isSubmiting, setIsSubmiting] = useState(false);
   const [article, setArticle] = useState<ArticleProps>();
   const [acceptedFilesManager, setAcceptedFilesManager] = useState<File[]>([]);
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -110,6 +111,8 @@ const ReviewArticle = () => {
 
     const id = router.query.id as string;
 
+    setIsSubmiting(true);
+
     try {
       let reader = new FileReader();
       reader.readAsDataURL(acceptedFilesManager[0]);
@@ -127,6 +130,7 @@ const ReviewArticle = () => {
             isReviewer: true,
           },
         });
+        setIsSubmiting(false);
 
         toast.success("Revisão submetida com sucesso!", {
           autoClose: 5000,
@@ -135,6 +139,7 @@ const ReviewArticle = () => {
         router.push("/review");
       };
     } catch {
+      setIsSubmiting(false);
       toast.error(
         "Ocorreu um erro ao enviar o artefato revisado, tente novamente!",
         {
@@ -350,7 +355,7 @@ const ReviewArticle = () => {
                   alignItems="start"
                   color="neutral.500"
                 >
-                  Comentários sobre o artefato
+                  Comentários sobre o artefato*
                 </Text>
                 <Textarea
                   resize="none"
@@ -371,7 +376,7 @@ const ReviewArticle = () => {
                 alignItems="start"
                 color="neutral.500"
               >
-                Artefato com demarcações
+                Artefato com demarcações*
               </Text>
               <Flex
                 {...getRootProps({ className: "dropzone" })}
@@ -405,7 +410,7 @@ const ReviewArticle = () => {
                 h="3.25rem"
                 type="submit"
                 disabled={isLoading}
-                isLoading={isLoading}
+                isLoading={isSubmiting}
                 variant="primary"
                 title="Adicionar revisão"
               >
