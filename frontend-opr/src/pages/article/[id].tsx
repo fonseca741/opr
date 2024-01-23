@@ -44,6 +44,7 @@ const LoadArticleById = () => {
   const { user } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useBoolean(true);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [article, setArticle] = useState<ArticleProps>();
   const [articleReviews, setArticleReviews] = useState<
     FormattedArticleReviewProps[]
@@ -132,6 +133,7 @@ const LoadArticleById = () => {
         });
         return;
       }
+      setIsUpdating(true);
 
       let reader = new FileReader();
       reader.readAsDataURL(acceptedFilesManager[0]);
@@ -147,9 +149,11 @@ const LoadArticleById = () => {
           autoClose: 5000,
         });
 
+        setIsUpdating(false);
         Router.reload();
       };
     } catch {
+      setIsUpdating(false);
       toast.error("Ocorreu ao atualizar o artefato, tente novamente!", {
         autoClose: 5000,
       });
@@ -325,6 +329,7 @@ const LoadArticleById = () => {
                     variant="primary"
                     title="Atualizar artigo"
                     onClick={handleUpdateArticle}
+                    isLoading={isUpdating}
                   >
                     Atualizar artefato
                   </Button>
