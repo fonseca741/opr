@@ -126,68 +126,72 @@ const Article = () => {
                     </Text>
                   </Flex>
 
-                  <Flex display="flex" alignItems="center">
+                  <Flex my="5px">
                     <Text
                       fontSize="20px"
                       fontWeight="bold"
-                      marginTop="10px"
-                      marginRight="15px"
+                      marginTop="2px"
+                      marginRight="2px"
                       title="Descrição"
                     >
                       <GrDocumentText />
                     </Text>
-
-                    <Text fontWeight="bold" marginTop="10px">
-                      {formattStringToDots(article.description, 80)}
+                    <Text fontWeight="bold" mr="5px">
+                      Descrição:
                     </Text>
+
+                    <Text>{formattStringToDots(article.description, 80)}</Text>
                   </Flex>
 
-                  <Flex display="flex" alignItems="center">
+                  <Flex my="5px">
                     <Text
                       fontSize="20px"
                       fontWeight="bold"
-                      marginTop="10px"
-                      marginRight="15px"
+                      marginTop="2px"
+                      marginRight="2px"
                       title="Autor"
                     >
                       <FiUser />
                     </Text>
-
-                    <Text fontWeight="bold" marginTop="10px">
-                      {article.creator.name}
+                    <Text fontWeight="bold" mr="5px">
+                      Autor:
                     </Text>
+
+                    <Text>{article.creator.name}</Text>
                   </Flex>
 
-                  <Flex display="flex" alignItems="center">
+                  <Flex my="5px">
                     <Text
                       fontSize="20px"
                       fontWeight="bold"
-                      marginTop="10px"
-                      marginRight="15px"
+                      marginTop="2px"
+                      marginRight="2px"
                       title="Atualizado em"
                     >
                       <AiOutlineClockCircle />
                     </Text>
-
-                    <Text fontWeight="bold" marginTop="10px">
-                      {article.updatedAt.split("T")[0]}
+                    <Text fontWeight="bold" mr="5px">
+                      Atualizado em:
                     </Text>
+
+                    <Text>{article.updatedAt.split("T")[0]}</Text>
                   </Flex>
 
-                  <Flex display="flex" alignItems="center">
+                  <Flex my="5px">
                     <Text
                       fontSize="20px"
                       fontWeight="bold"
-                      marginTop="10px"
-                      marginRight="15px"
+                      marginTop="2px"
+                      marginRight="2px"
                       title="Nome do evento"
                     >
                       <BsCalendar3Event />
                     </Text>
-
-                    <Text fontWeight="bold" marginTop="10px">
-                      {formattStringToDots(article.event.name, 80)}
+                    <Text fontWeight="bold" mr="5px">
+                      Evento:
                     </Text>
+
+                    <Text>{formattStringToDots(article.event.name, 80)}</Text>
                   </Flex>
                 </Box>
               ))

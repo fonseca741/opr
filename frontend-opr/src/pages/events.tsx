@@ -112,68 +112,72 @@ const Event = () => {
                     </Text>
                   </Flex>
 
-                  <Flex display="flex" alignItems="center">
+                  <Flex my="5px">
                     <Text
-                      fontSize="20px"
+                      fontSize="15px"
                       fontWeight="bold"
-                      marginTop="10px"
-                      marginRight="15px"
+                      marginTop="2px"
+                      marginRight="2px"
                       title="Descrição"
                     >
                       <GrDocumentText />
                     </Text>
-
-                    <Text fontWeight="bold" marginTop="10px">
-                      {formattStringToDots(event.description, 80)}
+                    <Text fontWeight="bold" mr="5px">
+                      Descrição:
                     </Text>
+
+                    <Text>{formattStringToDots(event.description, 80)}</Text>
                   </Flex>
 
-                  <Flex display="flex" alignItems="center">
+                  <Flex my="5px">
                     <Text
                       fontSize="20px"
                       fontWeight="bold"
-                      marginTop="10px"
-                      marginRight="15px"
+                      marginTop="2px"
+                      marginRight="2px"
                       title="Data de inicio"
                     >
                       <MdOutlineEventAvailable />
                     </Text>
-
-                    <Text fontWeight="bold" marginTop="10px">
-                      {event.startDate.split("T")[0]}
+                    <Text fontWeight="bold" mr="5px">
+                      Data de inicio:
                     </Text>
+
+                    <Text>{event.startDate.split("T")[0]}</Text>
                   </Flex>
 
-                  <Flex display="flex" alignItems="center">
+                  <Flex my="5px">
                     <Text
                       fontSize="20px"
                       fontWeight="bold"
-                      marginTop="10px"
-                      marginRight="15px"
+                      marginTop="2px"
+                      marginRight="2px"
                       title="Data de encerramento"
                     >
                       <MdOutlineEventBusy />
                     </Text>
-
-                    <Text fontWeight="bold" marginTop="10px">
-                      {event.endDate.split("T")[0]}
+                    <Text fontWeight="bold" mr="5px">
+                      Data de encerramento:
                     </Text>
+
+                    <Text>{event.endDate.split("T")[0]}</Text>
                   </Flex>
 
-                  <Flex display="flex" alignItems="center">
+                  <Flex my="5px">
                     <Text
                       fontSize="20px"
                       fontWeight="bold"
-                      marginTop="10px"
-                      marginRight="15px"
+                      marginTop="2px"
+                      marginRight="2px"
                       title="Atualizado em"
                     >
                       <AiOutlineClockCircle />
                     </Text>
-
-                    <Text fontWeight="bold" marginTop="10px">
-                      {event.updatedAt.split("T")[0]}
+                    <Text fontWeight="bold" mr="5px">
+                      Atualizado em:
                     </Text>
+
+                    <Text>{event.updatedAt.split("T")[0]}</Text>
                   </Flex>
                 </Box>
               ))
