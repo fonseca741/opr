@@ -67,9 +67,7 @@ type Inputs = {
 };
 
 const commentSchema = object({
-  comment: string()
-    .required("O compo é obrigatório")
-    .min(50, "O comentário deve conter no mínimo 50 caracteres."),
+  comment: string().required("O compo é obrigatório"),
 });
 
 const LoadReviewById = () => {
