@@ -81,7 +81,7 @@ const CreateArticle = () => {
 
         if (eventId) {
           setSelectedEvent(
-            formattedResponse.filter((event) => event.value == eventId)[0]
+            formattedResponse.filter((event: any) => event.value == eventId)[0]
           );
         }
       } catch (error) {
