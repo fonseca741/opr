@@ -7,7 +7,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
-import { GrDocumentText } from "react-icons/gr";
+import { FiUser } from "react-icons/fi";
+import { GrDocumentText, GrUserAdmin } from "react-icons/gr";
 import { MdOutlineEventAvailable, MdOutlineEventBusy } from "react-icons/md";
 import { toast } from "react-toastify";
 import fetchData from "utils/fetch";
@@ -82,7 +83,7 @@ const Event = () => {
                   width={{ base: "300px", md: "400px" }}
                   color="#000"
                   margin="1.5rem"
-                  height={{ base: "auto", md: "200px" }}
+                  height={{ base: "auto", md: "min-content" }}
                   borderRadius="4px"
                   padding="1rem"
                   _hover={{ border: "1px solid #FFD000" }}
@@ -127,6 +128,44 @@ const Event = () => {
                     </Text>
 
                     <Text>{formattStringToDots(event.description, 80)}</Text>
+                  </Flex>
+
+                  <Flex my="5px">
+                    <Text
+                      fontSize="20px"
+                      fontWeight="bold"
+                      marginTop="2px"
+                      marginRight="2px"
+                      title="Descrição"
+                    >
+                      <FiUser />
+                    </Text>
+                    <Text fontWeight="bold" mr="5px">
+                      Editor(a):
+                    </Text>
+
+                    <Text>{event.creator.name}</Text>
+                  </Flex>
+
+                  <Flex my="5px">
+                    <Text
+                      fontSize="18px"
+                      fontWeight="bold"
+                      marginX="2px"
+                      marginRight="2px"
+                      title="Descrição"
+                    >
+                      <GrUserAdmin />
+                    </Text>
+                    <Text fontWeight="bold" mr="5px">
+                      Chairs:
+                    </Text>
+
+                    <Text>
+                      {event.eventChairs
+                        .map((ec: any) => ec.chair.name)
+                        .join(", ")}
+                    </Text>
                   </Flex>
 
                   <Flex my="5px">

@@ -43,6 +43,7 @@ export class EventService {
       order: {
         endDate: 'DESC',
       },
+      relations: ['creator', 'eventChairs.chair'],
     });
   }
 
