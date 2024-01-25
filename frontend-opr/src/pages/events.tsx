@@ -92,24 +92,38 @@ const Event = () => {
                   onClick={() => router.push(`event/${event.id}`)}
                   fontSize="14px"
                 >
-                  <Flex
-                    width="300px"
-                    padding={2}
-                    height="60px"
-                    backgroundColor="primary.100"
-                    marginTop={{ base: "-16px", md: "-25px" }}
-                    marginLeft={{ base: "-16px", md: "-35px" }}
-                    borderRadius="4px"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Text
-                      fontWeight="bold"
-                      color="#000"
-                      fontSize="13"
-                      marginRight="10px"
+                  <Flex justifyContent="space-between">
+                    <Flex
+                      width="300px"
+                      padding={2}
+                      height="60px"
+                      backgroundColor="primary.100"
+                      marginTop={{ base: "-16px", md: "-25px" }}
+                      marginLeft={{ base: "-16px", md: "-35px" }}
+                      borderRadius="4px"
+                      alignItems="center"
+                      justifyContent="center"
                     >
-                      {formattStringToDots(event.name.toUpperCase(), 105)}
+                      <Text
+                        fontWeight="bold"
+                        color="#000"
+                        fontSize="13"
+                        marginRight="10px"
+                      >
+                        {formattStringToDots(event.name.toUpperCase(), 105)}
+                      </Text>
+                    </Flex>
+
+                    <Text
+                      display={
+                        new Date(event!.endDate) < new Date() ? "flex" : "none"
+                      }
+                      color="red"
+                      fontSize="25px"
+                      fontWeight="bold"
+                      title="Evento encerrado"
+                    >
+                      <MdOutlineEventBusy />
                     </Text>
                   </Flex>
 
@@ -185,7 +199,12 @@ const Event = () => {
                     <Text>{event.startDate.split("T")[0]}</Text>
                   </Flex>
 
-                  <Flex my="5px">
+                  <Flex
+                    my="5px"
+                    color={
+                      new Date(event!.endDate) < new Date() ? "red" : "black"
+                    }
+                  >
                     <Text
                       fontSize="20px"
                       fontWeight="bold"

@@ -91,6 +91,7 @@ const OAuth = () => {
           toast.error("Ocorreu um erro ao realizar o login pelo orcid", {
             autoClose: 5000,
           });
+          router.push("/login");
         } finally {
           setIsLoading.off();
         }
