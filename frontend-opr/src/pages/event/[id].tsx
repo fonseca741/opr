@@ -289,12 +289,27 @@ const LoadEventById = () => {
             <Text
               width="100%"
               textAlign="center"
-              margin="1rem 0 3rem 0"
+              margin="1rem 0 1rem 0"
               fontSize="1.5rem"
               fontWeight="bold"
             >
               Artefatos submetidos
             </Text>
+
+            <Button
+              mb="3rem"
+              variant="primary"
+              alignSelf="center"
+              isDisabled={
+                !["admin", "author"].includes(user.role) ||
+                new Date(event!.endDate) < new Date()
+              }
+              onClick={() =>
+                router.push({ pathname: `/create-article/${router.query.id}` })
+              }
+            >
+              Submeter artefato
+            </Button>
 
             <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
               {event?.eventArticles?.length ? (

@@ -57,6 +57,12 @@ const CreateArticle = () => {
   const [events, setEvents] = useState<SelectProps[]>([]);
 
   useEffect(() => {
+    console.log("Novo valor de selectedEvent:", selectedEvent);
+    // Restante do código
+  }, [selectedEvent]);
+
+  useEffect(() => {
+    const { id: eventId } = router.query;
     (async () => {
       try {
         const apiResponse = await fetchData("GET", "event");
@@ -72,13 +78,19 @@ const CreateArticle = () => {
             }]`,
           }));
         setEvents(formattedResponse);
+
+        if (eventId) {
+          setSelectedEvent(
+            formattedResponse.filter((event) => event.value == eventId)[0]
+          );
+        }
       } catch (error) {
         toast.error("Ocorreu um erro ao buscar os eventos, tente novamente!", {
           autoClose: 5000,
         });
       }
     })();
-  }, []);
+  }, [router.query]);
 
   useEffect(() => {
     setAcceptedFilesManager(acceptedFiles);
@@ -233,6 +245,7 @@ const CreateArticle = () => {
             </Text>
 
             <Select
+              key={selectedEvent ? selectedEvent.value : "no-event"}
               theme={(theme) => ({
                 ...theme,
                 borderRadius: 0,
@@ -245,6 +258,7 @@ const CreateArticle = () => {
               })}
               defaultValue={selectedEvent}
               onChange={(value) => {
+                console.log(value);
                 setSelectedEvent(value as SelectProps);
               }}
               options={events}

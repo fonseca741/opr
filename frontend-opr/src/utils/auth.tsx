@@ -11,7 +11,7 @@ const myRoutes: Record<string, string[]> = {
   "/articles": ["admin", "author", "publisher", "reviewer"],
   "/users": ["admin"],
   "/review": ["admin", "reviewer"],
-  "/create-article": ["admin", "author"],
+  "/create-article/[[...id]]": ["admin", "author"],
   "/create-event": ["admin", "publisher"],
   "/review/[id]": ["admin", "reviewer"],
   "/review/show/[id]": ["admin", "author", "publisher", "reviewer"],
