@@ -87,7 +87,7 @@ const EditEvent = () => {
           setUsers(formattedResponseUsers);
           setEvent(apiResponse);
           const reviewers = apiResponse.eventReviewers.map((er) => er.reviewer);
-          const chairs = apiResponse.eventChairs.map((ed) => ed.chair);
+          const chairs = apiResponse.eventChairs.map((ed: any) => ed.chair);
           setSelectedReviewers(formatOptions(reviewers));
           setSelectedChairs(formatOptions(chairs));
 

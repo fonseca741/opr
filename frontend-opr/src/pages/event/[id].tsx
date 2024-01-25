@@ -72,7 +72,7 @@ const LoadEventById = () => {
 
   const canEdit = () => {
     const eventChairsId = event?.eventChairs.map(
-      (eventChair) => eventChair.chair.id
+      (eventChair: any) => eventChair.chair.id
     );
 
     const allowedIds = [eventChairsId, event?.creator.id].flat(Infinity);
@@ -472,7 +472,7 @@ const LoadEventById = () => {
 
             <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">
               {event?.eventChairs?.length ? (
-                event?.eventChairs?.map((eventChair) => (
+                event?.eventChairs?.map((eventChair: any) => (
                   <Flex
                     justify="flex-start"
                     wrap="wrap"
