@@ -64,6 +64,7 @@ export class ArticleReviewService {
         articleReview: review.id,
         value: reviewArticleDto.discussion.value,
         isReviewer: reviewArticleDto.discussion.isReviewer,
+        creatorId: reviewArticleDto.reviewerId,
       });
       await this.mailService.send({
         to: article.creator.email,

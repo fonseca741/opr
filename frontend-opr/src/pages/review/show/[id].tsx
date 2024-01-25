@@ -21,6 +21,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { UserProps } from "common/types";
 import { useAuth } from "context";
 import Head from "next/head";
 import Router, { useRouter } from "next/router";
@@ -60,6 +61,7 @@ type Discussion = {
   createdAt: string;
   isReviewer: boolean;
   file?: string;
+  creator: UserProps;
 };
 
 type Inputs = {
@@ -185,6 +187,7 @@ const LoadReviewById = () => {
           file: fileResult.replace("data:application/pdf;base64,", ""),
           isReviewer: true,
           articleReviewId: +reviewId,
+          creatorId: user.id,
         });
         setIsSendingFile(false);
 
@@ -203,13 +206,12 @@ const LoadReviewById = () => {
   };
 
   const onSubmit = async (data: Inputs) => {
-    console.log(data);
-
     try {
       const response = await fetchData("POST", "article-review-discussion", {
         value: data.comment,
         isReviewer: user.role !== "author",
         articleReviewId: pageInfo?.review.id,
+        creatorId: user.id,
       });
 
       console.log(response);
@@ -233,6 +235,12 @@ const LoadReviewById = () => {
       user.id === pageInfo?.article.author.id ||
       pageInfo?.event.chairs.includes(user.id)
     );
+  };
+
+  const getRole = (user: UserProps) => {
+    if (pageInfo?.event.chairs.includes(user.id)) return "Chair:";
+    if (user.role === "author") return "Autor:";
+    if (user.role === "reviewer") return "Revisor:";
   };
 
   return (
@@ -341,12 +349,10 @@ const LoadReviewById = () => {
                   <Flex key={index} direction="column" mb="20px">
                     <Flex>
                       <Text fontSize="14px" fontWeight="600" marginX="5px">
-                        {comment.isReviewer ? "Revisor:" : "Autor:"}
+                        {getRole(comment.creator)}
                       </Text>
                       <Text fontSize="14px" marginRight="60px">
-                        {comment.isReviewer
-                          ? pageInfo?.review.reviewer.name
-                          : pageInfo?.article.author.name}
+                        {comment.creator.name}
                       </Text>
                     </Flex>
                     <Box
@@ -410,7 +416,7 @@ const LoadReviewById = () => {
                       </Text>
                     </Flex>
                     <Flex
-                      backgroundColor={comment.isReviewer ? "white" : "white"}
+                      backgroundColor="white"
                       borderRadius={6}
                       padding={2}
                       alignItems="center"
@@ -465,7 +471,7 @@ const LoadReviewById = () => {
           <Modal isOpen={isOpen} onClose={onClose} size="lg">
             <ModalOverlay />
             <ModalContent>
-              <ModalHeader>Submeter nova revisão de artefato</ModalHeader>
+              <ModalHeader>Submeter novo documento</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
                 <Flex justify="flex-start" wrap="wrap" w="100%" mb="0.3125rem">

@@ -98,6 +98,7 @@ export class ArticleService {
           articleReview: review.id,
           file: updateArticleDto.file,
           isReviewer: false,
+          creatorId: updateArticleDto.authorId,
         });
       }
     } catch (err) {

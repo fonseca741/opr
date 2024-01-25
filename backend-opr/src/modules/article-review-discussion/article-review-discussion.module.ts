@@ -6,12 +6,14 @@ import {
   ArticleReviewer,
 } from 'src/databases/postgres/entities/index';
 import { AuthModule } from 'src/modules/auth/auth.module';
+import { UserModule } from '../user/user.module';
 import { ArticleReviewDiscussionController } from './article-review-discussion.controller';
 import { ArticleReviewDiscussionService } from './article-review-discussion.service';
 
 @Module({
   imports: [
     AuthModule,
+    UserModule,
     TypeOrmModule.forFeature([
       ArticleReview,
       ArticleReviewer,

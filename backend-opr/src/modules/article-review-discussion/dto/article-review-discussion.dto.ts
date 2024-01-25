@@ -23,4 +23,7 @@ export class CreateArticleReviewDiscussionDto {
   @IsString()
   @IsOptional()
   file?: string;
+
+  @IsNumber()
+  creatorId: number;
 }

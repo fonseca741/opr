@@ -143,6 +143,7 @@ const LoadArticleById = () => {
 
         await fetchData("PUT", `article/${article?.id}`, {
           file: fileResult.replace("data:application/pdf;base64,", ""),
+          authorId: user.id,
         });
 
         toast.success("Artefato atualizado com sucesso!", {

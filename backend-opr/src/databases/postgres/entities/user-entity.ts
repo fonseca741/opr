@@ -9,7 +9,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { EventChairs } from './event-chairs-entity';
-import { Article, ArticleReviewer, Event, EventReviewers } from './index';
+import {
+  Article,
+  ArticleReviewDiscussion,
+  ArticleReviewer,
+  Event,
+  EventReviewers,
+} from './index';
 
 @Entity()
 export class User {
@@ -61,6 +67,9 @@ export class User {
 
   @OneToMany(() => EventChairs, (eventChairs) => eventChairs.chair)
   chairsEvent: EventReviewers;
+
+  @OneToMany(() => ArticleReviewDiscussion, (discussion) => discussion.creator)
+  articleReviewDiscussions: ArticleReviewDiscussion[];
 
   @BeforeInsert()
   hashPassword = async () => {

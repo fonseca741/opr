@@ -2,10 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ArticleReview } from './index';
+import { ArticleReview, User } from './index';
 
 @Entity()
 export class ArticleReviewDiscussion {
@@ -18,6 +19,9 @@ export class ArticleReviewDiscussion {
   @Column()
   isReviewer: boolean;
 
+  @Column()
+  creatorId: number;
+
   @Column({ nullable: true })
   file?: string;
 
@@ -29,4 +33,11 @@ export class ArticleReviewDiscussion {
     (articleReview) => articleReview.articleDiscussions,
   )
   articleReview: any;
+
+  @ManyToOne(() => User, (user) => user.articleReviewDiscussions, {
+    onDelete: 'CASCADE',
+    eager: true,
+  })
+  @JoinColumn({ name: 'creatorId' })
+  creator: any;
 }

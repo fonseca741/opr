@@ -7,6 +7,7 @@ import {
 import { Repository } from 'typeorm';
 import { MailTemplate } from '../mail/constants/mail-template.constants';
 import { MailService } from '../mail/mail.service';
+import { UserService } from '../user/user.service';
 import { CreateArticleReviewDiscussionDto } from './dto/article-review-discussion.dto';
 
 @Injectable()
@@ -17,6 +18,7 @@ export class ArticleReviewDiscussionService {
     @InjectRepository(ArticleReview)
     private readonly articleReview: Repository<ArticleReview>,
     private readonly mailService: MailService,
+    private readonly userService: UserService,
   ) {}
 
   async create(articleReviewDiscussion: CreateArticleReviewDiscussionDto) {
@@ -28,12 +30,16 @@ export class ArticleReviewDiscussionService {
       throw new Error('Article review not found');
     }
 
-    let savedDiscussion = {};
+    let savedDiscussion: Partial<ArticleReviewDiscussion> = {};
 
     try {
       savedDiscussion = await this.articleReviewDiscussion.save({
         articleReview: articleReviewDiscussion.articleReviewId,
         ...articleReviewDiscussion,
+      });
+
+      savedDiscussion.creator = await this.userService.loadUserById({
+        id: articleReviewDiscussion.creatorId,
       });
     } catch (err) {
       console.log(err);
