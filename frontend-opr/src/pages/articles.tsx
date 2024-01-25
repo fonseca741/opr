@@ -95,7 +95,7 @@ const Article = () => {
                   width={{ base: "300px", md: "400px" }}
                   color="#000"
                   margin="1.5rem"
-                  height={{ base: "auto", md: "220px" }}
+                  height={{ base: "auto", md: "min-content" }}
                   borderRadius="4px"
                   padding="1rem"
                   backgroundColor="#fff"
