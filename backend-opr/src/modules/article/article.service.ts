@@ -170,7 +170,7 @@ export class ArticleService {
     return await this.articleReviewer
       .createQueryBuilder('ar')
       .select([
-        'a.name as name',
+        'DISTINCT ON (a.id) a.name as name',
         'a.createdAt as createdAt',
         'a.id as articleId',
         'ar2.id as reviewId',
@@ -178,6 +178,7 @@ export class ArticleService {
       .innerJoin('article_review', 'ar2', 'ar2."articleReviewerId" = ar.id')
       .innerJoin('article', 'a', 'a.id = ar."articleId"')
       .where('ar."reviewerId" = :reviewerId', { reviewerId: id })
+      .orderBy('a.id')
       .getRawMany();
   }
 }

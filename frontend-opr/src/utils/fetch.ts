@@ -1,5 +1,3 @@
-import { toast } from "react-toastify";
-
 const fetchData = async (
   method: string,
   url: string,
@@ -17,12 +15,6 @@ const fetchData = async (
   });
 
   if (response.status > 299) {
-    toast.error(
-      "Ocorreu um erro ao realizar a operação, tente novamente mais tarde.",
-      {
-        autoClose: 5000,
-      }
-    );
     throw new Error();
   }
 

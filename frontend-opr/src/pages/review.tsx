@@ -79,91 +79,95 @@ const Reviews = () => {
             mb="0.3125rem"
           >
             {eventReviews.length ? (
-              eventReviews
-                .sort((first, second) => second.reviewid - first.reviewid)
-                .map((article) => (
+              eventReviews.map((article) => (
+                <Flex
+                  justify="flex-start"
+                  wrap="wrap"
+                  w="100%"
+                  mb="0.3125rem"
+                  key={article.articleid}
+                  min-height="8rem"
+                >
                   <Flex
-                    justify="flex-start"
-                    wrap="wrap"
-                    w="100%"
-                    mb="0.3125rem"
-                    key={article.articleid}
-                    min-height="8rem"
+                    flex={0.6}
+                    direction="column"
+                    mr={{ base: "0", sm: "1rem" }}
+                    minW="13.75rem"
                   >
-                    <Flex
-                      flex={0.6}
-                      direction="column"
-                      mr={{ base: "0", sm: "1rem" }}
-                      minW="13.75rem"
-                    >
-                      <Input
-                        name="title"
-                        label="Título do artefato"
-                        _focusVisible={{ borderColor: "primary.100" }}
-                        defaultValue={article.name}
-                        readOnly
-                        disabled
-                      />
-                    </Flex>
-
-                    <Flex
-                      flex={0.3}
-                      direction="column"
-                      mr={{ base: "0", sm: "1rem" }}
-                      minW="13.75rem"
-                    >
-                      <Input
-                        name="date"
-                        label="Data da submissão"
-                        _focusVisible={{ borderColor: "primary.100" }}
-                        defaultValue={article.createdat.split("T")[0]}
-                        readOnly
-                        disabled
-                      />
-                    </Flex>
-
-                    <Flex
-                      flex={0.05}
-                      direction="column"
-                      minW="13.75rem"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Button
-                        variant="primary"
-                        title="   Visualizar arquivo"
-                        onClick={() =>
-                          router.push(`/article/${article.articleid}`)
-                        }
-                        marginBottom="20px"
-                      >
-                        Acessar artefato
-                      </Button>
-                    </Flex>
-
-                    <Flex
-                      flex={0.05}
-                      direction="column"
-                      mr={{ base: "0", sm: "1rem" }}
-                      minW="13.75rem"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Button
-                        variant="primary"
-                        title="Revisar artefato"
-                        onClick={() =>
-                          router.push(
-                            `/review/show/${article.articleid}-${article.reviewid}`
-                          )
-                        }
-                        marginBottom="20px"
-                      >
-                        Acessar revisão
-                      </Button>
-                    </Flex>
+                    <Input
+                      name="title"
+                      label="Título do artefato"
+                      _focusVisible={{ borderColor: "primary.100" }}
+                      defaultValue={article.name}
+                      readOnly
+                      disabled
+                    />
                   </Flex>
-                ))
+
+                  <Flex
+                    flex={0.3}
+                    direction="column"
+                    mr={{ base: "0", sm: "1rem" }}
+                    minW="13.75rem"
+                  >
+                    <Input
+                      name="date"
+                      label="Data da submissão"
+                      _focusVisible={{ borderColor: "primary.100" }}
+                      defaultValue={`${
+                        article.createdat.split("T")[0]
+                      }, ${article.createdat
+                        .split("T")[1]
+                        .split(":")
+                        .slice(0, 2)
+                        .join(":")}`}
+                      readOnly
+                      disabled
+                    />
+                  </Flex>
+
+                  <Flex
+                    flex={0.05}
+                    direction="column"
+                    minW="13.75rem"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Button
+                      variant="primary"
+                      title="   Visualizar arquivo"
+                      onClick={() =>
+                        router.push(`/article/${article.articleid}`)
+                      }
+                      marginBottom="20px"
+                    >
+                      Acessar artefato
+                    </Button>
+                  </Flex>
+
+                  <Flex
+                    flex={0.05}
+                    direction="column"
+                    mr={{ base: "0", sm: "1rem" }}
+                    minW="13.75rem"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Button
+                      variant="primary"
+                      title="Revisar artefato"
+                      onClick={() =>
+                        router.push(
+                          `/review/show/${article.articleid}-${article.reviewid}`
+                        )
+                      }
+                      marginBottom="20px"
+                    >
+                      Acessar revisão
+                    </Button>
+                  </Flex>
+                </Flex>
+              ))
             ) : (
               <Text textAlign="center" width="100%" color="#696969">
                 Nenhum processo de revisão :(
