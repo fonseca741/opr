@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { CreateArticleReviewDiscussionDto } from 'src/modules/article-review-discussion/dto/article-review-discussion.dto';
 
 export class ArticleReviewDto {
@@ -11,13 +17,14 @@ export class ArticleReviewDto {
   reviewerId: number;
 
   @IsString()
-  @IsNotEmpty()
-  file: string;
+  @IsOptional()
+  file?: string;
 
   @IsString()
   @IsNotEmpty()
   originalFile: string;
 
+  @IsArray()
   @IsNotEmpty()
-  discussion: CreateArticleReviewDiscussionDto;
+  discussions: CreateArticleReviewDiscussionDto[];
 }

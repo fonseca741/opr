@@ -312,19 +312,9 @@ const LoadReviewById = () => {
                 >
                   Visualizar artefato original
                 </Button>
-                <Button
-                  variant="primary"
-                  marginBottom="10px"
-                  onClick={() => handleReviewerPdf(pageInfo!.review.file)}
-                  disabled={!pageInfo!.review.file}
-                >
-                  Visualizar revisão inicial
-                </Button>
 
                 <Button
-                  display={
-                    user.id === pageInfo?.review.reviewer.id ? "flex" : "none"
-                  }
+                  isDisabled={!canComment()}
                   variant="secondary"
                   onClick={onOpen}
                 >
@@ -395,12 +385,10 @@ const LoadReviewById = () => {
                   >
                     <Flex marginX="5px">
                       <Text fontSize="14px" fontWeight="600">
-                        {comment.isReviewer ? "Revisor:" : "Autor:"}
+                        {getRole(comment.creator)}
                       </Text>
                       <Text fontSize="14px" marginRight="60px">
-                        {comment.isReviewer
-                          ? pageInfo?.review.reviewer.name
-                          : pageInfo?.article.author.name}
+                        {comment.creator.name}
                       </Text>
                       <Text fontSize="14px" fontWeight="600" marginRight="5px">
                         Data:
@@ -425,7 +413,7 @@ const LoadReviewById = () => {
                     >
                       <Text>
                         {comment.isReviewer
-                          ? "Submeteu um novo arquivo pdf"
+                          ? "Submeteu um anexo"
                           : "Submeteu uma nova versão do artefato"}
                       </Text>
                       <Button

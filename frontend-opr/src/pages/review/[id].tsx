@@ -101,43 +101,56 @@ const ReviewArticle = () => {
   };
 
   const onSubmit = async (data: Inputs) => {
-    if (!acceptedFilesManager.length) {
-      toast.error("É necessário enviar o artefato revisado!", {
-        autoClose: 5000,
-      });
-
+    if (!acceptedFilesManager.length && !data.comments) {
+      toast.error(
+        "É necessário adicionar ao menos um comentário ou um artefato com demarcações",
+        {
+          autoClose: 10000,
+        }
+      );
       return;
     }
 
     const id = router.query.id as string;
-
     setIsSubmiting(true);
 
+    let discussions: {
+      isReviewer: boolean;
+      file?: string;
+      value?: string;
+    }[] = [];
+
     try {
-      let reader = new FileReader();
-      reader.readAsDataURL(acceptedFilesManager[0]);
+      if (data.comments) {
+        discussions.push({
+          isReviewer: true,
+          value: data.comments,
+        });
+      }
 
-      reader.onload = async () => {
-        const fileResult = reader.result as string;
+      if (acceptedFilesManager.length) {
+        const fileResult = await readFileAsync(acceptedFilesManager[0]);
 
-        await fetchData("POST", "article-review/review", {
+        discussions.push({
+          isReviewer: true,
           file: fileResult.replace("data:application/pdf;base64,", ""),
-          articleId: Number(id.split("-")[0]),
-          reviewerId: Number(id.split("-")[1]),
-          originalFile: article?.file,
-          discussion: {
-            value: data.comments || "",
-            isReviewer: true,
-          },
         });
-        setIsSubmiting(false);
+      }
 
-        toast.success("Revisão submetida com sucesso!", {
-          autoClose: 5000,
-        });
+      await fetchData("POST", "article-review/review", {
+        articleId: Number(id.split("-")[0]),
+        reviewerId: Number(id.split("-")[1]),
+        originalFile: article?.file,
+        discussions: discussions,
+      });
 
-        router.push("/review");
-      };
+      setIsSubmiting(false);
+
+      toast.success("Revisão submetida com sucesso!", {
+        autoClose: 5000,
+      });
+
+      router.push("/review");
     } catch {
       setIsSubmiting(false);
       toast.error(
@@ -148,6 +161,20 @@ const ReviewArticle = () => {
       );
     }
   };
+
+  async function readFileAsync(file) {
+    return new Promise<string>((resolve, reject) => {
+      let reader = new FileReader();
+
+      reader.onload = () => {
+        resolve(reader.result as string);
+      };
+
+      reader.onerror = reject;
+
+      reader.readAsDataURL(file);
+    });
+  }
 
   return (
     <LayoutSigned>
@@ -355,7 +382,7 @@ const ReviewArticle = () => {
                   alignItems="start"
                   color="neutral.500"
                 >
-                  Comentários sobre o artefato*
+                  Comentários sobre o artefato
                 </Text>
                 <Textarea
                   resize="none"
@@ -376,7 +403,7 @@ const ReviewArticle = () => {
                 alignItems="start"
                 color="neutral.500"
               >
-                Artefato com demarcações*
+                Artefato com demarcações
               </Text>
               <Flex
                 {...getRootProps({ className: "dropzone" })}

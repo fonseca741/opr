@@ -23,9 +23,6 @@ export class ArticleReview {
   articleReviewer: any;
 
   @Column()
-  file: string;
-
-  @Column()
   originalFile: string;
 
   @OneToMany(

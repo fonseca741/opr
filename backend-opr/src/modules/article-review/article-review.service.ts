@@ -57,15 +57,18 @@ export class ArticleReviewService {
     try {
       const review = await this.repository.save({
         articleReviewer: articleReviewId,
-        file: reviewArticleDto.file,
         originalFile: reviewArticleDto.originalFile,
       });
-      await this.articleReviewDiscussion.save({
-        articleReview: review.id,
-        value: reviewArticleDto.discussion.value,
-        isReviewer: reviewArticleDto.discussion.isReviewer,
-        creatorId: reviewArticleDto.reviewerId,
-      });
+      for (const discussion of reviewArticleDto.discussions) {
+        await this.articleReviewDiscussion.save({
+          articleReview: review.id,
+          value: discussion.value,
+          isReviewer: discussion.isReviewer,
+          file: discussion.file,
+          creatorId: reviewArticleDto.reviewerId,
+        });
+      }
+
       await this.mailService.send({
         to: article.creator.email,
         subject: '[OpenChair] Você recebeu uma nova revisão!',
