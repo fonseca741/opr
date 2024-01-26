@@ -110,8 +110,6 @@ const OAuth = () => {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
-
     try {
       setIsLoading.on();
       const apiResponse: CreateAndLoginResponse = await fetchData(

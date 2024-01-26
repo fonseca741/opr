@@ -58,8 +58,6 @@ export class ArticleService {
         })
       ).name;
 
-      console.log(eventName);
-
       eventReviewers.forEach((reviewer) => {
         this.mailService.send({
           to: reviewer.email,

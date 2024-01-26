@@ -57,11 +57,6 @@ const CreateArticle = () => {
   const [events, setEvents] = useState<SelectProps[]>([]);
 
   useEffect(() => {
-    console.log("Novo valor de selectedEvent:", selectedEvent);
-    // Restante do código
-  }, [selectedEvent]);
-
-  useEffect(() => {
     const { id: eventId } = router.query;
     (async () => {
       try {
@@ -151,8 +146,7 @@ const CreateArticle = () => {
 
       <Flex
         as="form"
-        width="80%"
-        padding="1rem"
+        width={{ base: "100%", md: "80%" }}
         direction="column"
         onSubmit={handleSubmit(onSubmit)}
       >
@@ -258,7 +252,6 @@ const CreateArticle = () => {
               })}
               defaultValue={selectedEvent}
               onChange={(value) => {
-                console.log(value);
                 setSelectedEvent(value as SelectProps);
               }}
               options={events}

@@ -311,6 +311,7 @@ const LoadArticleById = () => {
                 minW="13.75rem"
               >
                 <Button
+                  marginBottom="10px"
                   variant="primary"
                   title="Baixar artigo"
                   onClick={handleDonwloadPdf}

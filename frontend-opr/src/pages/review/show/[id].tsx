@@ -214,7 +214,6 @@ const LoadReviewById = () => {
         creatorId: user.id,
       });
 
-      console.log(response);
       setDiscussions([...discussions, response]);
       reset();
 
@@ -295,7 +294,7 @@ const LoadReviewById = () => {
                   </Text>
                   <Text>{pageInfo?.review.reviewer.name}</Text>
                 </Flex>
-                <Flex>
+                <Flex mb="20px">
                   <Text fontWeight="bold" marginRight="5px">
                     Data da revisão:
                   </Text>
@@ -423,9 +422,7 @@ const LoadReviewById = () => {
                           handleReviewerPdf(comment.file as string)
                         }
                       >
-                        {comment.isReviewer
-                          ? "Visualizar arquivo"
-                          : "Visualizar artefato"}
+                        Visualizar
                       </Button>
                     </Flex>
                   </Flex>

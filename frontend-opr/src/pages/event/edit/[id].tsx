@@ -97,7 +97,6 @@ const EditEvent = () => {
           setValue("description", apiResponse.description);
           setValue("questions", apiResponse.creatorInfos);
         } catch (error) {
-          console.log(error);
           toast.error(
             "Ocorreu um erro ao carregar os dados do evento, tente novamente!",
             {
@@ -163,8 +162,7 @@ const EditEvent = () => {
 
       <Flex
         as="form"
-        width="80%"
-        padding="1rem"
+        width={{ base: "100%", md: "80%" }}
         direction="column"
         onSubmit={handleSubmit(onSubmit)}
       >

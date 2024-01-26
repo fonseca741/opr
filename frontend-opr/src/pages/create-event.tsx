@@ -147,8 +147,7 @@ const CreateEvent = () => {
 
       <Flex
         as="form"
-        width="80%"
-        padding="1rem"
+        width={{ base: "100%", md: "80%" }}
         direction="column"
         onSubmit={handleSubmit(onSubmit)}
       >

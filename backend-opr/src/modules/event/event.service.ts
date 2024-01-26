@@ -82,8 +82,6 @@ export class EventService {
 
     await this.repository.update({ id: updateEventDto.id }, updateData);
 
-    console.log(updateEventDto.id);
-
     const oldChairs = await this.repositoryChairs.findBy({
       event_id: updateEventDto.id,
     });

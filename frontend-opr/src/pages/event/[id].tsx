@@ -367,6 +367,7 @@ const LoadEventById = () => {
                       <Button
                         variant="primary"
                         title="Ver detalhes"
+                        mb="10px"
                         onClick={() =>
                           router.push(`/article/${article.article.id}`)
                         }
@@ -388,6 +389,7 @@ const LoadEventById = () => {
                       >
                         <Button
                           variant="primary"
+                          mb="10px"
                           title="Revisar artigo"
                           onClick={() => {
                             const currentReviewerId =
