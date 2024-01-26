@@ -162,7 +162,7 @@ const ReviewArticle = () => {
     }
   };
 
-  async function readFileAsync(file) {
+  async function readFileAsync(file: Blob) {
     return new Promise<string>((resolve, reject) => {
       let reader = new FileReader();
 
