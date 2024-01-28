@@ -173,9 +173,12 @@ export class ArticleService {
         'ar2.createdAt as createdAt',
         'a.id as articleId',
         'ar2.id as reviewId',
+        'e.name as eventName',
       ])
       .innerJoin('article_review', 'ar2', 'ar2."articleReviewerId" = ar.id')
       .innerJoin('article', 'a', 'a.id = ar."articleId"')
+      .innerJoin('event_articles', 'ea', 'ea.articleId = a.id')
+      .innerJoin('event', 'e', 'e.id = ea.eventId')
       .where('ar."reviewerId" = :reviewerId', { reviewerId: id })
       .orderBy('ar2.createdAt', 'ASC')
       .getRawMany();

@@ -14,6 +14,7 @@ type EventReviewsProps = {
   createdat: string;
   name: string;
   articleid: number;
+  eventname: string;
 };
 
 const Reviews = () => {
@@ -105,7 +106,7 @@ const Reviews = () => {
                   </Flex>
 
                   <Flex
-                    flex={0.3}
+                    flex={0.1}
                     direction="column"
                     mr={{ base: "0", sm: "1rem" }}
                     minW="13.75rem"
@@ -121,6 +122,22 @@ const Reviews = () => {
                         .split(":")
                         .slice(0, 2)
                         .join(":")}`}
+                      readOnly
+                      disabled
+                    />
+                  </Flex>
+
+                  <Flex
+                    flex={0.6}
+                    direction="column"
+                    mr={{ base: "0", sm: "1rem" }}
+                    minW="13.75rem"
+                  >
+                    <Input
+                      name="title"
+                      label="Nome do evento"
+                      _focusVisible={{ borderColor: "primary.100" }}
+                      defaultValue={article.eventname}
                       readOnly
                       disabled
                     />
