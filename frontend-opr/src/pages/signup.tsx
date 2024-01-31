@@ -33,10 +33,14 @@ const schema = yup.object().shape({
     .string()
     .email("Digite um e-mail válido.")
     .required("Por favor, digite um e-mail."),
-  password: yup.string().required("Por favor, digite uma senha."),
+  password: yup
+    .string()
+    .required("Por favor, digite uma senha.")
+    .min(4, "A senha precisa ter mais que 3 caracteres."),
   passwordConfirmation: yup
     .string()
-    .oneOf([yup.ref("password"), null], "As senhas não coincidem."),
+    .oneOf([yup.ref("password"), null], "As senhas não coincidem.")
+    .min(4, "A senha precisa ter mais que 3 caracteres."),
 });
 
 type SelectProps = {
