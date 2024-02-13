@@ -15,7 +15,7 @@ const fetchData = async (
   });
 
   if (response.status > 299) {
-    throw new Error();
+    throw new Error((await response.json()).message);
   }
 
   try {

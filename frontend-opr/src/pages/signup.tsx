@@ -91,7 +91,13 @@ const Signup = () => {
         autoClose: 5000,
       });
       router.replace("/login");
-    } catch {
+    } catch (e: any) {
+      if (e.message == "User already registered with this email!") {
+        toast.error("Email já cadastrado!", {
+          autoClose: 5000,
+        });
+        return;
+      }
       toast.error("Ocorreu um erro ao realizar o cadastro, tente novamente!", {
         autoClose: 5000,
       });

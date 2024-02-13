@@ -43,7 +43,13 @@ const Login = () => {
       handleSetToken(response.token);
       handleSetUser(response.user);
       router.replace("/");
-    } catch {
+    } catch (e: any) {
+      if (e.message == "User not found with this email!") {
+        toast.error("Usuário não encontrado!", {
+          autoClose: 5000,
+        });
+        return;
+      }
       toast.error("Ocorreu um erro ao realizar o login, tente novamente!", {
         autoClose: 5000,
       });
